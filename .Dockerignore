@@ -1,0 +1,48 @@
+# Node.js dependencies
+node_modules
+pnpm-lock.yaml
+
+# Next.js build output (only needed in final stage)
+.next/cache
+.next/trace
+.next/types
+
+# Local environment files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Logs & cache
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+.cache
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor & IDE settings
+.vscode/
+.idea/
+*.swp
+
+# Docker-related files
+Dockerfile
+.dockerignore
+
+# Git
+.git
+.gitignore
+
+# Other unnecessary files
+out/
+dist/
+coverage/
+public_html_legacy
+docker-compose.yml
+Caddyfile

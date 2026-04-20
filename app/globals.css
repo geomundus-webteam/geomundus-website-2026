@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Add styles for Portable Text content */
+.portable-text h1 {
+  @apply text-3xl font-bold mt-6 mb-4;
+}
+
+.portable-text h2 {
+  @apply text-2xl font-bold mt-5 mb-3;
+}
+
+.portable-text h3 {
+  @apply text-xl font-bold mt-4 mb-2;
+}
+
+.portable-text p {
+  @apply mb-4;
+}
+
+.portable-text ul {
+  @apply list-disc pl-5 mb-4;
+}
+
+.portable-text ol {
+  @apply list-decimal pl-5 mb-4;
+}
+
+.portable-text a {
+  @apply text-emerald-700 hover:underline;
+}
+
+.portable-text blockquote {
+  @apply border-l-4 border-emerald-700 pl-4 italic my-4;
+}
+
+.portable-text code {
+  @apply bg-gray-100 rounded px-1 py-0.5;
+}
+
+.portable-text pre {
+  @apply bg-gray-100 rounded p-4 overflow-x-auto my-4;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 142.1 76.2% 36.3%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    --banner-height: 0px;
+    --banner-height-sm: 0px;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.4% 10%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 142.4 71.8% 29.2%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+body {
+  padding-top: var(--banner-height);
+}
+
+@media (min-width: 640px) {
+  body {
+    padding-top: var(--banner-height-sm);
+  }
+}
+
+/* Ensure content starts below the banner */
+.has-banner {
+  padding-top: var(--banner-height);
+}
+
+@media (min-width: 640px) {
+  .has-banner {
+    padding-top: var(--banner-height-sm);
+  }
+}
+
+/* Focus Topics Section Styling */
+.focus-topic-card {
+  transition: all 0.3s ease;
+}
+
+.focus-topic-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Portable Text additional styling */
+.portable-text p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.portable-text strong {
+  color: #065f46;
+}
+
+/* Focus Topic Icons Animation */
+@keyframes pulse-light {
+  0%,
+  100% {
+    background-color: rgba(236, 253, 245, 1);
+  }
+  50% {
+    background-color: rgba(209, 250, 229, 1);
+  }
+}
+
+.focus-topic-icon {
+  animation: pulse-light 3s infinite ease-in-out;
+}
+
+/* React Player Styles */
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.react-player video {
+  object-fit: cover;
+}

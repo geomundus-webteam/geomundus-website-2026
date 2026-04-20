@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /
+Allow: /$
+Allow: /registration
+Allow: /submissions
+Allow: /speakers
+Allow: /sponsors

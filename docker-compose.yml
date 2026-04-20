@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: geomundus-website:dev
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data
+
+  legacy-website:
+    image: caddy:alpine
+    container_name: legacy-website
+    ports:
+      - "8443:8443"
+    volumes:
+      - ./public_html_legacy:/srv
+      - ./Caddyfile:/etc/caddy/Caddyfile

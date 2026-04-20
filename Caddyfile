@@ -1,0 +1,44 @@
+localhost:8443 {
+    tls internal
+
+    root * /srv
+
+    # Static versioned routes
+    handle_path /[0-9]{4}/assets/* {
+        file_server
+    }
+
+    handle_path /[0-9]{4}/images/* {
+        file_server
+    }
+
+    handle_path /[0-9]{4}/js/* {
+        file_server
+    }
+
+    # Fallback routes
+    handle_path /assets/* {
+        uri strip_prefix /assets
+        try_files /2025/assets/{path} /2024/assets/{path} /2023/assets/{path} /2022/assets/{path}
+        file_server
+    }
+
+    handle_path /images/* {
+        uri strip_prefix /images
+        try_files /2025/images/{path} /2024/images/{path} /2023/images/{path} /2022/images/{path}
+        file_server
+    }
+
+    handle_path /js/* {
+        uri strip_prefix /js
+        try_files /2025/js/{path} /2024/js/{path} /2023/js/{path} /2022/js/{path}
+        file_server
+    }
+
+    # Catch-all
+    handle {
+        try_files {path} {path}/index.html
+        file_server
+    }
+}
+
