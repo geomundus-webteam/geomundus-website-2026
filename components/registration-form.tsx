@@ -442,7 +442,7 @@ export default function RegistrationForm() {
               <strong>Event Dates:</strong> TBD 2026
             </p>
             <p>
-              <strong>Location: Castellón de la Plana, Spain
+              <strong>Location:</strong> Castellón de la Plana, Spain
             </p>
             <p>
               <strong>Contact:</strong> program@geomundus.org
