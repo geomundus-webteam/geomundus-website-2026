@@ -576,7 +576,7 @@ export default async function SponsorsPage() {
                     Sponsors
                   </h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
-                    {currentConference.sponsors.map((sponsor) => (
+                    {currentConference?.sponsors?.map((sponsor) => (
                       <div
                         key={sponsor._id}
                         className="flex items-center justify-center"
@@ -615,7 +615,7 @@ export default async function SponsorsPage() {
                     Partners
                   </h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
-                    {currentConference.partners.map((partner) => (
+                    {currentConference?.partners?.map((partner) => (
                       <div
                         key={partner._id}
                         className="flex items-center justify-center"

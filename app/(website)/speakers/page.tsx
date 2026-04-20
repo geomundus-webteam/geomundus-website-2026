@@ -15,8 +15,8 @@ export const metadata: Metadata = {
 
 export default async function SpeakersPage() {
   const currentConference = await cachedClient(currentConferenceQuery.query);
-  const speakers = currentConference.keynoteSpeakers || [];
-  const workshopLeaders = currentConference.workshopLeaders || [];
+  const speakers = currentConference?.keynoteSpeakers || [];
+  const workshopLeaders = currentConference?.workshopLeaders || [];
   const siteSettings = await cachedClient(siteSettingsQuery.query);
 
   return (

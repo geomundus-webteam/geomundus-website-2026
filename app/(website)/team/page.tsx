@@ -48,7 +48,7 @@ export default async function AboutPage() {
   const teamMembers = await cachedClient(currentTeamMembersQuery.query, {
     year: currentYear,
   });
-  const groupedMembers = groupMembersByTeam(teamMembers);
+  const groupedMembers = groupMembersByTeam(teamMembers ?? []);
   const teamNames = Object.keys(groupedMembers).sort();
   return (
     <div className="min-h-screen text-white bg-gradient-to-br from-emerald-800 to-teal-600">
