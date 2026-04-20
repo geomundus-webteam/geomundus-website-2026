@@ -84,7 +84,7 @@ export default async function SubmissionsPage() {
             {submissionInfo?.callForPapersContent ? (
               <div className="prose max-w-none text-gray-700">
                 <PortableTextRenderer
-                  content={submissionInfo.callForPapersContent}
+                  content={submissionInfo?.callForPapersContent}
                 />
               </div>
             ) : (
@@ -106,7 +106,7 @@ export default async function SubmissionsPage() {
 
             {submissionInfo?.footnote && (
               <p className="text-sm text-gray-500 italic mt-6">
-                {submissionInfo.footnote}
+                {submissionInfo?.footnote}
               </p>
             )}
           </div>
@@ -170,14 +170,14 @@ export default async function SubmissionsPage() {
 
             {submissionInfo?.posterPrintingNote && (
               <p className="text-center mb-6 text-sm text-gray-600">
-                {submissionInfo.posterPrintingNote}
+                {submissionInfo?.posterPrintingNote}
               </p>
             )}
 
             <div className="space-y-4">
               <SubmissionButton
                 submissionOpen={isSubmissionOpen}
-                link={submissionInfo.submissionFormUrl}
+                link={submissionInfo?.submissionFormUrl}
               />
             </div>
             <div className="mt-10 text-center p-6 bg-gray-100 rounded-lg">
@@ -187,10 +187,10 @@ export default async function SubmissionsPage() {
                 }{" "}
                 {submissionInfo?.contactEmail && (
                   <Link
-                    href={`mailto:${submissionInfo.contactEmail}`}
+                    href={`mailto:${submissionInfo?.contactEmail}`}
                     className="text-emerald-700 font-medium hover:underline"
                   >
-                    {submissionInfo.contactEmail}.
+                    {submissionInfo?.contactEmail}.
                   </Link>
                 )}
               </p>

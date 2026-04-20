@@ -56,7 +56,7 @@ export default async function ConferenceArchivePage({ params }: Props) {
   const currentYear = await cachedClient(currentConferenceYearQuery.query);
 
   // Redirect to home page if trying to access current year in archive
-  if (parsedYear === currentYear) {
+  if (parsedYear === currentYear?.year) {
     redirect("/");
   }
 
