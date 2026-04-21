@@ -27,8 +27,8 @@ export default async function ArchivePage() {
   const currentYear = await cachedClient(currentConferenceYearQuery.query);
 
   // Filter out the current year from the archive
-  const pastConferences = conferences.filter(
-    (conf: Conference) => conf.year !== currentYear,
+  const pastConferences = (conferences ?? []).filter(
+    (conf: Conference) => conf.year !== currentYear?.year,
   );
   return (
     <main className="flex min-h-screen flex-col">
