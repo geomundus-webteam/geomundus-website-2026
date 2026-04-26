@@ -318,3 +318,83 @@ export const currentTeamMembersQuery = tagQuery(
   }`,
   "teamMember",
 );
+
+// All speakers for the current conference
+export const currentSpeakersQuery = tagQuery(
+  groq`*[_type == "speaker" && conference->current == true] | order(order asc, name asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    role,
+    organization,
+    jobTitle,
+    topic,
+    shortBio,
+    fullBio,
+    "imageUrl": image.asset->url,
+    "imageAlt": image.alt,
+    websiteUrl,
+    linkedinUrl,
+    twitterUrl,
+    googleScholarUrl,
+    featured,
+    confirmed,
+    order
+  }`,
+  "speaker",
+);
+
+// Featured speakers (homepage highlights)
+export const featuredSpeakersQuery = tagQuery(
+  groq`*[_type == "speaker" && featured == true && conference->current == true] | order(order asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    role,
+    organization,
+    jobTitle,
+    topic,
+    shortBio,
+    "imageUrl": image.asset->url,
+    websiteUrl,
+    linkedinUrl,
+    twitterUrl
+  }`,
+  "speaker",
+);
+
+// Single speaker by slug
+export const speakerBySlugQuery = tagQuery(
+  groq`*[_type == "speaker" && slug.current == $slug][0] {
+    _id,
+    name,
+    "slug": slug.current,
+    role,
+    organization,
+    jobTitle,
+    topic,
+    shortBio,
+    fullBio,
+    "imageUrl": image.asset->url,
+    "imageAlt": image.alt,
+    websiteUrl,
+    linkedinUrl,
+    twitterUrl,
+    googleScholarUrl,
+    confirmed,
+    "conferenceYear": conference->year
+  }`,
+  "speaker",
+);
+
+// Speakers grouped by role
+export const speakersByRoleQuery = tagQuery(
+  groq`{
+    "keynotes": *[_type == "speaker" && role == "keynote" && conference->current == true] | order(order asc),
+    "workshops": *[_type == "speaker" && role == "workshop" && conference->current == true] | order(order asc),
+    "panels": *[_type == "speaker" && role == "panel" && conference->current == true] | order(order asc),
+    "moderators": *[_type == "speaker" && role == "moderator" && conference->current == true] | order(order asc)
+  }`,
+  "speaker",
+);
+

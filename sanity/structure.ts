@@ -55,6 +55,52 @@ export const structure = (S: StructureBuilder) =>
         ),
 
       S.listItem()
+        .title("Speakers")
+        .icon(FiUsers)
+        .child(
+          S.list()
+            .title("Speakers")
+            .items([
+              S.listItem()
+                .title("All Speakers")
+                .icon(FiUsers)
+                .child(
+                  S.documentList()
+                    .title("All Speakers")
+                    .filter('_type == "speaker"')
+                    .defaultOrdering([{ field: "order", direction: "asc" }]),
+                ),
+              S.listItem()
+                .title("Keynote Speakers")
+                .icon(FiStar)
+                .child(
+                  S.documentList()
+                    .title("Keynote Speakers")
+                    .filter('_type == "speaker" && role == "keynote"')
+                    .defaultOrdering([{ field: "order", direction: "asc" }]),
+                ),
+              S.listItem()
+                .title("Workshop Leaders")
+                .icon(FiUserCheck)
+                .child(
+                  S.documentList()
+                    .title("Workshop Leaders")
+                    .filter('_type == "speaker" && role == "workshop"')
+                    .defaultOrdering([{ field: "order", direction: "asc" }]),
+                ),
+              S.listItem()
+                .title("Featured Speakers")
+                .icon(FiStar)
+                .child(
+                  S.documentList()
+                    .title("Featured Speakers")
+                    .filter('_type == "speaker" && featured == true')
+                    .defaultOrdering([{ field: "order", direction: "asc" }]),
+                ),
+            ]),
+        ),
+
+      S.listItem()
         .title("Schedule")
         .icon(FiCalendar)
         .child(S.document().schemaType("schedule").documentId("schedule")),
