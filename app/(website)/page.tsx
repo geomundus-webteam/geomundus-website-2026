@@ -83,10 +83,10 @@ export default async function Home() {
           18th Edition · GeoMundus Conference 2026
         </p>
         <h1 className="text-[56px] md:text-[68px] font-medium text-[#1d1d1f] leading-[1.05] tracking-tight mb-5">
-          Where Earth<br />meets <em className="not-italic text-[#3a7a30]">discovery.</em>
+          Mapping the<br />path to <em className="not-italic text-[#3a7a30]">resilience.</em>
         </h1>
         <p className="text-[18px] text-[#6e6e73] leading-relaxed max-w-[460px] mx-auto mb-10">
-          An international geospatial technologies conference. Castellón de la Plana, Spain.
+          Geospatial Intelligence for Disaster Resilience. Castellón de la Plana, Spain.
         </p>
 
         <div className="flex justify-center gap-3 mb-12">
@@ -192,22 +192,22 @@ export default async function Home() {
       <section className="py-24 px-6 bg-[#f5f9f4] border-t border-[#f0f0f0]">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Theme</p>
-          <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">Coming soon</h2>
+          <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">Geospatial Intelligence for Disaster Resilience</h2>
           <p className="text-[17px] text-[#6e6e73] leading-relaxed mb-12 max-w-[480px] mx-auto">
-            The organizing committee is finalizing the central theme for 2026. Stay tuned for the announcement.
+            The 2026 theme explores how geospatial science strengthens early warning systems, disaster response, and climate adaptation.
           </p>
           <div className="bg-white rounded-2xl border border-[#deeada] p-10 text-left">
             <span className="inline-block text-[11px] font-medium tracking-widest uppercase bg-[#e0f0dc] text-[#3a7a30] px-4 py-1.5 rounded-full mb-5">
-              To be announced
+              2026 Theme
             </span>
             <h3 className="text-[22px] font-medium text-[#1d1d1f] tracking-tight mb-3">
-              GeoMundus 2026 — central theme
+              GeoMundus 2026 — focus areas
             </h3>
             <p className="text-[14px] text-[#6e6e73] leading-[1.8] mb-6">
-              Previous editions explored Smart Cities, Climate Resilience, and Disaster Management. GeoMundus 2026 will continue advancing the frontiers of geospatial science and innovation.
+              GeoMundus 2026 brings together researchers, practitioners, and students working at the intersection of geospatial science and disaster resilience — from satellite-based early warning to participatory risk mapping.
             </p>
             <div className="flex flex-wrap gap-2">
-              {["GIS", "Remote sensing", "Spatial AI", "Earth observation", "Urban analytics"].map((tag) => (
+              {["GIS", "Remote sensing", "Spatial AI", "Earth observation", "Disaster resilience"].map((tag) => (
                 <span key={tag} className="text-[13px] bg-white text-[#3a7a30] border border-[#c4dcc0] px-4 py-1.5 rounded-full">
                   {tag}
                 </span>
