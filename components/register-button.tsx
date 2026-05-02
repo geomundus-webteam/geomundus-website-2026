@@ -8,7 +8,7 @@ interface RegisterButtonProps {
 export function RegisterButton({ registrationOpen }: RegisterButtonProps) {
   return (
     <Link
-      href={registrationOpen ? "/registration" : "/#contact"}
+      href="/registration"
       className="inline-block bg-[#2d6a27] text-white text-[14px] font-medium px-6 py-2.5 rounded-full hover:bg-[#245520] transition-colors duration-200"
     >
       {registrationOpen ? "Register now" : "Register interest"}
