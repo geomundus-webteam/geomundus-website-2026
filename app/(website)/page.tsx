@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { cachedClient } from "@/lib/sanity.client";
 import {
   siteSettingsQuery,
@@ -78,16 +79,26 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col bg-white" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif" }}>
 
       {/* ── HERO ── */}
-      <section className="bg-[#f5f9f4] pt-32 pb-20 text-center px-6">
-        <p className="text-[13px] font-medium text-[#3a7a30] tracking-wide mb-5">
-          18th Edition · GeoMundus Conference 2026
-        </p>
-        <h1 className="text-[56px] md:text-[68px] font-medium text-[#1d1d1f] leading-[1.05] tracking-tight mb-5">
-          Mapping the<br />path to <em className="not-italic text-[#3a7a30]">resilience.</em>
-        </h1>
-        <p className="text-[18px] text-[#6e6e73] leading-relaxed max-w-[460px] mx-auto mb-10">
-          Geospatial Intelligence for Disaster Resilience. Castellón de la Plana, Spain.
-        </p>
+      <section className="relative bg-[#f5f9f4] pt-24 pb-20 text-center px-6 overflow-hidden">
+        {/* Soft radial glow behind the logo */}
+        <div className="absolute inset-x-0 top-0 h-[480px] pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 70% at 50% 35%, rgba(125, 186, 90, 0.18) 0%, rgba(125, 186, 90, 0.06) 40%, transparent 75%)" }} />
+
+        <div className="relative z-10">
+          <p className="text-[13px] font-medium text-[#3a7a30] tracking-wide mb-8">
+            18th Edition · GeoMundus Conference 2026
+          </p>
+
+          {/* Big centered logo */}
+          <div className="flex justify-center mb-10">
+            <Image src="/geo_logo.png" alt="GeoMundus 2026" width={280} height={335} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
+          </div>
+
+          <h1 className="text-[44px] md:text-[56px] font-medium text-[#1d1d1f] leading-[1.05] tracking-tight mb-5">
+            Mapping the path to <em className="not-italic text-[#3a7a30]">resilience.</em>
+          </h1>
+          <p className="text-[18px] text-[#6e6e73] leading-relaxed max-w-[520px] mx-auto mb-10">
+            Geospatial Intelligence for Disaster Resilience. Castellón de la Plana, Spain.
+          </p>
 
         <div className="flex justify-center gap-3 mb-12">
           <RegisterButton registrationOpen={siteSettings?.registrationOpen} />
@@ -135,6 +146,7 @@ export default async function Home() {
             <line x1="170" y1="55" x2="280" y2="80" stroke="#c8dfc4" strokeWidth="0.5" strokeDasharray="3 3"/>
             <line x1="400" y1="100" x2="280" y2="80" stroke="#c8dfc4" strokeWidth="0.5" strokeDasharray="3 3"/>
           </svg>
+        </div>
         </div>
       </section>
 

@@ -3,6 +3,7 @@
 import type React from "react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { LuMenu, LuX } from "react-icons/lu";
 import { RegisterButton } from "./register-button";
 import { SiteSettings } from "@/sanity.types";
@@ -31,14 +32,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-[#2d6a27] flex items-center justify-center flex-shrink-0">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="8" r="5.5" stroke="#7dba5a" strokeWidth="1"/>
-              <circle cx="8" cy="8" r="2.5" stroke="#7dba5a" strokeWidth="1"/>
-              <line x1="2.5" y1="8" x2="13.5" y2="8" stroke="#7dba5a" strokeWidth="0.8"/>
-              <line x1="8" y1="2.5" x2="8" y2="13.5" stroke="#7dba5a" strokeWidth="0.8"/>
-            </svg>
-          </div>
+          <Image src="/geo_logo.png" alt="GeoMundus logo" width={36} height={43} className="flex-shrink-0" priority />
           <span className="text-[15px] font-medium text-[#1d1d1f] tracking-tight">GeoMundus</span>
         </Link>
 
