@@ -25,12 +25,11 @@ jobs:
       - name: Build Docker image with build-time secrets
         run: |
           docker build \
-            --build-arg SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }} \
+            --build-arg SANITY_PROJECT_ID=${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }} \
             --build-arg SANITY_DATASET=${{ secrets.SANITY_DATASET }} \
-            --build-arg NEXT_PUBLIC_SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }} \
+            --build-arg NEXT_PUBLIC_SANITY_PROJECT_ID=${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }} \
             --build-arg NEXT_PUBLIC_SANITY_DATASET=${{ secrets.SANITY_DATASET }} \
-            --build-arg SANITY_AUTH_TOKEN=${{ secrets.SANITY_AUTH_TOKEN }} \
-            --build-arg POSTHOG_KEY=${{ secrets.POSTHOG_KEY }} \
+            --build-arg SANITY_AUTH_TOKEN=${{ secrets.SANITY_API_TOKEN }} \
             -t $IMAGE_NAME:latest .
       - name: Push Docker image
         run: docker push $IMAGE_NAME:latest
