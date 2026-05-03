@@ -15,6 +15,7 @@ import PortableTextRenderer from "@/components/portable-text-renderer";
 import type { Conference, Faq, Schedule, SiteSettings } from "@/sanity.types";
 import { SocialLinks } from "@/components/socialLinks";
 import CookieConsent from "@/components/cookie-consent";
+import SpeakersGrid from "@/components/speakers-grid";
 
 interface KeynoteSpeaker {
   name?: string;
@@ -259,7 +260,7 @@ export default async function Home() {
               <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">Keynote speakers</h2>
               <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry. Full lineup coming soon.</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {[{ icon: "🌍", slot: "Keynote speaker #1" }, { icon: "🛰️", slot: "Keynote speaker #2" }, { icon: "🗺️", slot: "Keynote speaker #3" }].map(({ icon, slot }) => (
                 <div key={slot} className="bg-white rounded-2xl border border-[#e8e8e8] p-8 text-center">
                   <div className="w-14 h-14 rounded-full bg-[#e8f4e4] mx-auto mb-4 flex items-center justify-center text-2xl">{icon}</div>
@@ -267,7 +268,8 @@ export default async function Home() {
                   <p className="text-[13px] text-[#3a7a30]">{slot}</p>
                 </div>
               ))}
-            </div>
+            </div> */}
+            <SpeakersGrid />
           </div>
         </section>
       )}
