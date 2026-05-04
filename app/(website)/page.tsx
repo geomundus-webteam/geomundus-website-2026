@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { AnimateOnScroll, RevealText, GlowCard } from "@/components/animate-on-scroll";
 import { cachedClient } from "@/lib/sanity.client";
 import {
   siteSettingsQuery,
@@ -15,7 +16,6 @@ import PortableTextRenderer from "@/components/portable-text-renderer";
 import type { Conference, Faq, Schedule, SiteSettings } from "@/sanity.types";
 import { SocialLinks } from "@/components/socialLinks";
 import CookieConsent from "@/components/cookie-consent";
-import SpeakersGrid from "@/components/speakers-grid";
 
 interface KeynoteSpeaker {
   name?: string;
@@ -152,27 +152,29 @@ export default async function Home() {
       </section>
 
       {/* ── STATS ── */}
-      <section className="bg-[#1a2e18] grid grid-cols-2 md:grid-cols-4 border-t border-[#ffffff10]">
-        {[
-          { num: "18th", label: "Edition" },
-          { num: "100+", label: "Participants" },
-          { num: "5+", label: "Keynote speakers" },
-          { num: "3", label: "Workshops" },
-        ].map(({ num, label }) => (
-          <div key={label} className="py-6 px-6 text-center border-r border-[#ffffff08] last:border-r-0">
-            <p className="text-[28px] font-medium text-white">{num}</p>
-            <p className="text-[11px] text-[#ffffff40] uppercase tracking-wider mt-1">{label}</p>
-          </div>
-        ))}
+      <section className="bg-[#1a2e18] border-t border-[#ffffff10]">
+        <AnimateOnScroll staggerChildren className="grid grid-cols-2 md:grid-cols-4">
+          {[
+            { num: "18th", label: "Edition" },
+            { num: "100+", label: "Participants" },
+            { num: "5+", label: "Keynote speakers" },
+            { num: "3", label: "Workshops" },
+          ].map(({ num, label }) => (
+            <div key={label} className="py-6 px-6 text-center border-r border-[#ffffff08] last:border-r-0">
+              <p className="text-[28px] font-medium text-white">{num}</p>
+              <p className="text-[11px] text-[#ffffff40] uppercase tracking-wider mt-1">{label}</p>
+            </div>
+          ))}
+        </AnimateOnScroll>
       </section>
 
       {/* ── ABOUT ── */}
       <section id="info" className="py-24 px-6 bg-white">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+        <AnimateOnScroll staggerChildren className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
           <div>
             <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">About</p>
             <h2 className="text-[36px] font-medium text-[#1d1d1f] leading-tight tracking-tight mb-5">
-              Geospatial science,<br />shaped by students
+              <RevealText text="Geospatial science, shaped by students" />
             </h2>
             <p className="text-[15px] text-[#6e6e73] leading-[1.85] mb-4">
               GeoMundus is a free international conference organized by students of the Erasmus Mundus Master in Geospatial Technologies. Since 2009, it has united researchers, practitioners, and students from across the globe.
@@ -198,18 +200,20 @@ export default async function Home() {
               <text x="16" y="288" fill="#c4dfc0" fontSize="10" fontFamily="monospace">Castellón, Spain</text>
             </svg>
           </div>
-        </div>
+        </AnimateOnScroll>
       </section>
 
       {/* ── THEME ── */}
       <section className="py-24 px-6 bg-[#f5f9f4] border-t border-[#f0f0f0]">
-        <div className="max-w-3xl mx-auto text-center">
+        <AnimateOnScroll staggerChildren className="max-w-3xl mx-auto text-center">
           <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Theme</p>
-          <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">Geospatial Intelligence for Disaster Resilience</h2>
+          <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
+            <RevealText text="Geospatial Intelligence for Disaster Resilience" />
+          </h2>
           <p className="text-[17px] text-[#6e6e73] leading-relaxed mb-12 max-w-[480px] mx-auto">
             The 2026 theme explores how geospatial science strengthens early warning systems, disaster response, and climate adaptation.
           </p>
-          <div className="bg-white rounded-2xl border border-[#deeada] p-10 text-left">
+          <GlowCard className="bg-white rounded-2xl border border-[#deeada] p-10 text-left overflow-hidden">
             <span className="inline-block text-[11px] font-medium tracking-widest uppercase bg-[#e0f0dc] text-[#3a7a30] px-4 py-1.5 rounded-full mb-5">
               2026 Theme
             </span>
@@ -226,50 +230,53 @@ export default async function Home() {
                 </span>
               ))}
             </div>
-          </div>
-        </div>
+          </GlowCard>
+        </AnimateOnScroll>
       </section>
 
       {/* ── SPEAKERS ── */}
       {currentConference?.keynoteSpeakers && currentConference.keynoteSpeakers.length > 0 ? (
         <section id="speakers" className="py-24 px-6 bg-white border-t border-[#f0f0f0]">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-14">
+            <AnimateOnScroll staggerChildren className="text-center mb-14">
               <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Speakers</p>
-              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">Keynote speakers</h2>
+              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
+                <RevealText text="Keynote speakers" />
+              </h2>
               <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            </AnimateOnScroll>
+            <AnimateOnScroll staggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
               {currentConference.keynoteSpeakers.map((speaker, i) => (
-                <div key={i} className="bg-[#f5f9f4] rounded-2xl border border-[#e0eada] p-6 text-center">
+                <GlowCard key={i} className="bg-[#f5f9f4] rounded-2xl border border-[#e0eada] p-6 text-center overflow-hidden">
                   <div className="w-16 h-16 rounded-full bg-[#e8f4e4] border border-[#c8ddb8] mx-auto mb-4 flex items-center justify-center">
                     <span className="text-[#3a7a30] font-medium text-lg">{speaker.name?.[0] ?? "?"}</span>
                   </div>
                   <p className="text-[15px] font-medium text-[#1d1d1f] mb-1">{speaker.name}</p>
                   <p className="text-[13px] text-[#3a7a30]">{speaker.organization}</p>
-                </div>
+                </GlowCard>
               ))}
-            </div>
+            </AnimateOnScroll>
           </div>
         </section>
       ) : (
         <section id="speakers" className="py-24 px-6 bg-[#f5f9f4] border-t border-[#f0f0f0]">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-14">
+            <AnimateOnScroll staggerChildren className="text-center mb-14">
               <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Speakers</p>
-              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">Keynote speakers</h2>
+              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
+                <RevealText text="Keynote speakers" />
+              </h2>
               <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry. Full lineup coming soon.</p>
-            </div>
-            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            </AnimateOnScroll>
+            <AnimateOnScroll staggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {[{ icon: "🌍", slot: "Keynote speaker #1" }, { icon: "🛰️", slot: "Keynote speaker #2" }, { icon: "🗺️", slot: "Keynote speaker #3" }].map(({ icon, slot }) => (
-                <div key={slot} className="bg-white rounded-2xl border border-[#e8e8e8] p-8 text-center">
+                <GlowCard key={slot} className="bg-white rounded-2xl border border-[#e8e8e8] p-8 text-center overflow-hidden">
                   <div className="w-14 h-14 rounded-full bg-[#e8f4e4] mx-auto mb-4 flex items-center justify-center text-2xl">{icon}</div>
                   <p className="text-[15px] font-medium text-[#1d1d1f] mb-1">To be announced</p>
                   <p className="text-[13px] text-[#3a7a30]">{slot}</p>
-                </div>
+                </GlowCard>
               ))}
-            </div> */}
-            <SpeakersGrid />
+            </AnimateOnScroll>
           </div>
         </section>
       )}
@@ -288,6 +295,7 @@ export default async function Home() {
       )}
 
       {/* ── TIMELINE ── */}
+      <AnimateOnScroll>
       <section className="py-24 px-6 bg-[#f5f9f4] border-t border-[#f0f0f0]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
@@ -312,8 +320,10 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      </AnimateOnScroll>
 
       {/* ── SPONSORS ── */}
+      <AnimateOnScroll>
       <section id="sponsors" className="py-24 px-6 bg-white border-t border-[#f0f0f0]">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Sponsors</p>
@@ -332,6 +342,7 @@ export default async function Home() {
           </Link>
         </div>
       </section>
+      </AnimateOnScroll>
 
       {/* ── FAQ ── */}
       {faqs && faqs.length > 0 && (
@@ -347,6 +358,7 @@ export default async function Home() {
       )}
 
       {/* ── VENUE ── */}
+      <AnimateOnScroll>
       <section className="py-24 px-6 bg-[#1a2e18]">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div>
@@ -376,6 +388,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      </AnimateOnScroll>
 
       {/* ── CONTACT ── */}
       {siteSettings && (
@@ -419,6 +432,7 @@ export default async function Home() {
       )}
 
       {/* ── PAST CONFERENCES ── */}
+      <AnimateOnScroll>
       <section className="py-24 px-6 bg-[#f5f9f4] border-t border-[#f0f0f0]">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Archive</p>
@@ -431,6 +445,7 @@ export default async function Home() {
           </Link>
         </div>
       </section>
+      </AnimateOnScroll>
 
       {/* ── FOOTER ── */}
       <footer className="bg-[#f5f5f7] border-t border-[#e8e8e8] py-6 px-6">

@@ -58,3 +58,65 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* ============ Global interactive polish ============ */
+/* Smooth interactions everywhere — Apple/Linear-style */
+
+@layer base {
+  /* All buttons and primary links: subtle scale on hover, press effect on click */
+  button,
+  a[class*="rounded-full"],
+  a[class*="rounded-2xl"],
+  a[class*="rounded-lg"] {
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  button:hover,
+  a[class*="rounded-full"]:hover,
+  a[class*="rounded-2xl"]:hover {
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  button:active,
+  a[class*="rounded-full"]:active,
+  a[class*="rounded-2xl"]:active {
+    transform: translateY(0) scale(0.98);
+    transition-duration: 100ms;
+  }
+
+  /* Cards lift on hover — applies to anything with rounded-2xl + bg-white pattern */
+  .group-card,
+  div[class*="rounded-2xl"][class*="bg-white"]:not([class*="border-0"]) {
+    transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  div[class*="rounded-2xl"][class*="bg-white"]:not([class*="border-0"]):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px -10px rgba(45, 106, 39, 0.12),
+                0 4px 12px -4px rgba(45, 106, 39, 0.08);
+  }
+
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Respect users who don't want motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
