@@ -16,6 +16,7 @@ import PortableTextRenderer from "@/components/portable-text-renderer";
 import type { Conference, Faq, Schedule, SiteSettings } from "@/sanity.types";
 import { SocialLinks } from "@/components/socialLinks";
 import CookieConsent from "@/components/cookie-consent";
+import SpeakersGrid from "@/components/speakers-grid";
 
 interface KeynoteSpeaker {
   name?: string;
@@ -268,7 +269,7 @@ export default async function Home() {
               </h2>
               <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry. Full lineup coming soon.</p>
             </AnimateOnScroll>
-            <AnimateOnScroll staggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* <AnimateOnScroll staggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {[{ icon: "🌍", slot: "Keynote speaker #1" }, { icon: "🛰️", slot: "Keynote speaker #2" }, { icon: "🗺️", slot: "Keynote speaker #3" }].map(({ icon, slot }) => (
                 <GlowCard key={slot} className="bg-white rounded-2xl border border-[#e8e8e8] p-8 text-center overflow-hidden">
                   <div className="w-14 h-14 rounded-full bg-[#e8f4e4] mx-auto mb-4 flex items-center justify-center text-2xl">{icon}</div>
@@ -276,7 +277,8 @@ export default async function Home() {
                   <p className="text-[13px] text-[#3a7a30]">{slot}</p>
                 </GlowCard>
               ))}
-            </AnimateOnScroll>
+            </AnimateOnScroll> */}
+            <SpeakersGrid />
           </div>
         </section>
       )}
