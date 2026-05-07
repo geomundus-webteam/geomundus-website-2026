@@ -34,20 +34,21 @@ export default function Navbar({ siteSettings }: NavbarProps) {
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
           <Image src="/geo_logo.png" alt="GeoMundus logo" width={36} height={43} className="flex-shrink-0" priority />
-          <span className="text-[15px] font-medium text-[#1d1d1f] tracking-tight">GeoMundus</span>
+          <span className="text-[16px] font-bold text-[#1d1d1f] tracking-tight">GEOMUNDUS</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
           {[
-            { href: "/#info", label: "About" },
+            { href: "/#info", label: "Home" },
             { href: "/speakers", label: "Speakers" },
             { href: "/#schedule", label: "Schedule" },
             { href: "/submissions", label: "Submissions" },
             { href: "/sponsors", label: "Sponsors" },
             { href: "/#contact", label: "Contact" },
+            { href: "/#local", label: "Travel"},
             { href: "/team", label: "Team" },
           ].map(({ href, label }) => (
-            <Link key={label} href={href} className="text-[13px] text-[#6e6e73] hover:text-[#1d1d1f] transition-colors px-3 py-2 rounded-lg hover:bg-gray-50">
+            <Link key={label} href={href} className="text-[16px] text-[#262628] hover:text-[#1d1d1f] transition-colors px-3 py-2 rounded-lg hover:bg-gray-50">
               {label}
             </Link>
           ))}
@@ -72,6 +73,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
               { href: "/submissions", label: "Submissions" },
               { href: "/sponsors", label: "Sponsors" },
               { href: "/#contact", label: "Contact" },
+              { href: "/#local", label: "Travel"},
               { href: "/team", label: "Team" },
             ].map(({ href, label }) => (
               <Link key={label} href={href} onClick={() => setIsOpen(false)} className="text-[14px] text-[#6e6e73] hover:text-[#1d1d1f] py-2.5 border-b border-gray-50 transition-colors">

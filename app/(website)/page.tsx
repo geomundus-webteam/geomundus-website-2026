@@ -17,6 +17,7 @@ import type { Conference, Faq, Schedule, SiteSettings } from "@/sanity.types";
 import { SocialLinks } from "@/components/socialLinks";
 import CookieConsent from "@/components/cookie-consent";
 import SpeakersGrid from "@/components/speakers-grid";
+import CountdownTimer from "@/components/countdown-timer"
 
 interface KeynoteSpeaker {
   name?: string;
@@ -37,8 +38,8 @@ interface CurrentConference extends Conference {
 
 const mockSiteSettings: any = {
   title: "GeoMundus 2026",
-  conferenceDate: "2026-10-01",
-  conferenceEndDate: "2026-10-02",
+  conferenceDate: "2026-10-16",
+  conferenceEndDate: "2026-10-17",
   conferenceLocation: "Castellón de la Plana, Spain",
   conferenceVenue: "Universitat Jaume I",
   heroSubtitle: "Theme to be announced soon",
@@ -81,12 +82,12 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col bg-white" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif" }}>
 
       {/* ── HERO ── */}
-      <section className="relative bg-[#f5f9f4] pt-24 pb-20 text-center px-6 overflow-hidden">
+      <section className="relative bg-[#f2f7f7] pt-24 pb-20 text-center px-6 overflow-hidden">
         {/* Soft radial glow behind the logo */}
-        <div className="absolute inset-x-0 top-0 h-[480px] pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 70% at 50% 35%, rgba(125, 186, 90, 0.18) 0%, rgba(125, 186, 90, 0.06) 40%, transparent 75%)" }} />
+        {/* <div className="absolute inset-x-0 top-0 h-[480px] pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 70% at 50% 35%, rgba(125, 186, 90, 0.18) 0%, rgba(125, 186, 90, 0.06) 40%, transparent 75%)" }} /> */}
 
         <div className="relative z-10">
-          <p className="text-[13px] font-medium text-[#3a7a30] tracking-wide mb-8">
+          <p className="text-[16px] font-medium text-[#058a78] tracking-wide mb-8">
             18th Edition · GeoMundus Conference 2026
           </p>
 
@@ -95,45 +96,51 @@ export default async function Home() {
             <Image src="/geo_logo.png" alt="GeoMundus 2026" width={280} height={335} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
           </div>
 
-          <h1 className="text-[44px] md:text-[56px] font-medium text-[#1d1d1f] leading-[1.05] tracking-tight mb-5">
-            Mapping the path to <em className="not-italic text-[#3a7a30]">resilience.</em>
+          <h1 className="text-[44px] md:text-[56px] font-medium text-[#1d1d1f] leading-[1.05] tracking-tight mb-5 uppercase">
+            Geospatial Intelligence<br />for <em className="not-italic text-[#058a78]">Disaster Resilience.</em>
           </h1>
-          <p className="text-[18px] text-[#6e6e73] leading-relaxed max-w-[520px] mx-auto mb-10">
-            Geospatial Intelligence for Disaster Resilience. Castellón de la Plana, Spain.
+          <p className="text-[18px] text-[#434346] leading-relaxed max-w-[520px] mx-auto mb-10">
+            From Data to Action: Mapping Risk, Strengthening Response, and Building Safer Communities
           </p>
 
         <div className="flex justify-center gap-3 mb-12">
           <RegisterButton registrationOpen={siteSettings?.registrationOpen} />
           <Link
             href="/#info"
-            className="text-[15px] text-[#2d6a27] border border-[#2d6a27] px-7 py-3 rounded-full hover:bg-[#2d6a27] hover:text-white transition-all duration-200"
+            className="text-[15px] text-[#058a78] border border-[#058a78] px-7 py-3 rounded-full hover:bg-[#036154] hover:text-white transition-all duration-200"
           >
             Learn more
           </Link>
         </div>
 
         {/* Meta pills */}
-        <div className="inline-flex border border-[#d8e8d4] rounded-2xl overflow-hidden bg-white max-w-[480px] w-full">
-          <div className="flex-1 py-4 px-5 text-center border-r border-[#e8f0e4]">
-            <p className="text-[11px] text-[#aeaeb2] uppercase tracking-wider mb-1">Date</p>
-            <p className="text-[15px] font-medium text-[#1d1d1f]">
+        <div className="inline-flex flex-col sm:flex-row border border-[#b2d8d4] rounded-2xl overflow-hidden bg-white w-full max-w-[900px]">
+          <div className="flex-1 py-4 px-5 text-center sm:border-r sm:border-b-0 border-b border-[#d0ecea]">
+            <p className="text-[14px] font-bold text-[#058a78] uppercase tracking-wider mb-1">Date</p>
+            <p className="text-[16px] font-bold text-[#1d1d1f]">
               {startDay && endDay && month ? `${month} ${startDay}–${endDay}, ${year}` : "TBD · 2026"}
             </p>
           </div>
-          <div className="flex-1 py-4 px-5 text-center border-r border-[#e8f0e4]">
-            <p className="text-[11px] text-[#aeaeb2] uppercase tracking-wider mb-1">Location</p>
-            <p className="text-[15px] font-medium text-[#1d1d1f]">
+          <div className="flex-1 py-4 px-5 text-center sm:border-r sm:border-b-0 border-b border-[#d0ecea]">
+            <p className="text-[14px] font-bold text-[#058a78] uppercase tracking-wider mb-1">Location</p>
+            <p className="text-[16px] font-bold text-[#1d1d1f]">
               {siteSettings?.conferenceLocation ?? "Castellón, Spain"}
             </p>
           </div>
           <div className="flex-1 py-4 px-5 text-center">
-            <p className="text-[11px] text-[#aeaeb2] uppercase tracking-wider mb-1">Edition</p>
-            <p className="text-[15px] font-medium text-[#1d1d1f]">18th</p>
+            <p className="text-[14px] font-bold text-[#058a78] uppercase tracking-wider mb-1">Edition</p>
+            <p className="text-[16px] font-bold text-[#1d1d1f]">18th</p>
           </div>
         </div>
 
-        {/* Topographic ring illustration */}
-        <div className="mt-16 flex justify-center">
+        {/* Countdown */}
+        {startDate && (
+          <div className="mt-8">
+            <CountdownTimer targetDate={siteSettings.conferenceDate} />
+          </div>
+        )}
+        {/* Topographic ring illustration [to be replaced] */}
+        {/* <div className="mt-16 flex justify-center">
           <svg width="560" height="160" viewBox="0 0 560 160" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-w-full">
             <ellipse cx="280" cy="80" rx="260" ry="70" stroke="#d4e8d0" strokeWidth="0.8"/>
             <ellipse cx="280" cy="80" rx="196" ry="53" stroke="#c4dfc0" strokeWidth="0.8"/>
@@ -148,32 +155,34 @@ export default async function Home() {
             <line x1="170" y1="55" x2="280" y2="80" stroke="#c8dfc4" strokeWidth="0.5" strokeDasharray="3 3"/>
             <line x1="400" y1="100" x2="280" y2="80" stroke="#c8dfc4" strokeWidth="0.5" strokeDasharray="3 3"/>
           </svg>
-        </div>
+        </div> */}
         </div>
       </section>
 
       {/* ── STATS ── */}
-      <section className="bg-[#1a2e18] border-t border-[#ffffff10]">
+      <section className="bg-[#000000] border-t border-[#ffffff10]">
         <AnimateOnScroll staggerChildren className="grid grid-cols-2 md:grid-cols-4">
           {[
             { num: "18th", label: "Edition" },
             { num: "100+", label: "Participants" },
-            { num: "5+", label: "Keynote speakers" },
+            { num: "4", label: "Keynote speakers" },
             { num: "3", label: "Workshops" },
           ].map(({ num, label }) => (
             <div key={label} className="py-6 px-6 text-center border-r border-[#ffffff08] last:border-r-0">
               <p className="text-[28px] font-medium text-white">{num}</p>
-              <p className="text-[11px] text-[#ffffff40] uppercase tracking-wider mt-1">{label}</p>
+              <p className="text-[14px] text-[#fffffffd] uppercase tracking-wider mt-1">{label}</p>
             </div>
           ))}
         </AnimateOnScroll>
       </section>
 
       {/* ── ABOUT ── */}
-      <section id="info" className="py-24 px-6 bg-white">
+      <section id="info" className="py-24 px-6 bg-[#ffffff] border-[#07686f]">
+        <div className="max-w-6xl mx-auto text-center mb-12">
+          <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest inline-block">About</p>
+        </div>
         <AnimateOnScroll staggerChildren className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
           <div>
-            <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">About</p>
             <h2 className="text-[36px] font-medium text-[#1d1d1f] leading-tight tracking-tight mb-5">
               <RevealText text="Geospatial science, shaped by students" />
             </h2>
@@ -184,8 +193,9 @@ export default async function Home() {
               The 18th edition comes to Castellón de la Plana, hosted by Universitat Jaume I.
             </p>
           </div>
-          <div className="rounded-2xl overflow-hidden border border-[#e0eada] bg-[#f5f9f4]">
-            <svg width="100%" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* to be replaced */}
+          {/* <div className="rounded-2xl overflow-hidden border border-[#e0eada] bg-[#f5f9f4]"> */}
+            {/* <svg width="100%" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="400" height="300" fill="#f5f9f4"/>
               <ellipse cx="200" cy="150" rx="165" ry="120" stroke="#d4e8d0" strokeWidth="1"/>
               <ellipse cx="200" cy="150" rx="120" ry="87" stroke="#c0debb" strokeWidth="1"/>
@@ -199,15 +209,15 @@ export default async function Home() {
               <line x1="135" y1="112" x2="200" y2="150" stroke="#c8dfc4" strokeWidth="0.5" strokeDasharray="3 3"/>
               <text x="16" y="24" fill="#c4dfc0" fontSize="10" fontFamily="monospace">GeoMundus · 2026</text>
               <text x="16" y="288" fill="#c4dfc0" fontSize="10" fontFamily="monospace">Castellón, Spain</text>
-            </svg>
-          </div>
+            </svg> */}
+          {/* </div> */}
         </AnimateOnScroll>
       </section>
 
       {/* ── THEME ── */}
-      <section className="py-24 px-6 bg-[#f5f9f4] border-t border-[#f0f0f0]">
+      <section className="py-24 px-6 bg-[#f2f7f7] border-t border-[#07686f]">
         <AnimateOnScroll staggerChildren className="max-w-3xl mx-auto text-center">
-          <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Theme</p>
+          <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Theme</p>
           <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
             <RevealText text="Geospatial Intelligence for Disaster Resilience" />
           </h2>
@@ -215,7 +225,7 @@ export default async function Home() {
             The 2026 theme explores how geospatial science strengthens early warning systems, disaster response, and climate adaptation.
           </p>
           <GlowCard className="bg-white rounded-2xl border border-[#deeada] p-10 text-left overflow-hidden">
-            <span className="inline-block text-[11px] font-medium tracking-widest uppercase bg-[#e0f0dc] text-[#3a7a30] px-4 py-1.5 rounded-full mb-5">
+            <span className="inline-block text-[11px] font-medium tracking-widest uppercase bg-[#e0f0dc] text-[#058a78] px-4 py-1.5 rounded-full mb-5">
               2026 Theme
             </span>
             <h3 className="text-[22px] font-medium text-[#1d1d1f] tracking-tight mb-3">
@@ -226,7 +236,7 @@ export default async function Home() {
             </p>
             <div className="flex flex-wrap gap-2">
               {["GIS", "Remote sensing", "Spatial AI", "Earth observation", "Disaster resilience"].map((tag) => (
-                <span key={tag} className="text-[13px] bg-white text-[#3a7a30] border border-[#c4dcc0] px-4 py-1.5 rounded-full">
+                <span key={tag} className="text-[13px] bg-white text-[#058a78] border border-[#c4dcc0] px-4 py-1.5 rounded-full">
                   {tag}
                 </span>
               ))}
@@ -237,10 +247,10 @@ export default async function Home() {
 
       {/* ── SPEAKERS ── */}
       {currentConference?.keynoteSpeakers && currentConference.keynoteSpeakers.length > 0 ? (
-        <section id="speakers" className="py-24 px-6 bg-white border-t border-[#f0f0f0]">
+        <section id="speakers" className="py-24 px-6 bg-white border-t border-[#07686f]">
           <div className="max-w-6xl mx-auto">
             <AnimateOnScroll staggerChildren className="text-center mb-14">
-              <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Speakers</p>
+              <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Speakers</p>
               <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
                 <RevealText text="Keynote speakers" />
               </h2>
@@ -250,20 +260,20 @@ export default async function Home() {
               {currentConference.keynoteSpeakers.map((speaker, i) => (
                 <GlowCard key={i} className="bg-[#f5f9f4] rounded-2xl border border-[#e0eada] p-6 text-center overflow-hidden">
                   <div className="w-16 h-16 rounded-full bg-[#e8f4e4] border border-[#c8ddb8] mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-[#3a7a30] font-medium text-lg">{speaker.name?.[0] ?? "?"}</span>
+                    <span className="text-[#058a78] font-medium text-lg">{speaker.name?.[0] ?? "?"}</span>
                   </div>
                   <p className="text-[15px] font-medium text-[#1d1d1f] mb-1">{speaker.name}</p>
-                  <p className="text-[13px] text-[#3a7a30]">{speaker.organization}</p>
+                  <p className="text-[13px] text-[#058a78]">{speaker.organization}</p>
                 </GlowCard>
               ))}
             </AnimateOnScroll>
           </div>
         </section>
       ) : (
-        <section id="speakers" className="py-24 px-6 bg-[#f5f9f4] border-t border-[#f0f0f0]">
+        <section id="speakers" className="py-24 px-6 bg-[#ffffff] border-t border-[#07686f]">
           <div className="max-w-6xl mx-auto">
             <AnimateOnScroll staggerChildren className="text-center mb-14">
-              <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Speakers</p>
+              <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Speakers</p>
               <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
                 <RevealText text="Keynote speakers" />
               </h2>
@@ -274,21 +284,21 @@ export default async function Home() {
                 <GlowCard key={slot} className="bg-white rounded-2xl border border-[#e8e8e8] p-8 text-center overflow-hidden">
                   <div className="w-14 h-14 rounded-full bg-[#e8f4e4] mx-auto mb-4 flex items-center justify-center text-2xl">{icon}</div>
                   <p className="text-[15px] font-medium text-[#1d1d1f] mb-1">To be announced</p>
-                  <p className="text-[13px] text-[#3a7a30]">{slot}</p>
+                  <p className="text-[13px] text-[#058a78]">{slot}</p>
                 </GlowCard>
               ))}
             </AnimateOnScroll> */}
-            <SpeakersGrid />
+            {/* <SpeakersGrid /> */}
           </div>
         </section>
       )}
 
       {/* ── SCHEDULE ── */}
       {schedule && schedule.days && schedule.days.length > 0 && (
-        <section id="schedule" className="py-24 px-6 bg-white border-t border-[#f0f0f0]">
+        <section id="schedule" className="py-24 px-6 bg-[#f2f7f7] border-t border-[#07686f]">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-14">
-              <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Programme</p>
+              <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Programme</p>
               <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight">Conference schedule</h2>
             </div>
             <ScheduleSection schedule={schedule} />
@@ -298,10 +308,10 @@ export default async function Home() {
 
       {/* ── TIMELINE ── */}
       <AnimateOnScroll>
-      <section className="py-24 px-6 bg-[#f5f9f4] border-t border-[#f0f0f0]">
+      <section className="py-24 px-6 bg-[#ffffff] border-t border-[#07686f]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Timeline</p>
+            <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Timeline</p>
             <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">Key dates</h2>
             <p className="text-[16px] text-[#6e6e73]">All dates subject to confirmation.</p>
           </div>
@@ -312,11 +322,11 @@ export default async function Home() {
               { n: "03", t: "Registration opens", d: "Secure your spot at GeoMundus 2026" },
               { n: "04", t: "Conference days", d: "Talks, workshops, and networking" },
             ].map(({ n, t, d }, i) => (
-              <div key={n} className={`p-7 ${i < 3 ? "border-b md:border-b-0 md:border-r" : ""} border-[#f0f0f0]`}>
+              <div key={n} className={`p-7 ${i < 3 ? "border-b md:border-b-0 md:border-r" : ""} border-[#e8e8e8]`}>
                 <p className="text-[11px] font-medium text-[#c4c4c8] tracking-widest mb-3">{n}</p>
                 <p className="text-[15px] font-medium text-[#1d1d1f] mb-2">{t}</p>
                 <p className="text-[13px] text-[#6e6e73] leading-snug mb-3">{d}</p>
-                <p className="text-[13px] font-medium text-[#3a7a30]">TBD 2026</p>
+                <p className="text-[13px] font-medium text-[#058a78]">TBD 2026</p>
               </div>
             ))}
           </div>
@@ -326,20 +336,20 @@ export default async function Home() {
 
       {/* ── SPONSORS ── */}
       <AnimateOnScroll>
-      <section id="sponsors" className="py-24 px-6 bg-white border-t border-[#f0f0f0]">
+      <section id="sponsors" className="py-24 px-6 bg-[#f2f7f7] border-t border-[#07686f]">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Sponsors</p>
+          <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Sponsors</p>
           <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-5">Sponsors & partners</h2>
           <p className="text-[16px] text-[#6e6e73] leading-relaxed mb-3 max-w-xl mx-auto">
             GeoMundus is seeking partners from public and private entities including spatial, technological, scientific, and academic fields.
           </p>
           <p className="text-[15px] text-[#6e6e73] mb-10">
             Contact us at{" "}
-            <Link href="mailto:budget@geomundus.org" className="text-[#2d6a27] hover:underline">
+            <Link href="mailto:budget@geomundus.org" className="text-[#058a78] hover:underline">
               budget@geomundus.org
             </Link>
           </p>
-          <Link href="/sponsors" className="inline-block bg-[#2d6a27] text-white text-[15px] px-8 py-3.5 rounded-full hover:bg-[#245520] transition-colors">
+          <Link href="/sponsors" className="inline-block bg-[#058a78] text-white text-[15px] px-8 py-3.5 rounded-full hover:bg-[#036154] transition-colors">
             View sponsors
           </Link>
         </div>
@@ -348,10 +358,10 @@ export default async function Home() {
 
       {/* ── FAQ ── */}
       {faqs && faqs.length > 0 && (
-        <section id="faq" className="py-24 px-6 bg-[#f5f9f4] border-t border-[#f0f0f0]">
+        <section id="faq" className="py-24 px-6 bg-[#ffffff] border-t border-[#07686f]">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-14">
-              <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">FAQ</p>
+              <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">FAQ</p>
               <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight">Frequently asked questions</h2>
             </div>
             <FaqSection faqs={faqs} />
@@ -361,17 +371,19 @@ export default async function Home() {
 
       {/* ── VENUE ── */}
       <AnimateOnScroll>
-      <section className="py-24 px-6 bg-[#1a2e18]">
+      <section className="py-24 px-6 bg-[#2a4c50]">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <p className="text-[12px] font-medium text-[#7dba5a] uppercase tracking-widest mb-5">Venue</p>
+            <p className="text-[28px] font-medium text-[#ea8a29] uppercase tracking-widest mb-5">Venue</p>
             <h2 className="text-[36px] font-medium text-[#f2f9f0] tracking-tight mb-3">Universitat Jaume I</h2>
             <p className="text-[14px] text-[#ffffff40] mb-5">Castellón de la Plana, Spain</p>
             <p className="text-[15px] text-[#ffffff50] leading-[1.8]">
               One of three host universities of the Erasmus Mundus Master in Geospatial Technologies, alongside NOVA IMS in Lisbon and WWU Münster in Germany.
             </p>
           </div>
-          <div className="rounded-2xl overflow-hidden border border-[#ffffff10]">
+          
+          {/* to be replaced */}
+          {/* <div className="rounded-2xl overflow-hidden border border-[#ffffff10]">
             <svg width="100%" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="400" height="260" fill="#1e3520"/>
               <ellipse cx="222" cy="130" rx="175" ry="106" stroke="rgba(125,186,90,0.1)" strokeWidth="1"/>
@@ -386,17 +398,17 @@ export default async function Home() {
               <text x="234" y="140" fill="rgba(125,186,90,0.4)" fontSize="9" fontFamily="sans-serif">Universitat Jaume I</text>
               <circle cx="128" cy="92" r="3" fill="rgba(125,186,90,0.35)"/>
               <line x1="128" y1="92" x2="222" y2="130" stroke="rgba(125,186,90,0.1)" strokeWidth="0.5" strokeDasharray="3 3"/>
-            </svg>
-          </div>
+            </svg>*/}
+          {/* </div>  */}
         </div>
       </section>
       </AnimateOnScroll>
 
       {/* ── CONTACT ── */}
       {siteSettings && (
-        <section id="contact" className="py-24 px-6 bg-white border-t border-[#f0f0f0]">
+        <section id="contact" className="py-24 px-6 bg-[#ffffff] border-t border-[#07686f]">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Contact</p>
+            <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Contact</p>
             <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-14">Get in touch</h2>
             {siteSettings?.googleMapsEmbedUrl && (
               <div className="mb-12 rounded-2xl overflow-hidden border border-[#e8e8e8]">
@@ -435,14 +447,14 @@ export default async function Home() {
 
       {/* ── PAST CONFERENCES ── */}
       <AnimateOnScroll>
-      <section className="py-24 px-6 bg-[#f5f9f4] border-t border-[#f0f0f0]">
+      <section className="py-24 px-6 bg-[#f2f7f7] border-t border-[#07686f]">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-[12px] font-medium text-[#3a7a30] uppercase tracking-widest mb-4">Archive</p>
+          <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Archive</p>
           <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-5">Past conferences</h2>
           <p className="text-[16px] text-[#6e6e73] mb-10 leading-relaxed">
             GeoMundus has a rich history of bringing together students, researchers, and professionals since 2009.
           </p>
-          <Link href="/archive" className="inline-block bg-[#2d6a27] text-white text-[15px] px-8 py-3.5 rounded-full hover:bg-[#245520] transition-colors">
+          <Link href="/archive" className="inline-block bg-[#058a78] text-white text-[15px] px-8 py-3.5 rounded-full hover:bg-[#036154] transition-colors">
             Explore past editions
           </Link>
         </div>
@@ -450,12 +462,12 @@ export default async function Home() {
       </AnimateOnScroll>
 
       {/* ── FOOTER ── */}
-      <footer className="bg-[#f5f5f7] border-t border-[#e8e8e8] py-6 px-6">
+      <footer className="bg-[#ffffff] border-t border-[#07686f] py-6 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[12px] text-[#aeaeb2]">© GeoMundus {currentYear?.year} · Designed by the Web Team</p>
+          <p className="text-[12px] text-[#3f3f40]">© GeoMundus {currentYear?.year} · Designed by the Web Team</p>
           <div className="flex gap-5">
             {["Instagram", "LinkedIn", "Twitter", "GitHub"].map((s) => (
-              <span key={s} className="text-[12px] text-[#aeaeb2] cursor-pointer hover:text-[#6e6e73] transition-colors">{s}</span>
+              <span key={s} className="text-[12px] text-[#868688] cursor-pointer hover:text-[#29292a] transition-colors">{s}</span>
             ))}
           </div>
         </div>
