@@ -61,7 +61,7 @@ export default async function SubmissionsPage() {
           ) : isDeadlinePast ? (
             <p className="flex items-center justify-center gap-2 text-lg mt-4">
               <CalendarIcon className="h-5 w-5" />
-              Submissions are now closed.
+              Submissions opening soon.
             </p>
           ) : (
             <p className="flex items-center justify-center gap-2 text-lg mt-4">
