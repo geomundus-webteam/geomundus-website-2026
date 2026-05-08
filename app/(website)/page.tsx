@@ -97,7 +97,7 @@ export default async function Home() {
           {/* Big centered logo */}
           {/* {(() => { console.log("logo url:", siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : "no logo"); return null; })()} */}
           <div className="flex justify-center mb-10">
-            <Image src={siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : "/enhanced_logo.png"} alt="GeoMundus 2026" width={280} height={335} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
+            <Image src={siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : "/enhanced logo.png"} alt="GeoMundus 2026" width={280} height={335} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
           </div>
     
           <h1 className="text-[44px] md:text-[56px] font-medium text-[#1d1d1f] leading-[1.05] tracking-tight mb-5 uppercase">
