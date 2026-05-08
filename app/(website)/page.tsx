@@ -384,14 +384,28 @@ export default async function Home() {
             GeoMundus is seeking partners from public and private entities including spatial, technological, scientific, and academic fields.
           </p>
           <p className="text-[15px] text-[#6e6e73] mb-10">
-            Contact us at{" "}
+            Interested in sponsoring?{" "}
             <Link href="mailto:budget@geomundus.org" className="text-[#058a78] hover:underline">
               budget@geomundus.org
             </Link>
           </p>
-          <Link href="/sponsors" className="inline-block bg-[#058a78] text-white text-[15px] px-8 py-3.5 rounded-full hover:bg-[#036154] transition-colors">
-            View sponsors
-          </Link>
+          <div className="flex justify-center gap-4 flex-wrap">
+            <Link
+                href={siteSettings.sponsorshipBrochureUrl? siteSettings.sponsorshipBrochureUrl : "https://drive.google.com/file/d/1QTq61xwFxNK_uwzlUY6AHB6eaR2y4bwt/view?usp=drive_link"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-white text-[#058a78] border border-[#058a78] text-[15px] px-8 py-3.5 rounded-full hover:bg-[#f0faf8] transition-colors"
+              >
+                More info
+              </Link>
+          
+            <Link
+              href="mailto:budget@geomundus.org?subject=Sponsorship%20Inquiry%20—%20GeoMundus%202026&body=Hello%20GeoMundus%20Team%2C%0A%0AI%20am%20interested%20in%20sponsoring%20GeoMundus%202026.%20Please%20send%20me%20more%20information%20about%20the%20sponsorship%20packages.%0A%0AOrganization%3A%0AContact%20person%3A%0A%0AThank%20you."
+              className="inline-block bg-[#058a78] text-white text-[15px] px-8 py-3.5 rounded-full hover:bg-[#036154] transition-colors"
+            >
+              Become a sponsor
+            </Link>
+          </div>
         </div>
       </section>
       </AnimateOnScroll>
