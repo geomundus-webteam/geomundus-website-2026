@@ -5,4 +5,3 @@ export const projectId = (process.env.SANITY_PROJECT_ID ||
 export const useCdn = process.env.NODE_ENV === "production";
 export const token = process.env.SANITY_API_TOKEN;
 
-{(() => { console.log("project ID:", projectId); return null; })()}

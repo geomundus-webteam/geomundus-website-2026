@@ -97,7 +97,7 @@ export default async function Home() {
           {/* Big centered logo */}
           {/* {(() => { console.log("logo url:", siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : "no logo"); return null; })()} */}
           <div className="flex justify-center mb-10">
-            <Image src={siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : "/enhanced logo.png"} alt="GeoMundus 2026" width={280} height={335} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
+            <Image src={siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : "/enhanced_logo.png"} alt="GeoMundus 2026" width={280} height={335} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
           </div>
     
           <h1 className="text-[44px] md:text-[56px] font-medium text-[#1d1d1f] leading-[1.05] tracking-tight mb-5 uppercase">
@@ -165,6 +165,11 @@ export default async function Home() {
 
       {/* ── STATS ── */}
       <section className="bg-[#000000] border-t border-[#ffffff10]">
+        <div className="max-w-6xl mx-auto px-6 pt-8">
+          <p className="text-[14px] md:text-[16px] text-white/80 uppercase tracking-[0.2em] text-center">
+            Previous edition highlights
+          </p>
+        </div>
         <AnimateOnScroll staggerChildren className="grid grid-cols-2 md:grid-cols-4">
           {[
             { num: "18th", label: "Edition" },
