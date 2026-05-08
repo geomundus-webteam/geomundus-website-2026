@@ -248,11 +248,10 @@ export default async function SpeakersPage() {
             <div className="text-center py-12 max-w-2xl mx-auto">
               <div className="bg-gray-50 rounded-lg p-12">
                 <h2 className="text-3xl font-bold text-gray-700 mb-4">
-                  Speakers Coming Soon
+                  Information Coming Soon
                 </h2>
                 <p className="text-gray-600 text-lg mb-6">
-                  We're currently finalizing our lineup of distinguished
-                  speakers for this year's conference. Check back soon for
+                  We're currently finalizing our lineup of the workshop leaders for this year's conference. Check back soon for
                   updates!
                 </p>
                 {siteSettings?.contactEmail && (

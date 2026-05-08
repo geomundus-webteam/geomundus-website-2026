@@ -18,7 +18,10 @@ import { SocialLinks } from "@/components/socialLinks";
 import CookieConsent from "@/components/cookie-consent";
 import SpeakersGrid from "@/components/speakers-grid";
 import CountdownTimer from "@/components/countdown-timer"
-
+import TimelineCards from "@/components/timeline-cards";
+import sitesettings from "@/sanity/schemas/siteSettings";
+import { urlFor } from "@/lib/sanity.client";
+import { urlForImage } from "@/sanity/lib/image";
 interface KeynoteSpeaker {
   name?: string;
   organization?: string;
@@ -92,10 +95,11 @@ export default async function Home() {
           </p>
 
           {/* Big centered logo */}
+          {/* {(() => { console.log("logo url:", siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : "no logo"); return null; })()} */}
           <div className="flex justify-center mb-10">
-            <Image src="/geo_logo.png" alt="GeoMundus 2026" width={280} height={335} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
+            <Image src={siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : "/enhanced logo.png"} alt="GeoMundus 2026" width={280} height={335} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
           </div>
-
+    
           <h1 className="text-[44px] md:text-[56px] font-medium text-[#1d1d1f] leading-[1.05] tracking-tight mb-5 uppercase">
             Geospatial Intelligence<br />for <em className="not-italic text-[#058a78]">Disaster Resilience.</em>
           </h1>
@@ -216,31 +220,60 @@ export default async function Home() {
 
       {/* ── THEME ── */}
       <section className="py-24 px-6 bg-[#f2f7f7] border-t border-[#07686f]">
-        <AnimateOnScroll staggerChildren className="max-w-3xl mx-auto text-center">
+        <AnimateOnScroll staggerChildren className="max-w-4xl mx-auto text-center">
           <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Theme</p>
           <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
             <RevealText text="Geospatial Intelligence for Disaster Resilience" />
           </h2>
-          <p className="text-[17px] text-[#6e6e73] leading-relaxed mb-12 max-w-[480px] mx-auto">
-            The 2026 theme explores how geospatial science strengthens early warning systems, disaster response, and climate adaptation.
+          <p className="text-[17px] text-[#6e6e73] leading-relaxed mb-12 max-w-[580px] mx-auto">
+            From early warning to recovery - geospatial tools at every stage of disaster.
           </p>
+
+          <GlowCard className="bg-white rounded-2xl border border-[#deeada] p-10 text-left overflow-hidden mb-6">
+            <span className="inline-block text-[11px] font-medium tracking-widest uppercase bg-[#e0f0dc] text-[#058a78] px-4 py-1.5 rounded-full mb-5">
+              Disaster Management
+            </span>
+            <h3 className="text-[18px] font-medium text-[#1d1d1f] tracking-tight mb-4">
+              Disaster Categories
+            </h3>
+            <ul className="space-y-3">
+              {[
+                "Natural Disasters - earthquakes, floods, cyclones, droughts, landslides, avalanches, heatwaves, volcanic eruptions",
+                "Man-Made Disasters - industrial accidents, chemical spills, nuclear incidents, terrorist attacks, structural failures",
+                "Complex / Hybrid Disasters - epidemics, armed conflicts, or combination of natural and human-induced factors",
+              ].map((item) => (
+                <li key={item} className="flex gap-3 text-[14px] text-[#6e6e73] leading-[1.7]">
+                  <span className="mt-1 w-2 h-2 rounded-full bg-[#058a78] shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </GlowCard>
+
           <GlowCard className="bg-white rounded-2xl border border-[#deeada] p-10 text-left overflow-hidden">
             <span className="inline-block text-[11px] font-medium tracking-widest uppercase bg-[#e0f0dc] text-[#058a78] px-4 py-1.5 rounded-full mb-5">
-              2026 Theme
+              Focus Areas
             </span>
-            <h3 className="text-[22px] font-medium text-[#1d1d1f] tracking-tight mb-3">
-              GeoMundus 2026 — focus areas
+            <h3 className="text-[18px] font-medium text-[#1d1d1f] tracking-tight mb-4">
+              GeoMundus 2026 - research tracks
             </h3>
-            <p className="text-[14px] text-[#6e6e73] leading-[1.8] mb-6">
-              GeoMundus 2026 brings together researchers, practitioners, and students working at the intersection of geospatial science and disaster resilience — from satellite-based early warning to participatory risk mapping.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {["GIS", "Remote sensing", "Spatial AI", "Earth observation", "Disaster resilience"].map((tag) => (
-                <span key={tag} className="text-[13px] bg-white text-[#058a78] border border-[#c4dcc0] px-4 py-1.5 rounded-full">
-                  {tag}
-                </span>
+            <ol className="space-y-4">
+              {[
+                { n: "01", t: "Hazard Modelling & Risk Assessment", d: "GIS mapping, Remote Sensing, AI & ML for predictive analytics, urban risk intelligence" },
+                { n: "02", t: "Early Warning & Monitoring Systems", d: "Multi-hazard alert systems, IoT Sensors" },
+                { n: "03", t: "Geospatial Decision Support Systems", d: "Spatial Data Infrastructure (SDI), DSS for crisis management, MCDA in disaster planning, Data Fusion (IoT + Remote Sensing + GIS)" },
+                { n: "04", t: "Emergency Response & Logistics", d: "Routing optimization, resource allocation, UAVs/drones for rapid situational awareness, mobile GIS, accessibility analysis" },
+                { n: "05", t: "Rapid Damage Assessment & Recovery", d: "Damage mapping, change detection, AI automated damage classification, infrastructure assessment, recovery planning, VGI" },
+              ].map(({ n, t, d }) => (
+                <li key={n} className="flex gap-4">
+                  <span className="text-[11px] font-medium text-[#058a78] tracking-widest mt-1 shrink-0">{n}</span>
+                  <div>
+                    <p className="text-[14px] font-medium text-[#1d1d1f] mb-1">{t}</p>
+                    <p className="text-[13px] text-[#6e6e73] leading-[1.7]">{d}</p>
+                  </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </GlowCard>
         </AnimateOnScroll>
       </section>
@@ -308,6 +341,7 @@ export default async function Home() {
 
       {/* ── TIMELINE ── */}
       <AnimateOnScroll>
+        
       <section className="py-24 px-6 bg-[#ffffff] border-t border-[#07686f]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
@@ -315,7 +349,7 @@ export default async function Home() {
             <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">Key dates</h2>
             <p className="text-[16px] text-[#6e6e73]">All dates subject to confirmation.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 border border-[#e8e8e8] rounded-2xl overflow-hidden bg-white">
+          {/* <div className="grid grid-cols-1 md:grid-cols-4 border border-[#e8e8e8] rounded-2xl overflow-hidden bg-white">
             {[
               { n: "01", t: "Call for papers", d: "Submit your abstract for oral or poster presentation" },
               { n: "02", t: "Submission deadline", d: "Final day for papers and posters" },
@@ -329,7 +363,8 @@ export default async function Home() {
                 <p className="text-[13px] font-medium text-[#058a78]">TBD 2026</p>
               </div>
             ))}
-          </div>
+          </div> */}
+          <TimelineCards />
         </div>
       </section>
       </AnimateOnScroll>
@@ -376,13 +411,16 @@ export default async function Home() {
           <div>
             <p className="text-[28px] font-medium text-[#ea8a29] uppercase tracking-widest mb-5">Venue</p>
             <h2 className="text-[36px] font-medium text-[#f2f9f0] tracking-tight mb-3">Universitat Jaume I</h2>
-            <p className="text-[14px] text-[#ffffff40] mb-5">Castellón de la Plana, Spain</p>
-            <p className="text-[15px] text-[#ffffff50] leading-[1.8]">
+            <p className="text-[14px] text-[#ffffffc9] mb-5">Castellón de la Plana, Spain</p>
+            <p className="text-[15px] text-[#ffffffc9] leading-[1.8]">
               One of three host universities of the Erasmus Mundus Master in Geospatial Technologies, alongside NOVA IMS in Lisbon and WWU Münster in Germany.
             </p>
           </div>
           
           {/* to be replaced */}
+          {/* <div className="flex justify-center mb-10">
+            <Image src={sitesettings.venueImage} alt="GeoMundus 2026" width={280} height={335} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
+          </div> */}
           {/* <div className="rounded-2xl overflow-hidden border border-[#ffffff10]">
             <svg width="100%" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="400" height="260" fill="#1e3520"/>
@@ -405,6 +443,7 @@ export default async function Home() {
       </AnimateOnScroll>
 
       {/* ── CONTACT ── */}
+      {/* {(() => { console.log(siteSettings); return null; })()} */}
       {siteSettings && (
         <section id="contact" className="py-24 px-6 bg-[#ffffff] border-t border-[#07686f]">
           <div className="max-w-4xl mx-auto text-center">
@@ -430,6 +469,8 @@ export default async function Home() {
                   </div>
                 )}
               </div>
+              {(() => { console.log(siteSettings); return null; })()}
+
               <div>
                 <h4 className="text-[15px] font-medium text-[#1d1d1f] mb-3">Social media</h4>
                 <SocialLinks
