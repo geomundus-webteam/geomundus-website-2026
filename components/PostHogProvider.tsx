@@ -7,7 +7,14 @@ import { usePathname, useSearchParams } from "next/navigation";
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+    const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+
+    if (!posthogKey) {
+      console.warn("PostHog disabled: NEXT_PUBLIC_POSTHOG_KEY is missing");
+      return;
+    }
+
+    posthog.init(posthogKey, {
       api_host: "/ingest",
       ui_host:
         process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com",

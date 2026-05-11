@@ -187,6 +187,12 @@ export default defineType({
           type: "string",
           description: "URL for the optional link button",
         }),
+        defineField({
+        name: "sponsorshipBrochureUrl",
+        title: "Sponsorship Brochure URL",
+        type: "url",
+        description: "Link to the sponsorship info document",
+      }),
       ],
     }),
   ],

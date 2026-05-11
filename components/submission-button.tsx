@@ -26,7 +26,7 @@ export function SubmissionButton({
       variant="outline"
       className="w-full bg-emerald-700 hover:bg-emerald-800 disabled cursor-not-allowed"
     >
-      <Link href="#">Submission Closed Now</Link>
+      <Link href="#">Submissions Opening Soon</Link>
     </Button>
   );
 }

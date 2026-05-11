@@ -50,19 +50,19 @@ export default function CountdownTimer({ targetDate }: CountdownTimerProps) {
   return (
     <div className="max-w-4xl mx-auto mb-16">
       <div className="grid grid-cols-4 gap-4 text-center">
-        <div className="bg-emerald-700 text-white p-4 rounded-lg">
+        <div className="bg-[#000000] text-white p-4 rounded-lg">
           <div className="text-4xl font-bold">{days}</div>
           <div className="text-sm uppercase">Days</div>
         </div>
-        <div className="bg-emerald-700 text-white p-4 rounded-lg">
+        <div className="bg-[#000000] text-white p-4 rounded-lg">
           <div className="text-4xl font-bold">{hours}</div>
           <div className="text-sm uppercase">Hours</div>
         </div>
-        <div className="bg-emerald-700 text-white p-4 rounded-lg">
+        <div className="bg-[#000000] text-white p-4 rounded-lg">
           <div className="text-4xl font-bold">{minutes}</div>
           <div className="text-sm uppercase">Minutes</div>
         </div>
-        <div className="bg-emerald-700 text-white p-4 rounded-lg">
+        <div className="bg-[#000000] text-white p-4 rounded-lg">
           <div className="text-4xl font-bold">{seconds}</div>
           <div className="text-sm uppercase">Seconds</div>
         </div>
