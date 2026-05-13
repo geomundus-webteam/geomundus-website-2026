@@ -184,7 +184,8 @@ export default async function SubmissionsPage() {
             <div className="space-y-4">
               <SubmissionButton
                 submissionOpen={isSubmissionOpen}
-                link={submissionInfo?.submissionFormUrl}
+                link="/submissions/abstract"
+                // {submissionInfo?.submissionFormUrl}
               />
             </div>
             <div className="mt-10 text-center p-6 bg-gray-100 rounded-lg">

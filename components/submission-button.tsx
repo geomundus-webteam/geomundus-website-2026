@@ -15,7 +15,7 @@ export function SubmissionButton({
       className="w-full bg-emerald-700 hover:bg-emerald-800"
       disabled={submissionOpen}
     >
-      <Link href={link || "#"} target="_blank">
+      <Link href={link ||  "/submissions/abstract"}>
         Submit Your Paper
       </Link>
     </Button>

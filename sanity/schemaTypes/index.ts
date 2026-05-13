@@ -8,6 +8,7 @@ import registration from "../schemas/registration";
 import submission from "../schemas/submission";
 import teamMember from "../schemas/teamMember";
 import speaker from "../schemas/speaker";
+import abstract from "../schemas/abstractSubmission";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -19,5 +20,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     submission,
     teamMember,
     speaker,
+    abstract,
   ],
 };
