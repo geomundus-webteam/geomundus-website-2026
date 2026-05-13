@@ -33,7 +33,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
-          <Image src="/enhanced logo.png" alt="GeoMundus logo" width={36} height={43} className="flex-shrink-0" priority />
+          <Image src="/coloured_light_notext.svg" alt="GeoMundus logo" width={36} height={43} className="flex-shrink-0" priority />
           <span className="text-[16px] font-bold text-[#1d1d1f] tracking-tight">GEOMUNDUS</span>
         </Link>
 

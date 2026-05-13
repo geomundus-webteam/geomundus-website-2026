@@ -83,7 +83,7 @@ export default async function Home() {
 
   const sanityLogoUrl = siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : null;
 
-  const logoUrl = typeof sanityLogoUrl === "string" && sanityLogoUrl.trim() !== "" ? sanityLogoUrl: "/enhanced logo.png";
+  const logoUrl = typeof sanityLogoUrl === "string" && sanityLogoUrl.trim() !== "" ? sanityLogoUrl: "/coloured_light_text.svg";
 
   return (
     <main className="flex min-h-screen flex-col bg-white" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif" }}>
@@ -94,10 +94,9 @@ export default async function Home() {
         {/* <div className="absolute inset-x-0 top-0 h-[480px] pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 70% at 50% 35%, rgba(125, 186, 90, 0.18) 0%, rgba(125, 186, 90, 0.06) 40%, transparent 75%)" }} /> */}
 
         <div className="relative z-10">
-          <p className="text-[16px] font-medium text-[#058a78] tracking-wide mb-8">
+          {/* <p className="text-[16px] font-medium text-[#058a78] tracking-wide mb-8">
             18th Edition · GeoMundus Conference 2026
-          </p>
-
+          </p> */}
           {/* Big centered logo */}
           {/* {(() => { console.log("logo url:", siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : "no logo"); return null; })()} */}
           <div className="flex justify-center mb-10">
@@ -342,7 +341,7 @@ export default async function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-14">
               <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Programme</p>
-              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight">Conference schedule</h2>
+              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight">Conference Schedule</h2>
             </div>
             <ScheduleSection schedule={schedule} />
           </div>
