@@ -396,7 +396,7 @@ export default async function Home() {
           </p>
           <div className="flex justify-center gap-4 flex-wrap">
             <Link
-                href={siteSettings.sponsorshipBrochureUrl? siteSettings.sponsorshipBrochureUrl : "https://drive.google.com/file/d/1QTq61xwFxNK_uwzlUY6AHB6eaR2y4bwt/view?usp=drive_link"}
+                href={siteSettings.sponsorshipBrochureUrl? siteSettings.sponsorshipBrochureUrl : "https://drive.google.com/file/d/1Jp2ZNXecmsvW5nw_A0fSCBpyp8KlFTc0/view?usp=sharing"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-white text-[#058a78] border border-[#058a78] text-[15px] px-8 py-3.5 rounded-full hover:bg-[#f0faf8] transition-colors"
