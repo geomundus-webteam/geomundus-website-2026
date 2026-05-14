@@ -58,7 +58,7 @@ export default function ScheduleSection({ schedule }: ScheduleSectionProps) {
   return (
     <div className="max-w-4xl mx-auto">
       <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-2 mb-8">
+        <TabsList className="grid grid-cols-3 gap-2 w-full">
           {schedule.days.map((day) => (
             <TabsTrigger
               key={day.date || "unknown"}

@@ -176,7 +176,7 @@ export default async function Home() {
         </div>
         <AnimateOnScroll staggerChildren className="grid grid-cols-2 md:grid-cols-4">
           {[
-            { num: "18th", label: "Edition" },
+            { num: "500+", label: "Registrations" },
             { num: "100+", label: "Participants" },
             { num: "4", label: "Keynote speakers" },
             { num: "3", label: "Workshops" },
@@ -294,9 +294,21 @@ export default async function Home() {
             <AnimateOnScroll staggerChildren className="text-center mb-14">
               <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Speakers</p>
               <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
-                <RevealText text="Keynote speakers" />
+                <RevealText text="Speakers Coming Soon" />
               </h2>
-              <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry.</p>
+              <p className="text-[14px] text-[#6e6e73] leading-[1.8] mb-4">
+                We&apos;re currently finalizing our lineup of distinguished speakers for this year&apos;s conference. Check back soon for updates.
+              </p>
+              <p className="text-[13px] text-[#6e6e73]">
+                Interested in speaking as a keynote?{" "}
+                <Link
+                  href="/#contact"
+                  className="text-[#058a78] font-medium hover:underline"
+                >
+                  Contact us
+                </Link>
+              </p>
+              {/* <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry.</p> */}
             </AnimateOnScroll>
             <AnimateOnScroll staggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
               {currentConference.keynoteSpeakers.map((speaker, i) => (
@@ -317,9 +329,21 @@ export default async function Home() {
             <AnimateOnScroll staggerChildren className="text-center mb-14">
               <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Speakers</p>
               <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
-                <RevealText text="Keynote speakers" />
+                <RevealText text="Speakers Coming Soon" />
               </h2>
-              <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry. Full lineup coming soon.</p>
+              <p className="text-[14px] text-[#6e6e73] leading-[1.8] mb-4">
+                We&apos;re currently finalizing our lineup of distinguished speakers for this year&apos;s conference. Check back soon for updates.
+              </p>
+              <p className="text-[13px] text-[#6e6e73]">
+                Interested in speaking as a keynote?{" "}
+                <Link
+                  href="/#contact"
+                  className="text-[#058a78] font-medium hover:underline"
+                >
+                  Contact us
+                </Link>
+              </p>
+              {/* <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry. Full lineup coming soon.</p> */}
             </AnimateOnScroll>
             {/* <AnimateOnScroll staggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {[{ icon: "🌍", slot: "Keynote speaker #1" }, { icon: "🛰️", slot: "Keynote speaker #2" }, { icon: "🗺️", slot: "Keynote speaker #3" }].map(({ icon, slot }) => (
@@ -529,11 +553,11 @@ export default async function Home() {
       <footer className="bg-[#ffffff] border-t border-[#07686f] py-6 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[12px] text-[#3f3f40]">© GeoMundus {currentYear?.year} · Designed by the Web Team</p>
-          <div className="flex gap-5">
+          {/* <div className="flex gap-5">
             {["Instagram", "LinkedIn", "Twitter", "GitHub"].map((s) => (
               <span key={s} className="text-[12px] text-[#868688] cursor-pointer hover:text-[#29292a] transition-colors">{s}</span>
             ))}
-          </div>
+          </div> */}
         </div>
       </footer>
 

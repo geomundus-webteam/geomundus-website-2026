@@ -74,10 +74,14 @@ export async function POST(request: Request) {
       driveFileId: uploaded.id,
     });
   } catch (error) {
-    console.error("Submission error:", error);
+    console.error("Submission error FULL:", error);
+
     return NextResponse.json(
-      {error: "Something went wrong while submitting the form."},
-      {status: 500},
+      {
+        error: "Something went wrong while submitting the form.",
+        details: error instanceof Error ? error.message : String(error),
+      },
+      { status: 500 }
     );
   }
 }
