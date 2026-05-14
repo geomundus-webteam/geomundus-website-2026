@@ -34,7 +34,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
           <Image src="/coloured_light_notext.svg" alt="GeoMundus logo" width={36} height={43} className="flex-shrink-0" priority />
-          <span className="text-[16px] font-bold text-[#1d1d1f] tracking-tight">GEOMUNDUS</span>
+          <span className="text-[16px] font-bold text-[#1d1d1f] tracking-tight">Geomundus</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -45,7 +45,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
             { href: "/submissions", label: "Submissions" },
             // { href: "/sponsors", label: "Sponsors" },
             { href: "/#contact", label: "Contact" },
-            { href: "/local", label: "Travel"},
+            { href: "/local", label: "Venue"},
             { href: "/team", label: "Team" },
           ].map(({ href, label }) => (
             <Link key={label} href={href} className="text-[16px] text-[#262628] hover:text-[#1d1d1f] transition-colors px-3 py-2 rounded-lg hover:bg-gray-50">
@@ -73,7 +73,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
               { href: "/submissions", label: "Submissions" },
               // { href: "/sponsors", label: "Sponsors" },
               { href: "/#contact", label: "Contact" },
-              { href: "/local", label: "Travel"},
+              { href: "/local", label: "Venue"},
               { href: "/team", label: "Team" },
             ].map(({ href, label }) => (
               <Link key={label} href={href} onClick={() => setIsOpen(false)} className="text-[14px] text-[#6e6e73] hover:text-[#1d1d1f] py-2.5 border-b border-gray-50 transition-colors">
