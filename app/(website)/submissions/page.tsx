@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: `GeoMundus - ${submissionInfo?.title || "Submissions"}`,
     description:
       submissionInfo?.description ||
-      "Submit your papers and posters to the GeoMundus Conference",
+      "Submit your abstract to the GeoMundus Conference",
   };
 }
 
@@ -50,7 +50,7 @@ export default async function SubmissionsPage() {
           </h1>
           <p className="text-lg md:text-xl mb-4">
             {submissionInfo?.description ||
-              "Submit your papers and posters to the GeoMundus Conference"}
+              "Submit your abstract to the GeoMundus Conference"}
           </p>
 
           {isSubmissionOpen && formattedDeadline ? (
@@ -78,7 +78,7 @@ export default async function SubmissionsPage() {
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-8">
               {submissionInfo?.callForPapersTitle ||
-                "Call for Short Paper and Poster"}
+                "Call for Abstracts"}
             </h2>
 
             {submissionInfo?.callForPapersContent ? (
@@ -118,8 +118,15 @@ export default async function SubmissionsPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl font-bold text-center mb-8">Submission</h2>
+            <p className="text-center mb-6">
+              Detailed submission templates and guidelines will be published soon.
+            </p>
 
-            <p className="text-center mb-10">
+            <p className="text-center text-gray-600 mb-10">
+              Please stay tuned for updates regarding the abstract submission format,
+              requirements, and important deadlines.
+            </p>
+            {/* <p className="text-center mb-10">
               You can download the templates for the short paper and poster
               below. Each template also includes the submission guidelines.
             </p>
@@ -166,24 +173,25 @@ export default async function SubmissionsPage() {
                   </Button>
                 </CardContent>
               </Card>
-            </div>
+            </div> */}
 
-            {submissionInfo?.posterPrintingNote && (
+            {/* {submissionInfo?.posterPrintingNote && (
               <p className="text-center mb-6 text-sm text-gray-600">
                 {submissionInfo?.posterPrintingNote}
               </p>
-            )}
+            )} */}
 
             <div className="space-y-4">
               <SubmissionButton
                 submissionOpen={isSubmissionOpen}
-                link={submissionInfo?.submissionFormUrl}
+                link="/submissions/abstract"
+                // {submissionInfo?.submissionFormUrl}
               />
             </div>
             <div className="mt-10 text-center p-6 bg-gray-100 rounded-lg">
               <p>
                 {
-                  "If you have further queries about the short paper and poster submission, please contact the conference organizing committee at"
+                  "If you have further queries about the abstract submission, please contact the conference organizing committee at"
                 }{" "}
                 {submissionInfo?.contactEmail && (
                   <Link

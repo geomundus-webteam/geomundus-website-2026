@@ -2,10 +2,10 @@
 import ScrollRevealGrid from "@/components/scroll-grid"
 
 const items = [
-  { n: "01", t: "Call for papers", d: "Submit your abstract for oral or poster presentation" },
-  { n: "02", t: "Submission deadline", d: "Final day for papers and posters" },
-  { n: "03", t: "Registration opens", d: "Secure your spot at GeoMundus 2026" },
-  { n: "04", t: "Conference days", d: "Talks, workshops, and networking" },
+  { n: "01", t: "Call for papers", d: "Submit your abstract for oral or poster presentation", date: "Opening soon" },
+  { n: "02", t: "Submission deadline", d: "Final day for papers and posters", date: "To be announced" },
+  { n: "03", t: "Registration opens", d: "Secure your spot at GeoMundus 2026", date: "To be announced" },
+  { n: "04", t: "Conference days", d: "Talks, workshops, and networking", date: "October 16-17, 2026" },
 ]
 
 export default function TimelineCards() {
@@ -22,7 +22,7 @@ export default function TimelineCards() {
           <p className="text-[14px] font-medium text-[#757578] tracking-widest mb-3">{item.n}</p>
           <p className="text-[18px] font-medium text-[#1d1d1f] mb-2">{item.t}</p>
           <p className="text-[14px] text-[#6e6e73] leading-snug mb-3">{item.d}</p>
-          <p className="text-[14px] font-medium text-[#058a78]">TBD 2026</p>
+          <p className="text-[14px] font-medium text-[#058a78] mb-3">{item.date}</p>
         </div>
       )}
     />

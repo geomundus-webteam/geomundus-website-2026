@@ -22,6 +22,9 @@ import TimelineCards from "@/components/timeline-cards";
 import sitesettings from "@/sanity/schemas/siteSettings";
 import { urlFor } from "@/lib/sanity.client";
 import { urlForImage } from "@/sanity/lib/image";
+import VenueSlideshow from "@/components/slideshow-images";
+import Slideshow from "@/components/slideshow-images";
+
 interface KeynoteSpeaker {
   name?: string;
   organization?: string;
@@ -74,6 +77,26 @@ export default async function Home() {
   const currentConference = currentConferenceRaw ?? mockConference;
   const currentYear = currentYearRaw ?? { year: 2026 };
 
+  const AboutSlideshowImages = currentConference?.gallery && currentConference.gallery.length > 0
+    ? currentConference.gallery.map((img: any) => ({
+        url: urlForImage(img)?.url() ?? "",
+        caption: img.caption ?? "",
+      })).filter((s: any) => s.url !== "")
+    : [
+        { url: "/about/about-2.jpg", caption: "" },
+        { url: "/about/about-1.jpeg", caption: "" },
+      ]
+
+  const VenueSlideshowImages = currentConference?.gallery && currentConference.gallery.length > 0
+    ? currentConference.gallery.map((img: any) => ({
+        url: urlForImage(img)?.url() ?? "",
+        caption: img.caption ?? "",
+      })).filter((s: any) => s.url !== "")
+    : [
+        { url: "/venue/UJI_campus.jpg", caption: "Universitat Jaume I" },
+        { url: "/venue/plaza-mayor-castellon.jpeg", caption: "Plaza Mayor, Castellón de la Plana" },
+        { url: "/venue/castellon-2.jpg", caption: "Grao de Castellón" },
+      ]
   const startDate = siteSettings?.conferenceDate ? new Date(siteSettings.conferenceDate) : null;
   const endDate = siteSettings?.conferenceEndDate ? new Date(siteSettings.conferenceEndDate) : null;
   const startDay = startDate?.getDate();
@@ -83,7 +106,7 @@ export default async function Home() {
 
   const sanityLogoUrl = siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : null;
 
-  const logoUrl = typeof sanityLogoUrl === "string" && sanityLogoUrl.trim() !== "" ? sanityLogoUrl: "/enhanced logo.png";
+  const logoUrl = typeof sanityLogoUrl === "string" && sanityLogoUrl.trim() !== "" ? sanityLogoUrl: "/coloured_light_text.svg";
 
   return (
     <main className="flex min-h-screen flex-col bg-white" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif" }}>
@@ -94,10 +117,9 @@ export default async function Home() {
         {/* <div className="absolute inset-x-0 top-0 h-[480px] pointer-events-none" style={{ background: "radial-gradient(ellipse 50% 70% at 50% 35%, rgba(125, 186, 90, 0.18) 0%, rgba(125, 186, 90, 0.06) 40%, transparent 75%)" }} /> */}
 
         <div className="relative z-10">
-          <p className="text-[16px] font-medium text-[#058a78] tracking-wide mb-8">
+          {/* <p className="text-[16px] font-medium text-[#058a78] tracking-wide mb-8">
             18th Edition · GeoMundus Conference 2026
-          </p>
-
+          </p> */}
           {/* Big centered logo */}
           {/* {(() => { console.log("logo url:", siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : "no logo"); return null; })()} */}
           <div className="flex justify-center mb-10">
@@ -105,7 +127,7 @@ export default async function Home() {
             {/* <Image src={siteSettings?.logo ? urlForImage(siteSettings.logo)?.url() : "/enhanced logo.png"} alt="GeoMundus 2026" width={280} height={335} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" /> */}
           </div>
     
-          <h1 className="text-[44px] md:text-[56px] font-medium text-[#1d1d1f] leading-[1.05] tracking-tight mb-5 uppercase">
+          <h1 className="text-[44px] md:text-[56px] font-medium text-[#1d1d1f] leading-[1.05] tracking-tight mb-5">
             Geospatial Intelligence<br />for <em className="not-italic text-[#058a78]">Disaster Resilience.</em>
           </h1>
           <p className="text-[18px] text-[#434346] leading-relaxed max-w-[520px] mx-auto mb-10">
@@ -121,13 +143,29 @@ export default async function Home() {
             Learn more
           </Link>
         </div>
+        {!siteSettings?.registrationOpen && (
+          <div className="max-w-[560px] mx-auto mb-10 text-center">
+            <p className="text-[18px] font-medium text-[#1d1d1f] mb-2">
+              Registrations Opening Soon!
+            </p>
+            <p className="text-[15px] text-[#6e6e73] mb-3">
+              Look at the theme and plan your submission.
+            </p>
+            <Link
+              href="/#theme"
+              className="text-[15px] text-[#058a78] font-medium hover:underline"
+            >
+              Explore the theme
+            </Link>
+          </div>
+        )}
 
         {/* Meta pills */}
         <div className="inline-flex flex-col sm:flex-row border border-[#b2d8d4] rounded-2xl overflow-hidden bg-white w-full max-w-[900px]">
           <div className="flex-1 py-4 px-5 text-center sm:border-r sm:border-b-0 border-b border-[#d0ecea]">
             <p className="text-[14px] font-bold text-[#058a78] uppercase tracking-wider mb-1">Date</p>
             <p className="text-[16px] font-bold text-[#1d1d1f]">
-              {startDay && endDay && month ? `${month} ${startDay}–${endDay}, ${year}` : "TBD · 2026"}
+              {startDay && endDay && month ? `${month} ${startDay} - ${endDay}, ${year}` : "TBD · 2026"}
             </p>
           </div>
           <div className="flex-1 py-4 px-5 text-center sm:border-r sm:border-b-0 border-b border-[#d0ecea]">
@@ -177,7 +215,7 @@ export default async function Home() {
         </div>
         <AnimateOnScroll staggerChildren className="grid grid-cols-2 md:grid-cols-4">
           {[
-            { num: "18th", label: "Edition" },
+            { num: "500+", label: "Registrations" },
             { num: "100+", label: "Participants" },
             { num: "4", label: "Keynote speakers" },
             { num: "3", label: "Workshops" },
@@ -207,31 +245,14 @@ export default async function Home() {
               The 18th edition comes to Castellón de la Plana, hosted by Universitat Jaume I.
             </p>
           </div>
-          {/* to be replaced */}
-          {/* <div className="rounded-2xl overflow-hidden border border-[#e0eada] bg-[#f5f9f4]"> */}
-            {/* <svg width="100%" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="400" height="300" fill="#f5f9f4"/>
-              <ellipse cx="200" cy="150" rx="165" ry="120" stroke="#d4e8d0" strokeWidth="1"/>
-              <ellipse cx="200" cy="150" rx="120" ry="87" stroke="#c0debb" strokeWidth="1"/>
-              <ellipse cx="200" cy="150" rx="82" ry="60" stroke="#a8cfa4" strokeWidth="1"/>
-              <ellipse cx="200" cy="150" rx="50" ry="36" stroke="#7dba5a" strokeWidth="1"/>
-              <ellipse cx="200" cy="150" rx="22" ry="16" fill="#e6f2e4"/>
-              <circle cx="200" cy="150" r="5" fill="#2d6a27"/>
-              <circle cx="200" cy="150" r="2" fill="white"/>
-              <circle cx="135" cy="112" r="3" fill="#7dba5a" fillOpacity="0.5"/>
-              <circle cx="268" cy="178" r="2.5" fill="#7dba5a" fillOpacity="0.45"/>
-              <line x1="135" y1="112" x2="200" y2="150" stroke="#c8dfc4" strokeWidth="0.5" strokeDasharray="3 3"/>
-              <text x="16" y="24" fill="#c4dfc0" fontSize="10" fontFamily="monospace">GeoMundus · 2026</text>
-              <text x="16" y="288" fill="#c4dfc0" fontSize="10" fontFamily="monospace">Castellón, Spain</text>
-            </svg> */}
-          {/* </div> */}
+          <Slideshow slides={AboutSlideshowImages} />
         </AnimateOnScroll>
       </section>
 
       {/* ── THEME ── */}
-      <section className="py-24 px-6 bg-[#f2f7f7] border-t border-[#07686f]">
+      <section id="theme" className="py-24 px-6 bg-[#f2f7f7] border-t border-[#07686f]">
         <AnimateOnScroll staggerChildren className="max-w-4xl mx-auto text-center">
-          <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Theme</p>
+          <p className="text-[28px] font-bold text-[#058a78] tracking-widest mb-4">Theme</p>
           <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
             <RevealText text="Geospatial Intelligence for Disaster Resilience" />
           </h2>
@@ -295,9 +316,21 @@ export default async function Home() {
             <AnimateOnScroll staggerChildren className="text-center mb-14">
               <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Speakers</p>
               <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
-                <RevealText text="Keynote speakers" />
+                <RevealText text="Speakers Coming Soon" />
               </h2>
-              <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry.</p>
+              <p className="text-[14px] text-[#6e6e73] leading-[1.8] mb-4">
+                We&apos;re currently finalizing our lineup of distinguished speakers for this year&apos;s conference. Check back soon for updates.
+              </p>
+              <p className="text-[13px] text-[#6e6e73]">
+                Interested in speaking as a keynote?{" "}
+                <Link
+                  href="/#contact"
+                  className="text-[#058a78] font-medium hover:underline"
+                >
+                  Contact us
+                </Link>
+              </p>
+              {/* <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry.</p> */}
             </AnimateOnScroll>
             <AnimateOnScroll staggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
               {currentConference.keynoteSpeakers.map((speaker, i) => (
@@ -318,9 +351,21 @@ export default async function Home() {
             <AnimateOnScroll staggerChildren className="text-center mb-14">
               <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Speakers</p>
               <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
-                <RevealText text="Keynote speakers" />
+                <RevealText text="Speakers Coming Soon" />
               </h2>
-              <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry. Full lineup coming soon.</p>
+              <p className="text-[14px] text-[#6e6e73] leading-[1.8] mb-4">
+                We&apos;re currently finalizing our lineup of distinguished speakers for this year&apos;s conference. Check back soon for updates.
+              </p>
+              <p className="text-[13px] text-[#6e6e73]">
+                Interested in speaking as a keynote?{" "}
+                <Link
+                  href="/#contact"
+                  className="text-[#058a78] font-medium hover:underline"
+                >
+                  Contact us
+                </Link>
+              </p>
+              {/* <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry. Full lineup coming soon.</p> */}
             </AnimateOnScroll>
             {/* <AnimateOnScroll staggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {[{ icon: "🌍", slot: "Keynote speaker #1" }, { icon: "🛰️", slot: "Keynote speaker #2" }, { icon: "🗺️", slot: "Keynote speaker #3" }].map(({ icon, slot }) => (
@@ -342,7 +387,7 @@ export default async function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-14">
               <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Programme</p>
-              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight">Conference schedule</h2>
+              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight">Conference Schedule (Tentative)</h2>
             </div>
             <ScheduleSection schedule={schedule} />
           </div>
@@ -396,7 +441,7 @@ export default async function Home() {
           </p>
           <div className="flex justify-center gap-4 flex-wrap">
             <Link
-                href={siteSettings.sponsorshipBrochureUrl? siteSettings.sponsorshipBrochureUrl : "https://drive.google.com/file/d/1QTq61xwFxNK_uwzlUY6AHB6eaR2y4bwt/view?usp=drive_link"}
+                href={siteSettings.sponsorshipBrochureUrl? siteSettings.sponsorshipBrochureUrl : "https://drive.google.com/file/d/1Jp2ZNXecmsvW5nw_A0fSCBpyp8KlFTc0/view?usp=sharing"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-white text-[#058a78] border border-[#058a78] text-[15px] px-8 py-3.5 rounded-full hover:bg-[#f0faf8] transition-colors"
@@ -441,27 +486,7 @@ export default async function Home() {
             </p>
           </div>
           
-          {/* to be replaced */}
-          {/* <div className="flex justify-center mb-10">
-            <Image src={sitesettings.venueImage} alt="GeoMundus 2026" width={280} height={335} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
-          </div> */}
-          {/* <div className="rounded-2xl overflow-hidden border border-[#ffffff10]">
-            <svg width="100%" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="400" height="260" fill="#1e3520"/>
-              <ellipse cx="222" cy="130" rx="175" ry="106" stroke="rgba(125,186,90,0.1)" strokeWidth="1"/>
-              <ellipse cx="222" cy="130" rx="128" ry="78" stroke="rgba(125,186,90,0.15)" strokeWidth="1"/>
-              <ellipse cx="222" cy="130" rx="86" ry="52" stroke="rgba(125,186,90,0.22)" strokeWidth="1"/>
-              <ellipse cx="222" cy="130" rx="46" ry="28" stroke="rgba(125,186,90,0.32)" strokeWidth="1"/>
-              <ellipse cx="222" cy="130" rx="18" ry="11" fill="rgba(125,186,90,0.15)"/>
-              <circle cx="222" cy="130" r="5.5" fill="#7dba5a"/>
-              <circle cx="222" cy="130" r="2" fill="white"/>
-              <circle cx="222" cy="130" r="16" stroke="#7dba5a" strokeWidth="0.5" strokeOpacity="0.35"/>
-              <text x="234" y="126" fill="rgba(125,186,90,0.75)" fontSize="11" fontFamily="sans-serif">Castellón</text>
-              <text x="234" y="140" fill="rgba(125,186,90,0.4)" fontSize="9" fontFamily="sans-serif">Universitat Jaume I</text>
-              <circle cx="128" cy="92" r="3" fill="rgba(125,186,90,0.35)"/>
-              <line x1="128" y1="92" x2="222" y2="130" stroke="rgba(125,186,90,0.1)" strokeWidth="0.5" strokeDasharray="3 3"/>
-            </svg>*/}
-          {/* </div>  */}
+          <Slideshow slides={VenueSlideshowImages} />
         </div>
       </section>
       </AnimateOnScroll>
@@ -530,11 +555,11 @@ export default async function Home() {
       <footer className="bg-[#ffffff] border-t border-[#07686f] py-6 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[12px] text-[#3f3f40]">© GeoMundus {currentYear?.year} · Designed by the Web Team</p>
-          <div className="flex gap-5">
+          {/* <div className="flex gap-5">
             {["Instagram", "LinkedIn", "Twitter", "GitHub"].map((s) => (
               <span key={s} className="text-[12px] text-[#868688] cursor-pointer hover:text-[#29292a] transition-colors">{s}</span>
             ))}
-          </div>
+          </div> */}
         </div>
       </footer>
 
