@@ -143,6 +143,22 @@ export default async function Home() {
             Learn more
           </Link>
         </div>
+        {!siteSettings?.registrationOpen && (
+          <div className="max-w-[560px] mx-auto mb-10 text-center">
+            <p className="text-[18px] font-medium text-[#1d1d1f] mb-2">
+              Registrations Opening Soon!
+            </p>
+            <p className="text-[15px] text-[#6e6e73] mb-3">
+              Look at the theme and plan your submission.
+            </p>
+            <Link
+              href="/#theme"
+              className="text-[15px] text-[#058a78] font-medium hover:underline"
+            >
+              Explore the theme
+            </Link>
+          </div>
+        )}
 
         {/* Meta pills */}
         <div className="inline-flex flex-col sm:flex-row border border-[#b2d8d4] rounded-2xl overflow-hidden bg-white w-full max-w-[900px]">
@@ -234,7 +250,7 @@ export default async function Home() {
       </section>
 
       {/* ── THEME ── */}
-      <section className="py-24 px-6 bg-[#f2f7f7] border-t border-[#07686f]">
+      <section id="theme" className="py-24 px-6 bg-[#f2f7f7] border-t border-[#07686f]">
         <AnimateOnScroll staggerChildren className="max-w-4xl mx-auto text-center">
           <p className="text-[28px] font-bold text-[#058a78] tracking-widest mb-4">Theme</p>
           <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
