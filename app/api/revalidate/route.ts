@@ -87,6 +87,15 @@ export async function POST(request: NextRequest) {
         revalidatePath("/");
         revalidatePath("/registration");
         break;
+      case "teamMember":
+        // Team members appear on the team page
+        revalidatePath("/");
+        revalidatePath("/team");
+        break;
+      case "abstractSubmission":
+        // Abstract submissions
+        revalidatePath("/submissions");
+        break;
       default:
         // For any other document types, revalidate the home page
         revalidatePath("/");
