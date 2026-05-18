@@ -4,7 +4,7 @@ import { siteSettingsQuery } from "@/lib/sanity.queries";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Travel | GeoMundus Conference",
+  title: "Venue | GeoMundus Conference",
   description: "Travel information for the GeoMundus Conference 2026",
 };
 
