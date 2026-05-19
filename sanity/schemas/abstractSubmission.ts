@@ -77,6 +77,17 @@ export default defineType({
       title: "Submitted At",
       type: "datetime",
     }),
+    defineField({
+      name: "confirmationEmailDelivered",
+      title: "Confirmation Email Delivered",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
+      name: "confirmationEmailError",
+      title: "Confirmation Email Error",
+      type: "text",
+    }),
   ],
   preview: {
     select: {

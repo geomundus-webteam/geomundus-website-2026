@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server";
-<<<<<<< HEAD
-import { sanityWriteClient } from "@/lib/sanity.write";
-import sendEmail from "@/lib/email";
-=======
 import nodemailer from "nodemailer";
 import { sanityWriteClient } from "@/lib/sanity.write";
->>>>>>> 353424f (WIP submission form and email flow)
 
 export const runtime = "nodejs";
 
@@ -27,6 +22,21 @@ function generateSubmissionId() {
   return `GM${year}-ABS-${year}${month}${day}-${randomPart}`;
 }
 
+function createTransporter() {
+  return nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: Number(process.env.EMAIL_PORT || 587),
+    secure: false,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+    tls: {
+      servername: process.env.EMAIL_HOST,
+    },
+  });
+}
+
 export async function GET() {
   return NextResponse.json({ ok: true, route: "/api/submissions working" });
 }
@@ -44,8 +54,6 @@ export async function POST(request: Request) {
     const selectedThemesRaw = String(formData.get("selectedThemes") || "[]");
     const file = formData.get("file");
 
-<<<<<<< HEAD
-=======
     let selectedThemes: string[] = [];
     try {
       selectedThemes = JSON.parse(selectedThemesRaw);
@@ -53,22 +61,11 @@ export async function POST(request: Request) {
       selectedThemes = [];
     }
 
->>>>>>> 353424f (WIP submission form and email flow)
     if (
       !firstName ||
       !lastName ||
       !institution ||
       !email ||
-<<<<<<< HEAD
-      !sessionTheme ||
-      !submissionType ||
-      !title ||
-      !authors
-    ) {
-      return NextResponse.json(
-        { error: "Please complete all required fields." },
-        { status: 400 }
-=======
       !title ||
       !authors ||
       selectedThemes.length === 0
@@ -79,40 +76,27 @@ export async function POST(request: Request) {
             "Please complete all required fields and select at least one theme.",
         },
         { status: 400 },
->>>>>>> 353424f (WIP submission form and email flow)
       );
     }
 
     if (!(file instanceof File)) {
       return NextResponse.json(
         { error: "A file is required." },
-<<<<<<< HEAD
-        { status: 400 }
-=======
         { status: 400 },
->>>>>>> 353424f (WIP submission form and email flow)
       );
     }
 
     if (!ALLOWED_TYPES.includes(file.type)) {
       return NextResponse.json(
         { error: "Only PDF, DOC, and DOCX files are allowed." },
-<<<<<<< HEAD
-        { status: 400 }
-=======
         { status: 400 },
->>>>>>> 353424f (WIP submission form and email flow)
       );
     }
 
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
         { error: "The file must be 10 MB or smaller." },
-<<<<<<< HEAD
-        { status: 400 }
-=======
         { status: 400 },
->>>>>>> 353424f (WIP submission form and email flow)
       );
     }
 
@@ -120,10 +104,6 @@ export async function POST(request: Request) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-<<<<<<< HEAD
-    // Save to Sanity
-=======
->>>>>>> 353424f (WIP submission form and email flow)
     const doc = await sanityWriteClient.create({
       _type: "abstractSubmission",
       submissionId,
@@ -136,43 +116,15 @@ export async function POST(request: Request) {
       authors,
       originalFileName: file.name,
       emailDelivered: false,
+      confirmationEmailDelivered: false,
+      confirmationEmailError: null,
       status: "submitted",
       submittedAt: new Date().toISOString(),
     });
 
-<<<<<<< HEAD
-    // Send file to web team via email
-    const teamEmailSent = await sendEmail({
-      to: process.env.EMAIL_FROM || "webteam@geomundus.org",
-      subject: `[GeoMundus 2026] New Abstract Submission: ${title}`,
-      text: [
-        `New abstract submission received:`,
-        ``,
-        `Name: ${firstName} ${lastName}`,
-        `Email: ${email}`,
-        `Institution: ${institution}`,
-        `Session Theme: ${sessionTheme}`,
-        `Submission Type: ${submissionType}`,
-        `Title: ${title}`,
-        `Authors: ${authors}`,
-        ``,
-        `The submitted file is attached.`,
-        `Submission ID: ${doc._id}`,
-      ].join("\n"),
-=======
-    const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT || 587),
-      secure: false,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-      tls: {
-        servername: process.env.EMAIL_HOST,
-      },
-    });
+    const transporter = createTransporter();
 
+    // Internal email: required
     await transporter.sendMail({
       from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
       to: process.env.SUBMISSIONS_TO_EMAIL,
@@ -212,7 +164,6 @@ Submitted at: ${new Date().toISOString()}
         <p><strong>Original file name:</strong> ${file.name}</p>
         <p><strong>Submitted at:</strong> ${new Date().toISOString()}</p>
       `,
->>>>>>> 353424f (WIP submission form and email flow)
       attachments: [
         {
           filename: file.name,
@@ -222,45 +173,74 @@ Submitted at: ${new Date().toISOString()}
       ],
     });
 
-<<<<<<< HEAD
-    // Send confirmation to submitter
-    const confirmationSent = await sendEmail({
-      to: email,
-      subject: `[GeoMundus 2026] Abstract Submission Received`,
-      text: [
-        `Dear ${firstName} ${lastName},`,
-        ``,
-        `Thank you for submitting your abstract to GeoMundus 2026.`,
-        ``,
-        `Submission details:`,
-        `- Title: ${title}`,
-        `- Type: ${submissionType}`,
-        `- Session Theme: ${sessionTheme}`,
-        ``,
-        `We will review your submission and get back to you soon.`,
-        ``,
-        `Best regards,`,
-        `GeoMundus 2026 Organizing Committee`,
-        `https://geomundus.org`,
-      ].join("\n"),
-    });
-=======
-    await sanityWriteClient.patch(doc._id).set({ emailDelivered: true }).commit();
->>>>>>> 353424f (WIP submission form and email flow)
+    let confirmationEmailDelivered = false;
+    let confirmationEmailError: string | null = null;
+
+    // User confirmation: optional
+    try {
+      await transporter.sendMail({
+        from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+        to: email,
+        subject: `[GeoMundus 2026] Submission received - ${submissionId}`,
+        text: `
+Dear ${firstName} ${lastName},
+
+Thank you for submitting your abstract to GeoMundus 2026.
+
+Your submission has been received successfully and is now under review.
+
+Submission ID: ${submissionId}
+Title: ${title}
+
+Selected themes:
+${selectedThemes.map((theme) => `- ${theme}`).join("\n")}
+
+Our team will review your submission and will contact you later with the decision and next steps, including whether it will proceed as an oral presentation or poster presentation.
+
+Best regards,
+GeoMundus 2026 Organizing Committee
+https://geomundus.org
+        `,
+        html: `
+          <p>Dear <strong>${firstName} ${lastName}</strong>,</p>
+          <p>Thank you for submitting your abstract to <strong>GeoMundus 2026</strong>.</p>
+          <p>Your submission has been received successfully and is now under review.</p>
+          <p><strong>Submission ID:</strong> ${submissionId}<br />
+          <strong>Title:</strong> ${title}</p>
+          <p><strong>Selected themes:</strong></p>
+          <ul>
+            ${selectedThemes.map((theme) => `<li>${theme}</li>`).join("")}
+          </ul>
+          <p>Our team will review your submission and will contact you later with the decision and next steps, including whether it will proceed as an oral presentation or poster presentation.</p>
+          <p>Best regards,<br />GeoMundus 2026 Organizing Committee<br />https://geomundus.org</p>
+        `,
+      });
+
+      confirmationEmailDelivered = true;
+    } catch (err) {
+      console.error("Confirmation email failed:", err);
+      confirmationEmailError =
+        err instanceof Error ? err.message : String(err);
+    }
+
+    await sanityWriteClient
+      .patch(doc._id)
+      .set({
+        emailDelivered: true,
+        confirmationEmailDelivered,
+        confirmationEmailError,
+      })
+      .commit();
 
     return NextResponse.json({
       success: true,
       id: doc._id,
-<<<<<<< HEAD
-      emailSent: teamEmailSent,
-      confirmationSent,
-=======
       submissionId,
       message: "Submission received successfully.",
->>>>>>> 353424f (WIP submission form and email flow)
+      confirmationEmailDelivered,
     });
   } catch (error) {
-    console.error("Submission error:", error);
+    console.error("Submission error FULL:", error);
 
     return NextResponse.json(
       {
