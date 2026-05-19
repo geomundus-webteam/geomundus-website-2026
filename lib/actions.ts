@@ -1,8 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { client } from "@/lib/sanity.client";
-import QRCode from "qrcode";
+import { sanityWriteClient } from "@/lib/sanity.write";
+import sendEmail from "@/lib/email";
 
 export async function submitRegistration(formData: {
   fullName: string;
@@ -23,9 +23,11 @@ export async function submitRegistration(formData: {
   drinkPreferences: string[];
   drinkRestrictions?: string;
   workshopPreferences: {
-    disasterManagement: number;
-    digitalTwins: number;
-    participatoryMapping: number;
+    hazardModelling: number;
+    earlyWarning: number;
+    decisionSupport: number;
+    emergencyResponse: number;
+    damageAssessment: number;
   };
   needsAccommodationHelp: boolean;
   joinWhatsApp: boolean;
@@ -35,14 +37,18 @@ export async function submitRegistration(formData: {
   howDidYouHearOther?: string;
   additionalComments?: string;
 }) {
-  const guestUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://geomundus.org"}/guests/${encodeURIComponent(formData.email)}`;
-  // const qrBuffer = await QRCode.toBuffer(guestUrl)
-  // const qrImageAsset = await client.assets.upload("image", qrBuffer, {
-  //   filename: `qr-${formData.email}.png`,
-  //   contentType: "image/png",
-  // })
+  // Check for duplicate email
+  const existing = await sanityWriteClient.fetch(
+    `count(*[_type == "registration" && email == $email])`,
+    { email: formData.email }
+  );
 
-  const result = await client.create({
+  if (existing > 0) {
+    throw new Error("EMAIL_ALREADY_REGISTERED");
+  }
+
+  // Save to Sanity
+  const result = await sanityWriteClient.create({
     _type: "registration",
     fullName: formData.fullName,
     email: formData.email,
@@ -70,166 +76,67 @@ export async function submitRegistration(formData: {
     howDidYouHearOther: formData.howDidYouHearOther || "",
     additionalComments: formData.additionalComments || "",
     status: "pending",
-    // qrCode: {
-    //   _type: "image",
-    //   asset: {
-    //     _type: "reference",
-    //     _ref: qrImageAsset._id,
-    //   },
-    // },
+    registeredAt: new Date().toISOString(),
   });
 
-  // Send notification to Teams/Discord
-  await sendWebhookNotification({
-    fullName: formData.fullName,
-    email: formData.email,
-    affiliation: formData.affiliation,
-    country: formData.country,
-    position: formData.position,
+  // Send confirmation email to registrant
+  await sendEmail({
+    to: formData.email,
+    subject: "[GeoMundus 2026] Registration Confirmed",
+    text: [
+      `Dear ${formData.fullName},`,
+      ``,
+      `Thank you for registering for GeoMundus 2026 — the 18th Edition of the GeoMundus Conference!`,
+      ``,
+      `Conference Details:`,
+      `- Theme: Geospatial Intelligence for Disaster Resilience`,
+      `- Dates: October 16-17, 2026`,
+      `- Location: Universitat Jaume I, Castellón de la Plana, Spain`,
+      ``,
+      `Your Registration Summary:`,
+      `- Name: ${formData.fullName}`,
+      `- Affiliation: ${formData.affiliation}`,
+      `- Presenting: ${formData.presenting === "oral" ? "Oral presentation" : formData.presenting === "poster" ? "Poster presentation" : "No"}`,
+      `- Conference Dinner: ${formData.attendingDinner ? "Yes" : "No"}`,
+      ``,
+      `We will send you further details as the conference date approaches.`,
+      `If you have any questions, please contact us at program@geomundus.org`,
+      ``,
+      `Best regards,`,
+      `GeoMundus 2026 Organizing Committee`,
+      `https://geomundus.org`,
+    ].join("\n"),
   });
 
-  revalidatePath("/admin/registrations");
+  // Send notification to web team
+  await sendEmail({
+    to: process.env.EMAIL_FROM || "webteam@geomundus.org",
+    subject: `[GeoMundus 2026] New Registration: ${formData.fullName}`,
+    text: [
+      `New registration received:`,
+      ``,
+      `Name: ${formData.fullName}`,
+      `Email: ${formData.email}`,
+      `Affiliation: ${formData.affiliation}`,
+      `Country: ${formData.country}`,
+      `Position: ${formData.position}`,
+      `Presenting: ${formData.presenting || "no"}`,
+      `Dinner: ${formData.attendingDinner ? "Yes" : "No"}`,
+      `Dietary: ${formData.dietaryRestrictions}`,
+      `Accommodation help: ${formData.needsAccommodationHelp ? "Yes" : "No"}`,
+      ``,
+      `Registration ID: ${result._id}`,
+    ].join("\n"),
+  });
+
+  revalidatePath("/registration");
   return { success: true, data: result };
 }
 
 export async function verifyAdminToken(token: string) {
   const result = token === process.env.ADMIN_TOKEN;
-
   if (!result) {
     throw new Error("Invalid token");
   }
-
   return result;
-}
-
-// Function to send webhook notification to Teams/Discord
-async function sendWebhookNotification(registrationData: {
-  fullName: string;
-  email: string;
-  affiliation: string;
-  country: string;
-  position: string;
-}) {
-  const webhookUrl = process.env.NOTIFICATION_WEBHOOK_URL;
-
-  if (!webhookUrl) {
-    console.warn(
-      "Notification webhook URL not configured. Skipping notification.",
-    );
-    return;
-  }
-
-  try {
-    if (
-      webhookUrl.includes("office.com") ||
-      webhookUrl.includes("outlook.com")
-    ) {
-      const teamsPayload = {
-        "@type": "MessageCard",
-        "@context": "http://schema.org/extensions",
-        themeColor: "0076D7",
-        summary: "New GeoMundus 2025 Registration",
-        sections: [
-          {
-            activityTitle: "🎉 New Conference Registration",
-            activitySubtitle: `${registrationData.fullName} has registered for GeoMundus 2025`,
-            facts: [
-              {
-                name: "Name",
-                value: registrationData.fullName,
-              },
-              {
-                name: "Email",
-                value: registrationData.email,
-              },
-              {
-                name: "Affiliation",
-                value: registrationData.affiliation,
-              },
-              {
-                name: "Country",
-                value: registrationData.country,
-              },
-              {
-                name: "Position",
-                value: registrationData.position,
-              },
-            ],
-            markdown: true,
-          },
-        ],
-        potentialAction: [
-          {
-            "@type": "OpenUri",
-            name: "View in Admin",
-            targets: [
-              {
-                os: "default",
-                uri: `${process.env.NEXT_PUBLIC_SITE_URL || "https://geomundus.org"}/studio`,
-              },
-            ],
-          },
-        ],
-      };
-
-      await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(teamsPayload),
-      });
-    }
-    // Format for Discord
-    else {
-      const discordPayload = {
-        embeds: [
-          {
-            title: "🎉 New Conference Registration",
-            description: `**${registrationData.fullName}** has registered for GeoMundus 2025`,
-            color: 3447003, // Blue color
-            fields: [
-              {
-                name: "Email",
-                value: registrationData.email,
-                inline: true,
-              },
-              {
-                name: "Affiliation",
-                value: registrationData.affiliation,
-                inline: true,
-              },
-              {
-                name: "Country",
-                value: registrationData.country,
-                inline: true,
-              },
-              {
-                name: "Position",
-                value: registrationData.position,
-                inline: true,
-              },
-            ],
-            timestamp: new Date().toISOString(),
-            footer: {
-              text: "GeoMundus 2025 Registration System",
-            },
-          },
-        ],
-      };
-
-      await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(discordPayload),
-      });
-    }
-
-    console.log("Registration notification sent successfully");
-  } catch (error) {
-    console.error("Error sending registration notification:", error);
-    // Don't throw the error - we don't want to fail the registration if notification fails
-  }
 }

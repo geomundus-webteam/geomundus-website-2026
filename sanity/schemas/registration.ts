@@ -98,7 +98,7 @@ export default defineType({
     }),
     defineField({
       name: "attendingDinner",
-      title: "Will you attend the conference dinner (Friday 17th)?",
+      title: "Will you attend the conference dinner (Friday October 16th)?",
       type: "boolean",
       validation: (Rule) => Rule.required(),
     }),
@@ -228,7 +228,7 @@ export default defineType({
     }),
     defineField({
       name: "needsAccommodationHelp",
-      title: "Need help with accommodation in Lisbon?",
+      title: "Need help with accommodation in Castellón de la Plana?",
       type: "boolean",
     }),
     defineField({
@@ -251,7 +251,7 @@ export default defineType({
     }),
     defineField({
       name: "howDidYouHear",
-      title: "How did you hear about GeoMundus 2025?",
+      title: "How did you hear about GeoMundus 2026?",
       type: "string",
       options: {
         list: [
