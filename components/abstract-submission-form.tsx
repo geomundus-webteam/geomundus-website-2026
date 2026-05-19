@@ -1,27 +1,66 @@
 "use client";
 
-import {useState} from "react";
+import { useState } from "react";
 
-const themes = [
-  {label: "Hazard Modelling & Risk Assessment", value: "hazard-modelling-&-risk-assessment"},
-  {label: "Early Warning & Monitoring Systems", value: "early-warning-&-monitoring-systems"},
-  {label: "Geospatial Decision Support Systems", value: "geospatial-decision-support-systems"},
-  {label: "Emergency Response & Logistics", value: "emergency-response-&-logistics"},
-  {label: "Rapid Damage Assessment & Recovery", value: "rapid-damage-assessment-&-recovery"},
+const THEMES = [
+  "Citizen Science and Volunteered Geographic Information for Disaster Response",
+  "Remote Sensing and Earth Observation for Disasters",
+  "Geospatial Intelligence in Emergency Management",
+  "AI, Machine Learning, and Predictive Analytics for Disasters",
+  "Early Warning and Real-Time Monitoring Systems",
+  "Crisis Mapping and Situational Awareness",
+  "Geospatial Decision Support Systems",
+  "Spatial Planning and Disaster Resilience",
+  "Emergency Response and Humanitarian Logistics",
+  "UAVs, Mobile GIS, and Sensor-Based Applications",
+  "Damage Assessment and Recovery Planning",
+  "Geospatial Analytics for Disaster Risk Reduction",
+  "Innovations and Emerging Trends in Geoinformatics for Disaster Management",
 ];
 
-export function AbstractSubmissionForm() {
-  const [submissionType, setSubmissionType] = useState<"paper" | "poster">("paper");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+export default function AbstractSubmissionForm() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [institution, setInstitution] = useState("");
+  const [email, setEmail] = useState("");
+  const [title, setTitle] = useState("");
+  const [authors, setAuthors] = useState("");
+  const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
+  const [file, setFile] = useState<File | null>(null);
 
-  async function handleSubmit(formData: FormData) {
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  function toggleTheme(theme: string) {
+    setSelectedThemes((prev) =>
+      prev.includes(theme)
+        ? prev.filter((item) => item !== theme)
+        : [...prev, theme],
+    );
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setLoading(true);
-    setMessage(null);
-    setError(null);
+    setMessage("");
+    setError("");
 
     try {
+      if (!file) {
+        throw new Error("Please upload your abstract file.");
+      }
+
+      const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("institution", institution);
+      formData.append("email", email);
+      formData.append("title", title);
+      formData.append("authors", authors);
+      formData.append("selectedThemes", JSON.stringify(selectedThemes));
+      formData.append("file", file);
+
       const response = await fetch("/api/submissions", {
         method: "POST",
         body: formData,
@@ -30,109 +69,174 @@ export function AbstractSubmissionForm() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || "Submission failed");
+        throw new Error(result.details || result.error || "Submission failed");
       }
 
-      setMessage("Your abstract was submitted successfully.");
+      setMessage(
+        result.submissionId
+          ? `Your abstract was submitted successfully. Submission ID: ${result.submissionId}`
+          : "Your abstract was submitted successfully.",
+      );
+
+      setFirstName("");
+      setLastName("");
+      setInstitution("");
+      setEmail("");
+      setTitle("");
+      setAuthors("");
+      setSelectedThemes([]);
+      setFile(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unexpected error");
+      setError(err instanceof Error ? err.message : "Submission failed");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-sm p-6 md:p-10">
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl md:text-4xl font-semibold text-[#1d1d1f]">
-          Abstract Submission
-        </h1>
-        <p className="mt-3 text-gray-600">
-          Submit your abstract directly through the GeoMundus website.
-        </p>
-        <p className="mt-2 text-sm text-gray-500">
-          Accepted file types: PDF, DOC, DOCX. Maximum size: 10 MB.
-        </p>
-      </div>
+    <form onSubmit={handleSubmit} className="space-y-8">
+      <section className="space-y-4">
+        <h2 className="text-[28px] font-medium text-[#1d1d1f]">
+          Personal Information
+        </h2>
 
-      <form action={handleSubmit} className="space-y-8">
-        <section>
-          <h2 className="text-xl font-medium text-[#1d1d1f] mb-4">Applicant Information</h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            <input name="firstName" placeholder="First Name" required className="w-full rounded-2xl border border-gray-300 px-4 py-3" />
-            <input name="lastName" placeholder="Last Name" required className="w-full rounded-2xl border border-gray-300 px-4 py-3" />
-            <input name="institution" placeholder="Organization or Institution’s Name" required className="w-full rounded-2xl border border-gray-300 px-4 py-3 md:col-span-2" />
-            <input name="email" type="email" placeholder="Corresponding Author Email" required className="w-full rounded-2xl border border-gray-300 px-4 py-3 md:col-span-2" />
-          </div>
-        </section>
-
-        <section>
-          <h2 className="text-xl font-medium text-[#1d1d1f] mb-4">Submission Information</h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            <select name="sessionTheme" required className="w-full rounded-2xl border border-gray-300 px-4 py-3">
-              <option value="">Select your session theme</option>
-              {themes.map((theme) => (
-                <option key={theme.value} value={theme.value}>
-                  {theme.label}
-                </option>
-              ))}
-            </select>
-
-            <select
-              name="submissionType"
-              required
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3"
-              value={submissionType}
-              onChange={(e) => setSubmissionType(e.target.value as "paper" | "poster")}
-            >
-              <option value="paper">Paper presentation</option>
-              <option value="poster">Poster presentation</option>
-            </select>
-
-            <input
-              name="title"
-              placeholder={submissionType === "paper" ? "Paper Title" : "Poster Title"}
-              required
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3 md:col-span-2"
-            />
-
-            <textarea
-              name="authors"
-              placeholder="Full name(s) of author(s). Separate multiple authors with commas."
-              required
-              rows={4}
-              className="w-full rounded-2xl border border-gray-300 px-4 py-3 md:col-span-2"
-            />
-          </div>
-        </section>
-
-        <section>
-          <h2 className="text-xl font-medium text-[#1d1d1f] mb-4">Upload</h2>
-          <label className="block text-sm text-gray-600 mb-2">
-            {submissionType === "paper" ? "Submit your paper" : "Submit your abstract"}
-          </label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
-            name="file"
-            type="file"
+            type="text"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className="w-full rounded-[24px] border border-[#d8dde3] px-6 py-5 text-[16px] text-[#1d1d1f] placeholder:text-[#98a2b3] outline-none focus:border-[#058a78]"
             required
-            accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-            className="block w-full rounded-2xl border border-gray-300 px-4 py-3"
           />
-        </section>
-
-        <div className="space-y-3">
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-full bg-[#058a78] text-white px-6 py-3.5 hover:bg-[#036154] transition-colors disabled:opacity-60"
-          >
-            {loading ? "Submitting..." : "Submit Abstract"}
-          </button>
-
-          {message && <p className="text-green-700 text-center">{message}</p>}
-          {error && <p className="text-red-600 text-center">{error}</p>}
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className="w-full rounded-[24px] border border-[#d8dde3] px-6 py-5 text-[16px] text-[#1d1d1f] placeholder:text-[#98a2b3] outline-none focus:border-[#058a78]"
+            required
+          />
         </div>
-      </form>
-    </div>
+
+        <input
+          type="text"
+          placeholder="Institution"
+          value={institution}
+          onChange={(e) => setInstitution(e.target.value)}
+          className="w-full rounded-[24px] border border-[#d8dde3] px-6 py-5 text-[16px] text-[#1d1d1f] placeholder:text-[#98a2b3] outline-none focus:border-[#058a78]"
+          required
+        />
+
+        <input
+          type="email"
+          placeholder="Email Address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full rounded-[24px] border border-[#d8dde3] px-6 py-5 text-[16px] text-[#1d1d1f] placeholder:text-[#98a2b3] outline-none focus:border-[#058a78]"
+          required
+        />
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-[28px] font-medium text-[#1d1d1f]">
+          Submission Information
+        </h2>
+
+        <div className="space-y-4">
+          <label className="block text-[15px] font-medium text-[#1d1d1f]">
+            Select one or more themes
+          </label>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {THEMES.map((theme) => {
+              const active = selectedThemes.includes(theme);
+
+              return (
+                <button
+                  key={theme}
+                  type="button"
+                  onClick={() => toggleTheme(theme)}
+                  className={`w-full rounded-2xl border px-4 py-4 text-left transition-all ${
+                    active
+                      ? "border-[#058a78] bg-[#eaf7f4] shadow-sm"
+                      : "border-[#d8dde3] bg-white hover:border-[#058a78]"
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div
+                      className={`mt-1 h-5 w-5 rounded border flex items-center justify-center ${
+                        active
+                          ? "border-[#058a78] bg-[#058a78] text-white"
+                          : "border-[#b8c0cc] bg-white"
+                      }`}
+                    >
+                      {active ? "✓" : ""}
+                    </div>
+                    <span className="text-[14px] leading-[1.5] text-[#1d1d1f]">
+                      {theme}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {selectedThemes.length > 0 && (
+            <p className="text-[13px] text-[#058a78]">
+              {selectedThemes.length} theme
+              {selectedThemes.length > 1 ? "s" : ""} selected
+            </p>
+          )}
+        </div>
+
+        <input
+          type="text"
+          placeholder="Paper Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full rounded-[24px] border border-[#d8dde3] px-6 py-5 text-[16px] text-[#1d1d1f] placeholder:text-[#98a2b3] outline-none focus:border-[#058a78]"
+          required
+        />
+
+        <textarea
+          placeholder="Full name(s) of author(s). Separate multiple authors with commas."
+          value={authors}
+          onChange={(e) => setAuthors(e.target.value)}
+          rows={5}
+          className="w-full rounded-[24px] border border-[#d8dde3] px-6 py-5 text-[16px] text-[#1d1d1f] placeholder:text-[#98a2b3] outline-none focus:border-[#058a78] resize-none"
+          required
+        />
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-[28px] font-medium text-[#1d1d1f]">Upload</h2>
+        <p className="text-[15px] text-[#6e6e73]">Upload your abstract file</p>
+
+        <input
+          type="file"
+          accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+          className="block w-full rounded-[24px] border border-[#d8dde3] px-4 py-4 text-[15px] text-[#1d1d1f]"
+          required
+        />
+      </section>
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full rounded-full bg-[#058a78] px-8 py-4 text-[18px] font-medium text-white hover:bg-[#036154] transition-colors disabled:opacity-60"
+      >
+        {loading ? "Submitting..." : "Submit Abstract"}
+      </button>
+
+      {message && (
+        <p className="text-center text-[15px] text-[#058a78]">{message}</p>
+      )}
+
+      {error && (
+        <p className="text-center text-[15px] text-red-600">{error}</p>
+      )}
+    </form>
   );
 }

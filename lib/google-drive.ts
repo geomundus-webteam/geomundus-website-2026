@@ -1,5 +1,5 @@
-import {google} from "googleapis";
-import {PassThrough} from "stream";
+import { google } from "googleapis";
+import { PassThrough } from "stream";
 
 function getDriveClient() {
   const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
@@ -15,7 +15,7 @@ function getDriveClient() {
     scopes: ["https://www.googleapis.com/auth/drive"],
   });
 
-  return google.drive({version: "v3", auth});
+  return google.drive({ version: "v3", auth });
 }
 
 export async function uploadFileToDrive(params: {
@@ -43,6 +43,7 @@ export async function uploadFileToDrive(params: {
       body: stream,
     },
     fields: "id,name,webViewLink,webContentLink",
+    supportsAllDrives: true,
   });
 
   return response.data;

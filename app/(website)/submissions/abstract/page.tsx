@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import {AbstractSubmissionForm} from "@/components/abstract-submission-form";
+import AbstractSubmissionForm from "@/components/abstract-submission-form";
 
 export const metadata: Metadata = {
   title: "Abstract Submission",
