@@ -97,8 +97,15 @@ export async function POST(request: NextRequest) {
         revalidatePath("/submissions");
         break;
       default:
-        // For any other document types, revalidate the home page
-        revalidatePath("/");
+        // For any other document types, revalidate all pages
+        revalidatePath("/", "layout");
+        revalidatePath("/team");
+        revalidatePath("/speakers");
+        revalidatePath("/sponsors");
+        revalidatePath("/submissions");
+        revalidatePath("/registration");
+        revalidatePath("/archive");
+        revalidatePath("/local");
     }
 
     return NextResponse.json({
