@@ -18,7 +18,9 @@ export const client = isDev
 // Create a cached version of the Sanity client - returns null in dev mode without credentials
 export const cachedClient = cache(async (_query: any, _params?: any): Promise<any> => {
   if (isDev) return null;
-  return client.fetch(_query, _params);
+  return client.fetch(_query, _params, {
+    next: { revalidate: 0 },
+  });
 });
 
 // Helper function to add tags to queries for revalidation
