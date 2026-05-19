@@ -82,13 +82,13 @@ export default async function SubmissionsPage() {
             </h2>
 
             {submissionInfo?.callForPapersContent ? (
-              <div className="prose max-w-none text-gray-700">
+              <div className="prose max-w-none text-gray-700 text-justify">
                 <PortableTextRenderer
                   content={submissionInfo?.callForPapersContent}
                 />
               </div>
             ) : (
-              <div className="prose max-w-none text-gray-700 space-y-4">
+              <div className="prose max-w-none text-gray-700 space-y-4 text-justify">
                 <p>
                   The GeoMundus Conference is opening its forum to young
                   professionals looking to present their work in the field of

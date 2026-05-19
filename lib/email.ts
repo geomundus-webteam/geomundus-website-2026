@@ -1,15 +1,25 @@
 import nodemailer from "nodemailer";
 
+interface Attachment {
+  filename: string;
+  content: Buffer;
+  contentType: string;
+}
+
 interface EmailOptions {
   to: string;
   subject: string;
   text: string;
+  html?: string;
+  attachments?: Attachment[];
 }
 
 export default async function sendEmail({
   to,
   subject,
   text,
+  html,
+  attachments,
 }: EmailOptions): Promise<boolean> {
   const {
     EMAIL_USER,
@@ -28,7 +38,7 @@ export default async function sendEmail({
   const transporter = nodemailer.createTransport({
     host: EMAIL_HOST,
     port: Number(EMAIL_PORT),
-    secure: EMAIL_SECURE === "true", // false for port 587, true for 465
+    secure: EMAIL_SECURE === "true",
     auth: {
       user: EMAIL_USER,
       pass: EMAIL_PASS,
@@ -41,6 +51,12 @@ export default async function sendEmail({
       to,
       subject,
       text,
+      html,
+      attachments: attachments?.map((a) => ({
+        filename: a.filename,
+        content: a.content,
+        contentType: a.contentType,
+      })),
     });
 
     return res.accepted.length > 0;

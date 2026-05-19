@@ -213,9 +213,8 @@ export default async function Home() {
             Previous edition highlights
           </p>
         </div>
-        <AnimateOnScroll staggerChildren className="grid grid-cols-2 md:grid-cols-4">
+        <AnimateOnScroll staggerChildren className="grid grid-cols-2 md:grid-cols-3">
           {[
-            { num: "500+", label: "Registrations" },
             { num: "100+", label: "Participants" },
             { num: "4", label: "Keynote speakers" },
             { num: "3", label: "Workshops" },
@@ -286,7 +285,7 @@ export default async function Home() {
               Focus Areas
             </span>
             <h3 className="text-[18px] font-medium text-[#1d1d1f] tracking-tight mb-4">
-              GeoMundus 2026 - research tracks
+              GeoMundus 2026
             </h3>
             <ol className="space-y-4">
               {[
@@ -297,7 +296,7 @@ export default async function Home() {
                 { n: "05", t: "Rapid Damage Assessment & Recovery", d: "Damage mapping, change detection, AI automated damage classification, infrastructure assessment, recovery planning, VGI" },
               ].map(({ n, t, d }) => (
                 <li key={n} className="flex gap-4">
-                  <span className="text-[11px] font-medium text-[#058a78] tracking-widest mt-1 shrink-0">{n}</span>
+                  <span className="mt-1 w-2 h-2 rounded-full bg-[#058a78] shrink-0" aria-hidden="true" />
                   <div>
                     <p className="text-[14px] font-medium text-[#1d1d1f] mb-1">{t}</p>
                     <p className="text-[13px] text-[#6e6e73] leading-[1.7]">{d}</p>

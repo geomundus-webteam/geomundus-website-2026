@@ -56,13 +56,14 @@ export default function ScheduleSection({ schedule }: ScheduleSectionProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto px-4 sm:px-0">
       <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid grid-cols-3 gap-2 w-full">
+        <TabsList className="flex w-full h-auto justify-start gap-2 overflow-x-auto bg-transparent p-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:bg-muted">
           {schedule.days.map((day) => (
             <TabsTrigger
               key={day.date || "unknown"}
               value={day.date || "unknown"}
+              className="whitespace-nowrap rounded-md px-4 py-2 data-[state=active]:bg-white data-[state=active]:shadow-sm sm:text-left sm:whitespace-normal"
             >
               {formatEventDate(day.date)}
             </TabsTrigger>
@@ -79,13 +80,13 @@ export default function ScheduleSection({ schedule }: ScheduleSectionProps) {
               <Card key={`${day.date}-${index}`} className="overflow-hidden">
                 <CardContent className="p-0">
                   <div className="flex flex-col md:flex-row">
-                    <div className="bg-gray-50 p-4 md:w-1/4 flex flex-col justify-center items-center md:items-start">
+                    <div className="bg-gray-50 p-4 w-full md:w-1/4 flex flex-col justify-center items-center md:items-start">
                       <div className="text-lg font-bold">{event.time}</div>
-                      {event.location && (
+                      {/* {event.location && (
                         <div className="text-sm text-gray-500">
                           {event.location}
                         </div>
-                      )}
+                      )} */}
                       {event.type && (
                         <Badge
                           className={`mt-2 ${getEventTypeColor(event.type)}`}
@@ -95,7 +96,7 @@ export default function ScheduleSection({ schedule }: ScheduleSectionProps) {
                         </Badge>
                       )}
                     </div>
-                    <div className="p-4 md:w-3/4">
+                    <div className="p-4 w-full md:w-3/4">
                       <h3 className="text-lg font-bold">{event.title}</h3>
                       {event.speaker && (
                         <p className="text-emerald-700 font-medium">
