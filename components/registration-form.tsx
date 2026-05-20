@@ -81,20 +81,13 @@ const formSchema = z.object({
   presenting: z.enum(["oral", "poster", "no"]).optional(),
   mapChallenge: z.boolean(),
   attendingDinner: z.boolean(),
-  dietaryRestrictions: z.enum(
-    ["none", "vegetarian", "vegan", "gluten_free", "halal", "other"],
-    {
-      required_error: "Please select your dietary restrictions.",
-    },
-  ),
+  dietaryRestrictions: z.array(z.string()).min(1, {
+    message: "Please select at least one option.",
+  }),
   dietaryRestrictionsOther: z.string().optional(),
-  alcoholConsumption: z.enum(["yes", "no", "maybe"], {
-    required_error: "Please indicate your alcohol consumption preference.",
+  beveragePreference: z.enum(["alcoholic_and_non", "non_alcoholic_only"], {
+    required_error: "Please select your beverage preference.",
   }),
-  drinkPreferences: z.array(z.string()).min(1, {
-    message: "Please select at least one drink preference.",
-  }),
-  drinkRestrictions: z.string().optional(),
   workshopPreferences: z.object({
     hazardModelling: z.number().min(1).max(5),
     earlyWarning: z.number().min(1).max(5),
@@ -226,9 +219,9 @@ export default function RegistrationForm() {
       presenting: "no",
       mapChallenge: false,
       attendingDinner: false,
+      dietaryRestrictions: [],
       dietaryRestrictionsOther: "",
-      drinkPreferences: [],
-      drinkRestrictions: "",
+      beveragePreference: undefined,
       workshopPreferences: {
         hazardModelling: 1,
         earlyWarning: 2,
@@ -247,7 +240,7 @@ export default function RegistrationForm() {
 
   const watchPosition = form.watch("position");
   const watchAttendanceReason = form.watch("attendanceReason");
-  const watchDietaryRestrictions = form.watch("dietaryRestrictions");
+
   const watchHowDidYouHear = form.watch("howDidYouHear");
 
   // Track form progression
@@ -871,144 +864,26 @@ export default function RegistrationForm() {
                 <FormField
                   control={form.control}
                   name="dietaryRestrictions"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Do you have any dietary restrictions? *
-                      </FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction("dietaryRestrictions", value);
-                          }}
-                          defaultValue={field.value}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="none" id="diet_none" />
-                            <Label htmlFor="diet_none">None</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="vegetarian"
-                              id="vegetarian"
-                            />
-                            <Label htmlFor="vegetarian">Vegetarian</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="vegan" id="vegan" />
-                            <Label htmlFor="vegan">Vegan</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="gluten_free"
-                              id="gluten_free"
-                            />
-                            <Label htmlFor="gluten_free">Gluten-Free</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="halal" id="halal" />
-                            <Label htmlFor="halal">Halal</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="other" id="diet_other" />
-                            <Label htmlFor="diet_other">Other</Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {watchDietaryRestrictions === "other" && (
-                  <FormField
-                    control={form.control}
-                    name="dietaryRestrictionsOther"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Please specify your dietary restrictions
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Your dietary restrictions"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
-
-                <FormField
-                  control={form.control}
-                  name="alcoholConsumption"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Do you plan to consume alcoholic beverages at dinner? *
-                      </FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction("alcoholConsumption", value);
-                          }}
-                          defaultValue={field.value}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="yes" id="alcohol_yes" />
-                            <Label htmlFor="alcohol_yes">Yes</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="no" id="alcohol_no" />
-                            <Label htmlFor="alcohol_no">No</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="maybe" id="alcohol_maybe" />
-                            <Label htmlFor="alcohol_maybe">Maybe</Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="drinkPreferences"
                   render={() => (
                     <FormItem>
                       <div className="mb-4">
                         <FormLabel className="text-base">
-                          What types of drinks do you prefer? (Select all that
-                          apply) *
+                          Do you have any dietary restrictions or food allergies? (Select all that apply) *
                         </FormLabel>
                       </div>
                       {[
-                        { id: "water", label: "Water" },
-                        {
-                          id: "soft_drinks",
-                          label: "Soft drinks (e.g., juice, soda)",
-                        },
-                        { id: "coffee_tea", label: "Coffee / Tea" },
-                        { id: "beer", label: "Beer" },
-                        { id: "wine", label: "Wine" },
-                        { id: "cocktails", label: "Cocktails" },
-                        {
-                          id: "non_alcoholic_only",
-                          label: "Non-alcoholic options only",
-                        },
+                        { id: "none", label: "None" },
+                        { id: "vegetarian", label: "Vegetarian" },
+                        { id: "halal", label: "Halal" },
+                        { id: "gluten_free", label: "Gluten-free" },
+                        { id: "nut_allergy", label: "Nut allergy" },
+                        { id: "seafood_allergy", label: "Seafood allergy" },
+                        { id: "other", label: "Other (please specify)" },
                       ].map((item) => (
                         <FormField
                           key={item.id}
                           control={form.control}
-                          name="drinkPreferences"
+                          name="dietaryRestrictions"
                           render={({ field }) => {
                             return (
                               <FormItem
@@ -1022,11 +897,11 @@ export default function RegistrationForm() {
                                       const newValue = checked
                                         ? [...field.value, item.id]
                                         : field.value?.filter(
-                                            (value) => value !== item.id,
+                                            (value: string) => value !== item.id,
                                           );
                                       field.onChange(newValue);
                                       trackFieldInteraction(
-                                        "drinkPreferences",
+                                        "dietaryRestrictions",
                                         newValue,
                                       );
                                     }}
@@ -1047,14 +922,46 @@ export default function RegistrationForm() {
 
                 <FormField
                   control={form.control}
-                  name="drinkRestrictions"
+                  name="dietaryRestrictionsOther"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Any drink-related restrictions or preferences?
+                        If you selected "Other" or would like to provide additional details, please specify below:
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="Optional" {...field} />
+                        <Input placeholder="Please specify" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="beveragePreference"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        What are your beverage preferences? *
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={(value) => {
+                            field.onChange(value);
+                            trackFieldInteraction("beveragePreference", value);
+                          }}
+                          defaultValue={field.value}
+                          className="flex flex-col space-y-2"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="alcoholic_and_non" id="bev_both" />
+                            <Label htmlFor="bev_both">Alcoholic and non-alcoholic beverages</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="non_alcoholic_only" id="bev_non" />
+                            <Label htmlFor="bev_non">Non-alcoholic beverages only</Label>
+                          </div>
+                        </RadioGroup>
                       </FormControl>
                       <FormMessage />
                     </FormItem>

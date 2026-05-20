@@ -17,11 +17,9 @@ export async function submitRegistration(formData: {
   presenting?: string;
   mapChallenge: boolean;
   attendingDinner: boolean;
-  dietaryRestrictions: string;
+  dietaryRestrictions: string[];
   dietaryRestrictionsOther?: string;
-  alcoholConsumption: string;
-  drinkPreferences: string[];
-  drinkRestrictions?: string;
+  beveragePreference: string;
   workshopPreferences: {
     hazardModelling: number;
     earlyWarning: number;
@@ -64,9 +62,7 @@ export async function submitRegistration(formData: {
     attendingDinner: formData.attendingDinner,
     dietaryRestrictions: formData.dietaryRestrictions,
     dietaryRestrictionsOther: formData.dietaryRestrictionsOther || "",
-    alcoholConsumption: formData.alcoholConsumption,
-    drinkPreferences: formData.drinkPreferences,
-    drinkRestrictions: formData.drinkRestrictions || "",
+    beveragePreference: formData.beveragePreference,
     workshopPreferences: formData.workshopPreferences,
     needsAccommodationHelp: formData.needsAccommodationHelp,
     joinWhatsApp: formData.joinWhatsApp,
@@ -98,6 +94,8 @@ export async function submitRegistration(formData: {
       `- Affiliation: ${formData.affiliation}`,
       `- Presenting: ${formData.presenting === "oral" ? "Oral presentation" : formData.presenting === "poster" ? "Poster presentation" : "No"}`,
       `- Conference Dinner: ${formData.attendingDinner ? "Yes" : "No"}`,
+      `- Dietary: ${formData.dietaryRestrictions.join(", ")}`,
+      `- Beverages: ${formData.beveragePreference === "alcoholic_and_non" ? "Alcoholic and non-alcoholic" : "Non-alcoholic only"}`,
       ``,
       `We will send you further details as the conference date approaches.`,
       `If you have any questions, please contact us at program@geomundus.org`,
@@ -122,7 +120,7 @@ export async function submitRegistration(formData: {
       `Position: ${formData.position}`,
       `Presenting: ${formData.presenting || "no"}`,
       `Dinner: ${formData.attendingDinner ? "Yes" : "No"}`,
-      `Dietary: ${formData.dietaryRestrictions}`,
+      `Dietary: ${formData.dietaryRestrictions.join(", ")}`,
       `Accommodation help: ${formData.needsAccommodationHelp ? "Yes" : "No"}`,
       ``,
       `Registration ID: ${result._id}`,
