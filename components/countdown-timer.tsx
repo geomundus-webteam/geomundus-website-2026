@@ -48,23 +48,23 @@ export default function CountdownTimer({ targetDate }: CountdownTimerProps) {
   if (!isVisible) return null;
 
   return (
-    <div className="max-w-4xl mx-auto mb-16">
-      <div className="grid grid-cols-4 gap-4 text-center">
-        <div className="bg-[#000000] text-white p-4 rounded-lg">
-          <div className="text-4xl font-bold">{days}</div>
-          <div className="text-sm uppercase">Days</div>
+    <div className="w-full max-w-4xl mx-auto mb-16 px-4 overflow-x-auto">
+      <div className="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+        <div className="bg-[#000000] text-white p-3 sm:p-4 rounded-lg">
+          <div className="text-xl sm:text-4xl font-bold">{days}</div>
+          <div className="text-xs sm:text-sm uppercase">{days === 1 ? 'Day' : 'Days'}</div>
         </div>
-        <div className="bg-[#000000] text-white p-4 rounded-lg">
-          <div className="text-4xl font-bold">{hours}</div>
-          <div className="text-sm uppercase">Hours</div>
+        <div className="bg-[#000000] text-white p-3 sm:p-4 rounded-lg">
+          <div className="text-xl sm:text-4xl font-bold">{hours}</div>
+          <div className="text-xs sm:text-sm uppercase">{hours === 1 ? 'Hour' : 'Hours'}</div>
         </div>
-        <div className="bg-[#000000] text-white p-4 rounded-lg">
-          <div className="text-4xl font-bold">{minutes}</div>
-          <div className="text-sm uppercase">Minutes</div>
+        <div className="bg-[#000000] text-white p-3 sm:p-4 rounded-lg">
+          <div className="text-xl sm:text-4xl font-bold">{minutes}</div>
+          <div className="text-xs sm:text-sm uppercase">{minutes === 1 ? 'Minute' : 'Minutes'}</div>
         </div>
-        <div className="bg-[#000000] text-white p-4 rounded-lg">
-          <div className="text-4xl font-bold">{seconds}</div>
-          <div className="text-sm uppercase">Seconds</div>
+        <div className="bg-[#000000] text-white p-3 sm:p-4 rounded-lg">
+          <div className="text-xl sm:text-4xl font-bold">{seconds}</div>
+          <div className="text-xs sm:text-sm uppercase">{seconds === 1 ? 'Second' : 'Seconds'}</div>
         </div>
       </div>
     </div>
