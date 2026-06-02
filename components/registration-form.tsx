@@ -81,25 +81,19 @@ const formSchema = z.object({
   presenting: z.enum(["oral", "poster", "no"]).optional(),
   mapChallenge: z.boolean(),
   attendingDinner: z.boolean(),
-  dietaryRestrictions: z.enum(
-    ["none", "vegetarian", "vegan", "gluten_free", "halal", "other"],
-    {
-      required_error: "Please select your dietary restrictions.",
-    },
-  ),
+  dietaryRestrictions: z.array(z.string()).min(1, {
+    message: "Please select at least one option.",
+  }),
   dietaryRestrictionsOther: z.string().optional(),
-  alcoholConsumption: z.enum(["yes", "no", "maybe"], {
-    required_error: "Please indicate your alcohol consumption preference.",
+  beveragePreference: z.enum(["alcoholic_and_non", "non_alcoholic_only"], {
+    required_error: "Please select your beverage preference.",
   }),
-  drinkPreferences: z.array(z.string()).min(1, {
-    message: "Please select at least one drink preference.",
-  }),
-  drinkRestrictions: z.string().optional(),
   workshopPreferences: z.object({
-    disasterManagement: z.number().min(1).max(4),
-    digitalTwins: z.number().min(1).max(4),
-    participatoryMapping: z.number().min(1).max(4),
-    participatoryMappingChallenge: z.number().min(1).max(4),
+    hazardModelling: z.number().min(1).max(5),
+    earlyWarning: z.number().min(1).max(5),
+    decisionSupport: z.number().min(1).max(5),
+    emergencyResponse: z.number().min(1).max(5),
+    damageAssessment: z.number().min(1).max(5),
   }),
   needsAccommodationHelp: z.boolean(),
   joinWhatsApp: z.boolean(),
@@ -225,14 +219,15 @@ export default function RegistrationForm() {
       presenting: "no",
       mapChallenge: false,
       attendingDinner: false,
+      dietaryRestrictions: [],
       dietaryRestrictionsOther: "",
-      drinkPreferences: [],
-      drinkRestrictions: "",
+      beveragePreference: undefined,
       workshopPreferences: {
-        disasterManagement: 1,
-        digitalTwins: 2,
-        participatoryMapping: 3,
-        participatoryMappingChallenge: 4,
+        hazardModelling: 1,
+        earlyWarning: 2,
+        decisionSupport: 3,
+        emergencyResponse: 4,
+        damageAssessment: 5,
       },
       needsAccommodationHelp: false,
       joinWhatsApp: false,
@@ -245,7 +240,7 @@ export default function RegistrationForm() {
 
   const watchPosition = form.watch("position");
   const watchAttendanceReason = form.watch("attendanceReason");
-  const watchDietaryRestrictions = form.watch("dietaryRestrictions");
+
   const watchHowDidYouHear = form.watch("howDidYouHear");
 
   // Track form progression
@@ -299,15 +294,16 @@ export default function RegistrationForm() {
     try {
       // Validate workshop preferences are unique
       const preferences = [
-        values.workshopPreferences.disasterManagement,
-        values.workshopPreferences.digitalTwins,
-        values.workshopPreferences.participatoryMapping,
-        values.workshopPreferences.participatoryMappingChallenge,
+        values.workshopPreferences.hazardModelling,
+        values.workshopPreferences.earlyWarning,
+        values.workshopPreferences.decisionSupport,
+        values.workshopPreferences.emergencyResponse,
+        values.workshopPreferences.damageAssessment,
       ];
       const uniquePreferences = new Set(preferences);
-      if (uniquePreferences.size !== 4) {
+      if (uniquePreferences.size !== 5) {
         const error =
-          "Invalid workshop preferences: Please assign unique ranks (1, 2, 3, 4) to each workshop.";
+          "Invalid workshop preferences: Please assign unique ranks (1, 2, 3, 4, 5) to each workshop.";
         setSubmitError(error);
 
         posthog?.capture("registration_validation_error", {
@@ -318,7 +314,7 @@ export default function RegistrationForm() {
         toast({
           title: "Invalid workshop preferences",
           description:
-            "Please assign unique ranks (1, 2, 3, 4) to each workshop.",
+            "Please assign unique ranks (1, 2, 3, 4, 5) to each workshop.",
           variant: "destructive",
         });
         return;
@@ -435,11 +431,11 @@ export default function RegistrationForm() {
           </CardTitle>
           <CardDescription className="text-lg">
             Be part of GeoMundus 2026, an international conference focused on
-            Geospatial Technologies for Smart Cities.
+            Geospatial Intelligence for Disaster Resilience.
           </CardDescription>
           <div className="mt-4 space-y-2 text-sm text-muted-foreground">
             <p>
-              <strong>Event Dates:</strong> TBD 2026
+              <strong>Event Dates:</strong> October 16-17, 2026
             </p>
             <p>
               <strong>Location:</strong> Castellón de la Plana, Spain
@@ -868,144 +864,26 @@ export default function RegistrationForm() {
                 <FormField
                   control={form.control}
                   name="dietaryRestrictions"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Do you have any dietary restrictions? *
-                      </FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction("dietaryRestrictions", value);
-                          }}
-                          defaultValue={field.value}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="none" id="diet_none" />
-                            <Label htmlFor="diet_none">None</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="vegetarian"
-                              id="vegetarian"
-                            />
-                            <Label htmlFor="vegetarian">Vegetarian</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="vegan" id="vegan" />
-                            <Label htmlFor="vegan">Vegan</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="gluten_free"
-                              id="gluten_free"
-                            />
-                            <Label htmlFor="gluten_free">Gluten-Free</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="halal" id="halal" />
-                            <Label htmlFor="halal">Halal</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="other" id="diet_other" />
-                            <Label htmlFor="diet_other">Other</Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {watchDietaryRestrictions === "other" && (
-                  <FormField
-                    control={form.control}
-                    name="dietaryRestrictionsOther"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Please specify your dietary restrictions
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Your dietary restrictions"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
-
-                <FormField
-                  control={form.control}
-                  name="alcoholConsumption"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Do you plan to consume alcoholic beverages at dinner? *
-                      </FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction("alcoholConsumption", value);
-                          }}
-                          defaultValue={field.value}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="yes" id="alcohol_yes" />
-                            <Label htmlFor="alcohol_yes">Yes</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="no" id="alcohol_no" />
-                            <Label htmlFor="alcohol_no">No</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="maybe" id="alcohol_maybe" />
-                            <Label htmlFor="alcohol_maybe">Maybe</Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="drinkPreferences"
                   render={() => (
                     <FormItem>
                       <div className="mb-4">
                         <FormLabel className="text-base">
-                          What types of drinks do you prefer? (Select all that
-                          apply) *
+                          Do you have any dietary restrictions or food allergies? (Select all that apply) *
                         </FormLabel>
                       </div>
                       {[
-                        { id: "water", label: "Water" },
-                        {
-                          id: "soft_drinks",
-                          label: "Soft drinks (e.g., juice, soda)",
-                        },
-                        { id: "coffee_tea", label: "Coffee / Tea" },
-                        { id: "beer", label: "Beer" },
-                        { id: "wine", label: "Wine" },
-                        { id: "cocktails", label: "Cocktails" },
-                        {
-                          id: "non_alcoholic_only",
-                          label: "Non-alcoholic options only",
-                        },
+                        { id: "none", label: "None" },
+                        { id: "vegetarian", label: "Vegetarian" },
+                        { id: "halal", label: "Halal" },
+                        { id: "gluten_free", label: "Gluten-free" },
+                        { id: "nut_allergy", label: "Nut allergy" },
+                        { id: "seafood_allergy", label: "Seafood allergy" },
+                        { id: "other", label: "Other (please specify)" },
                       ].map((item) => (
                         <FormField
                           key={item.id}
                           control={form.control}
-                          name="drinkPreferences"
+                          name="dietaryRestrictions"
                           render={({ field }) => {
                             return (
                               <FormItem
@@ -1019,11 +897,11 @@ export default function RegistrationForm() {
                                       const newValue = checked
                                         ? [...field.value, item.id]
                                         : field.value?.filter(
-                                            (value) => value !== item.id,
+                                            (value: string) => value !== item.id,
                                           );
                                       field.onChange(newValue);
                                       trackFieldInteraction(
-                                        "drinkPreferences",
+                                        "dietaryRestrictions",
                                         newValue,
                                       );
                                     }}
@@ -1044,14 +922,46 @@ export default function RegistrationForm() {
 
                 <FormField
                   control={form.control}
-                  name="drinkRestrictions"
+                  name="dietaryRestrictionsOther"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Any drink-related restrictions or preferences?
+                        If you selected "Other" or would like to provide additional details, please specify below:
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="Optional" {...field} />
+                        <Input placeholder="Please specify" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="beveragePreference"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        What are your beverage preferences? *
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={(value) => {
+                            field.onChange(value);
+                            trackFieldInteraction("beveragePreference", value);
+                          }}
+                          defaultValue={field.value}
+                          className="flex flex-col space-y-2"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="alcoholic_and_non" id="bev_both" />
+                            <Label htmlFor="bev_both">Alcoholic and non-alcoholic beverages</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="non_alcoholic_only" id="bev_non" />
+                            <Label htmlFor="bev_non">Non-alcoholic beverages only</Label>
+                          </div>
+                        </RadioGroup>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -1065,28 +975,22 @@ export default function RegistrationForm() {
                   Workshop Participation
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Please rank the following workshops in order of interest for
-                  attendance on Saturday 18th. Assign a rank from 1 (most
-                  preferred) to 4 (least preferred).
+                  Please rank the following workshop topics in order of interest.
+                  Assign a rank from 1 (most preferred) to 5 (least preferred).
                 </p>
 
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="workshopPreferences.disasterManagement"
+                    name="workshopPreferences.hazardModelling"
                     render={({ field }) => (
                       <FormItem>
                         <div className="space-y-2">
                           <FormLabel className="text-base font-medium">
-                            Geospatial data for disaster management and climate
-                            resilience (Andrés Felipe Ramirez)
+                            Hazard Modelling & Risk Assessment
                           </FormLabel>
                           <p className="text-sm text-muted-foreground">
-                            This workshop explores how geospatial technologies
-                            data supports urban resilience and disaster
-                            response. Participants will engage with real-world
-                            examples and learn about data integration, open
-                            platforms and challenges in data accessibility.
+                            GIS mapping, Remote Sensing, AI & ML for predictive analytics, urban risk intelligence.
                           </p>
                           <FormControl>
                             <Select
@@ -1094,7 +998,7 @@ export default function RegistrationForm() {
                                 const numValue = Number.parseInt(value);
                                 field.onChange(numValue);
                                 trackFieldInteraction(
-                                  "workshopPreferences.disasterManagement",
+                                  "workshopPreferences.hazardModelling",
                                   numValue,
                                 );
                               }}
@@ -1109,8 +1013,9 @@ export default function RegistrationForm() {
                                 </SelectItem>
                                 <SelectItem value="2">2</SelectItem>
                                 <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="4">
-                                  4 (Least preferred)
+                                <SelectItem value="4">4</SelectItem>
+                                <SelectItem value="5">
+                                  5 (Least preferred)
                                 </SelectItem>
                               </SelectContent>
                             </Select>
@@ -1123,21 +1028,15 @@ export default function RegistrationForm() {
 
                   <FormField
                     control={form.control}
-                    name="workshopPreferences.digitalTwins"
+                    name="workshopPreferences.earlyWarning"
                     render={({ field }) => (
                       <FormItem>
                         <div className="space-y-2">
                           <FormLabel className="text-base font-medium">
-                            Introduction to digital twins for smart cities
-                            (Nicolas Luna)
+                            Early Warning & Monitoring Systems
                           </FormLabel>
                           <p className="text-sm text-muted-foreground">
-                            This workshop presents two approaches to building
-                            digital twins using proprietary and open-source
-                            tools. Participants will explore workflows with
-                            ArcGIS and compare them with an open-source pipeline
-                            using PostGIS, Geoserver, and Cesium for 3D web
-                            visualization.
+                            Multi-hazard alert systems, IoT sensors, real-time monitoring networks.
                           </p>
                           <FormControl>
                             <Select
@@ -1145,7 +1044,7 @@ export default function RegistrationForm() {
                                 const numValue = Number.parseInt(value);
                                 field.onChange(numValue);
                                 trackFieldInteraction(
-                                  "workshopPreferences.digitalTwins",
+                                  "workshopPreferences.earlyWarning",
                                   numValue,
                                 );
                               }}
@@ -1160,8 +1059,9 @@ export default function RegistrationForm() {
                                 </SelectItem>
                                 <SelectItem value="2">2</SelectItem>
                                 <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="4">
-                                  4 (Least preferred)
+                                <SelectItem value="4">4</SelectItem>
+                                <SelectItem value="5">
+                                  5 (Least preferred)
                                 </SelectItem>
                               </SelectContent>
                             </Select>
@@ -1174,21 +1074,15 @@ export default function RegistrationForm() {
 
                   <FormField
                     control={form.control}
-                    name="workshopPreferences.participatoryMapping"
+                    name="workshopPreferences.decisionSupport"
                     render={({ field }) => (
                       <FormItem>
                         <div className="space-y-2">
                           <FormLabel className="text-base font-medium">
-                            Participatory mapping for smarter cities (Candela
-                            Sol Pelliza)
+                            Geospatial Decision Support Systems
                           </FormLabel>
                           <p className="text-sm text-muted-foreground">
-                            This workshop explores how participatory mapping can
-                            support smarter, more inclusive cities by empowering
-                            communities and informing policy. Participants will
-                            learn key practices, tools, and real-world
-                            applications, with a demo showcasing its use in
-                            urban planning.
+                            Spatial Data Infrastructure (SDI), crisis management DSS, multi-criteria decision analysis, data fusion.
                           </p>
                           <FormControl>
                             <Select
@@ -1196,7 +1090,7 @@ export default function RegistrationForm() {
                                 const numValue = Number.parseInt(value);
                                 field.onChange(numValue);
                                 trackFieldInteraction(
-                                  "workshopPreferences.participatoryMapping",
+                                  "workshopPreferences.decisionSupport",
                                   numValue,
                                 );
                               }}
@@ -1211,8 +1105,9 @@ export default function RegistrationForm() {
                                 </SelectItem>
                                 <SelectItem value="2">2</SelectItem>
                                 <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="4">
-                                  4 (Least preferred)
+                                <SelectItem value="4">4</SelectItem>
+                                <SelectItem value="5">
+                                  5 (Least preferred)
                                 </SelectItem>
                               </SelectContent>
                             </Select>
@@ -1225,16 +1120,15 @@ export default function RegistrationForm() {
 
                   <FormField
                     control={form.control}
-                    name="workshopPreferences.participatoryMappingChallenge"
+                    name="workshopPreferences.emergencyResponse"
                     render={({ field }) => (
                       <FormItem>
                         <div className="space-y-2">
                           <FormLabel className="text-base font-medium">
-                            Workshop 3 – To Be Announced
-                            
+                            Emergency Response & Logistics
                           </FormLabel>
                           <p className="text-sm text-muted-foreground">
-                            Details for this workshop will be announced soon. Stay tuned!
+                            Routing optimization, resource allocation, UAVs/drones, mobile GIS, accessibility analysis.
                           </p>
                           <FormControl>
                             <Select
@@ -1242,7 +1136,7 @@ export default function RegistrationForm() {
                                 const numValue = Number.parseInt(value);
                                 field.onChange(numValue);
                                 trackFieldInteraction(
-                                  "workshopPreferences.participatoryMappingChallenge",
+                                  "workshopPreferences.emergencyResponse",
                                   numValue,
                                 );
                               }}
@@ -1257,8 +1151,55 @@ export default function RegistrationForm() {
                                 </SelectItem>
                                 <SelectItem value="2">2</SelectItem>
                                 <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="4">
-                                  4 (Least preferred)
+                                <SelectItem value="4">4</SelectItem>
+                                <SelectItem value="5">
+                                  5 (Least preferred)
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="workshopPreferences.damageAssessment"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="space-y-2">
+                          <FormLabel className="text-base font-medium">
+                            Rapid Damage Assessment & Recovery
+                          </FormLabel>
+                          <p className="text-sm text-muted-foreground">
+                            Damage mapping, change detection, AI classification, infrastructure assessment, recovery planning.
+                          </p>
+                          <FormControl>
+                            <Select
+                              onValueChange={(value) => {
+                                const numValue = Number.parseInt(value);
+                                field.onChange(numValue);
+                                trackFieldInteraction(
+                                  "workshopPreferences.damageAssessment",
+                                  numValue,
+                                );
+                              }}
+                              defaultValue={field.value?.toString()}
+                            >
+                              <SelectTrigger className="w-48">
+                                <SelectValue placeholder="Select rank" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="1">
+                                  1 (Most preferred)
+                                </SelectItem>
+                                <SelectItem value="2">2</SelectItem>
+                                <SelectItem value="3">3</SelectItem>
+                                <SelectItem value="4">4</SelectItem>
+                                <SelectItem value="5">
+                                  5 (Least preferred)
                                 </SelectItem>
                               </SelectContent>
                             </Select>
