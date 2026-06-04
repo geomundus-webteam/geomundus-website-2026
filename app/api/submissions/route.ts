@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { sanityWriteClient } from "@/lib/sanity.write";
+import fs from "fs";
+import path from "path";
 
 export const runtime = "nodejs";
 
@@ -30,9 +32,6 @@ function createTransporter() {
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
-    },
-    tls: {
-      servername: process.env.EMAIL_HOST,
     },
   });
 }
@@ -123,7 +122,8 @@ export async function POST(request: Request) {
     });
 
     const transporter = createTransporter();
-
+    const signaturePath = path.join(process.cwd(), "public", "email", "signature.jpg");
+    const signatureBuffer = fs.readFileSync(signaturePath);
     // Internal email: required
     await transporter.sendMail({
       from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
@@ -170,6 +170,11 @@ Submitted at: ${new Date().toISOString()}
           content: buffer,
           contentType: file.type,
         },
+        // {
+        //   filename: "signature.jpg",
+        //   content: signatureBuffer,
+        //   cid: "geomundus-signature",
+        // },
       ],
     });
 
@@ -185,17 +190,15 @@ Submitted at: ${new Date().toISOString()}
         text: `
 Dear ${firstName} ${lastName},
 
-Thank you for submitting your abstract to GeoMundus 2026.
-
-Your submission has been received successfully and is now under review.
+Thank you for submitting your abstract to GeoMundus 2026. We are pleased to confirm that your submission has been received successfully and is now under review.
 
 Submission ID: ${submissionId}
 Title: ${title}
 
-Selected themes:
+Selected Focus Areas:
 ${selectedThemes.map((theme) => `- ${theme}`).join("\n")}
 
-Our team will review your submission and will contact you later with the decision and next steps, including whether it will proceed as an oral presentation or poster presentation.
+Our team will carefully evaluate your submission, and you will be informed of the decision and further steps, including whether your work will be selected for an oral or a poster presentation.
 
 Best regards,
 GeoMundus 2026 Organizing Committee
@@ -203,17 +206,24 @@ https://geomundus.org
         `,
         html: `
           <p>Dear <strong>${firstName} ${lastName}</strong>,</p>
-          <p>Thank you for submitting your abstract to <strong>GeoMundus 2026</strong>.</p>
-          <p>Your submission has been received successfully and is now under review.</p>
+          <p>Thank you for submitting your abstract to GeoMundus 2026. We are pleased to confirm that your submission has been received successfully and is now under review.</strong>.</p>
           <p><strong>Submission ID:</strong> ${submissionId}<br />
           <strong>Title:</strong> ${title}</p>
-          <p><strong>Selected themes:</strong></p>
+          <p><strong>Selected Focus Areas:</strong></p>
           <ul>
             ${selectedThemes.map((theme) => `<li>${theme}</li>`).join("")}
           </ul>
-          <p>Our team will review your submission and will contact you later with the decision and next steps, including whether it will proceed as an oral presentation or poster presentation.</p>
+          <p>Our team will carefully evaluate your submission, and you will be informed of the decision and further steps, including whether your work will be selected for an oral or a poster presentation.</p>
           <p>Best regards,<br />GeoMundus 2026 Organizing Committee<br />https://geomundus.org</p>
+          <img src="cid:geomundus-signature" alt="GeoMundus signature" style="max-width: 320px; height: auto;" />
         `,
+        attachments: [
+          {
+            filename: "signature.jpg",
+            content: signatureBuffer,
+            cid: "geomundus-signature",
+          },
+        ],
       });
 
       confirmationEmailDelivered = true;
