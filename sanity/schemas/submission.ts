@@ -44,6 +44,11 @@ export default defineType({
       type: "url",
     }),
     defineField({
+      name: "abstractTemplateUrl",
+      title: "Abstract Template URL",
+      type: "url",
+    }),
+    defineField({
       name: "submissionFormUrl",
       title: "Submission Form URL",
       type: "url",
