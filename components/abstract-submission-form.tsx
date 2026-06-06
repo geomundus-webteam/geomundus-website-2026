@@ -19,6 +19,7 @@ const THEMES = [
 ];
 
 export default function AbstractSubmissionForm() {
+  const [submissionId, setSubmissionId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [institution, setInstitution] = useState("");
@@ -45,6 +46,7 @@ export default function AbstractSubmissionForm() {
     setLoading(true);
     setMessage("");
     setError("");
+    setSubmissionId("");
 
     try {
       if (!file) {
@@ -72,11 +74,8 @@ export default function AbstractSubmissionForm() {
         throw new Error(result.details || result.error || "Submission failed");
       }
 
-      setMessage(
-        result.submissionId
-          ? `Your abstract was submitted successfully. Submission ID: ${result.submissionId}`
-          : "Your abstract was submitted successfully.",
-      );
+      setMessage("Your abstract was submitted successfully.");
+      setSubmissionId(result.submissionId || "");
 
       setFirstName("");
       setLastName("");
@@ -231,7 +230,17 @@ export default function AbstractSubmissionForm() {
       </button>
 
       {message && (
-        <p className="text-center text-[15px] text-[#058a78]">{message}</p>
+        <div className="rounded-2xl border border-[#058a78] bg-[#eaf7f4] px-6 py-6 text-center shadow-sm">
+          <p className="text-[20px] md:text-[22px] font-semibold text-[#047a6b] leading-relaxed">
+            {message}
+          </p>
+
+          {submissionId && (
+            <p className="mt-3 text-[18px] md:text-[20px] font-bold text-[#035f54] break-words">
+              Submission ID: {submissionId}
+            </p>
+          )}
+        </div>
       )}
 
       {error && (
