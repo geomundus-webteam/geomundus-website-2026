@@ -16,7 +16,7 @@ export function SubmissionButton({
       disabled={submissionOpen}
     >
       <Link href={link ||  "/submissions/abstract"}>
-        Submit Your Paper
+        Submit Your Abstract
       </Link>
     </Button>
   ) : (

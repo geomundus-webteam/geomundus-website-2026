@@ -403,21 +403,6 @@ export default async function Home() {
             <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">Key dates</h2>
             <p className="text-[16px] text-[#6e6e73]">All dates subject to confirmation.</p>
           </div>
-          {/* <div className="grid grid-cols-1 md:grid-cols-4 border border-[#e8e8e8] rounded-2xl overflow-hidden bg-white">
-            {[
-              { n: "01", t: "Call for papers", d: "Submit your abstract for oral or poster presentation" },
-              { n: "02", t: "Submission deadline", d: "Final day for papers and posters" },
-              { n: "03", t: "Registration opens", d: "Secure your spot at GeoMundus 2026" },
-              { n: "04", t: "Conference days", d: "Talks, workshops, and networking" },
-            ].map(({ n, t, d }, i) => (
-              <div key={n} className={`p-7 ${i < 3 ? "border-b md:border-b-0 md:border-r" : ""} border-[#e8e8e8]`}>
-                <p className="text-[11px] font-medium text-[#c4c4c8] tracking-widest mb-3">{n}</p>
-                <p className="text-[15px] font-medium text-[#1d1d1f] mb-2">{t}</p>
-                <p className="text-[13px] text-[#6e6e73] leading-snug mb-3">{d}</p>
-                <p className="text-[13px] font-medium text-[#058a78]">TBD 2026</p>
-              </div>
-            ))}
-          </div> */}
           <TimelineCards />
         </div>
       </section>
