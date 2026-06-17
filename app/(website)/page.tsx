@@ -228,10 +228,6 @@ export default async function Home() {
         </AnimateOnScroll>
       </section>
 
-      {/* ── SPONSORS BANNER ── */}
-      {currentConference?.sponsors && currentConference.sponsors.length > 0 && (
-        <SponsorsMarquee sponsors={currentConference.sponsors} />
-      )}
 
       {/* ── ABOUT ── */}
       <section id="info" className="py-24 px-6 bg-[#ffffff] border-[#07686f]">
@@ -449,6 +445,11 @@ export default async function Home() {
         </div>
       </section>
       </AnimateOnScroll>
+
+      {/* ── SPONSORS BANNER ── */}
+      {currentConference?.sponsors && currentConference.sponsors.length > 0 && (
+        <SponsorsMarquee sponsors={currentConference.sponsors} />
+      )}
 
       {/* ── FAQ ── */}
       {faqs && faqs.length > 0 && (
