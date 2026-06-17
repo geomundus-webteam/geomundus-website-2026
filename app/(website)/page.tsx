@@ -24,6 +24,7 @@ import { urlFor } from "@/lib/sanity.client";
 import { urlForImage } from "@/sanity/lib/image";
 import VenueSlideshow from "@/components/slideshow-images";
 import Slideshow from "@/components/slideshow-images";
+import SponsorsMarquee from "@/components/sponsor-marquee";
 
 interface KeynoteSpeaker {
   name?: string;
@@ -226,6 +227,11 @@ export default async function Home() {
           ))}
         </AnimateOnScroll>
       </section>
+
+      {/* ── SPONSORS BANNER ── */}
+      {currentConference?.sponsors && currentConference.sponsors.length > 0 && (
+        <SponsorsMarquee sponsors={currentConference.sponsors} />
+      )}
 
       {/* ── ABOUT ── */}
       <section id="info" className="py-24 px-6 bg-[#ffffff] border-[#07686f]">

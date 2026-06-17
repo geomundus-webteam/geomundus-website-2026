@@ -55,6 +55,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
               { href: "/speakers", label: "Speakers" },
               { href: "/submissions", label: "Submissions" },
               { href: "/#contact", label: "Contact" },
+              // { href: "/sponsors", label: "Sponsor" },
               { href: "/local", label: "Venue" },
               { href: "/team", label: "Team" },
             ].map(({ href, label }) => (
@@ -88,6 +89,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
                 { href: "/speakers", label: "Speakers" },
                 { href: "/submissions", label: "Submissions" },
                 { href: "/#contact", label: "Contact" },
+                // { href: "/sponsors", label: "Sponsor" },
                 { href: "/local", label: "Venue" },
                 { href: "/team", label: "Team" },
               ].map(({ href, label }) => (
