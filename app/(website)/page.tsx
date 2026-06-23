@@ -448,7 +448,9 @@ export default async function Home() {
 
       {/* ── SPONSORS BANNER ── */}
       {currentConference?.sponsors && currentConference.sponsors.length > 0 && (
-        <SponsorsMarquee sponsors={currentConference.sponsors} />
+        <SponsorsMarquee 
+          sponsors={currentConference.sponsors}
+          partners={currentConference.partners} />
       )}
 
       {/* ── FAQ ── */}
