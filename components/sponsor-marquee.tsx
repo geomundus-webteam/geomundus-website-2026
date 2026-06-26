@@ -67,7 +67,7 @@ export default function SponsorsMarquee({ sponsors = [], partners = [] }: Sponso
                   alt={item.name}
                   width={180}
                   height={72}
-                  className="max-h-16 w-auto object-contain"
+                  className="max-h-16 w-auto object-contain object-center mx-auto"
                 />
               ) : (
                 <span className="text-[15px] font-semibold text-[#6e6e73] px-4">
