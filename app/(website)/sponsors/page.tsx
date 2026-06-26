@@ -30,6 +30,7 @@ import {
 import { cachedClient } from "@/lib/sanity.client";
 import { currentConferenceQuery } from "@/lib/sanity.queries";
 import WhySponsorCards from "@/components/why-sponsors-grid";
+import SponsorsMarquee from "@/components/sponsor-marquee";
 
 export const metadata: Metadata = {
   title: "GeoMundus - Become a Sponsor",
@@ -120,7 +121,7 @@ export default async function SponsorsPage() {
             <div className="mb-16">
               <h3 className="text-2xl font-bold mb-8">Tier Benefits</h3>
                 <div className="flex justify-center mb-10">
-                  <Image src="/sponsorship_1.png" alt="Tier Benefits 2026" width={800} height={800} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
+                  <Image src="/Sponsorship Poster.png" alt="Tier Benefits 2026" width={800} height={800} priority className="drop-shadow-[0_10px_40px_rgba(45,106,39,0.15)]" />
                 </div>
             </div>
           </div>
@@ -137,84 +138,12 @@ export default async function SponsorsPage() {
                 Sponsors and Partners
               </h2>
 
-              {currentConference.sponsors?.length > 0 && (
-                <div className="mb-12">
-                  <h3 className="text-xl font-bold text-center mb-8">
-                    Sponsors
-                  </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
-                    {currentConference?.sponsors?.map((sponsor) => (
-                      <div
-                        key={sponsor._id}
-                        className="flex items-center justify-center"
-                      >
-                        {sponsor.logoUrl ? (
-                          <Link
-                            href={sponsor.websiteUrl || "#"}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:opacity-80 transition-opacity"
-                          >
-                            <Image
-                              src={sponsor.logoUrl || "/placeholder.svg"}
-                              alt={sponsor.name}
-                              width={150}
-                              height={80}
-                              className="max-h-20 w-auto object-contain"
-                            />
-                          </Link>
-                        ) : (
-                          <div className="bg-gray-200 p-4 rounded-md">
-                            <p className="text-gray-700 font-medium">
-                              {sponsor.name}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+          {currentConference?.sponsors && currentConference.sponsors.length > 0 && (
+            <SponsorsMarquee 
+              sponsors={currentConference.sponsors}
+              partners={currentConference.partners} />
+            )}
                 </div>
-              )}
-
-              {currentConference.partners?.length > 0 && (
-                <div>
-                  <h3 className="text-xl font-bold text-center mb-8">
-                    Partners
-                  </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
-                    {currentConference?.partners?.map((partner) => (
-                      <div
-                        key={partner._id}
-                        className="flex items-center justify-center"
-                      >
-                        {partner.logoUrl ? (
-                          <Link
-                            href={partner.websiteUrl || "#"}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:opacity-80 transition-opacity"
-                          >
-                            <Image
-                              src={partner.logoUrl || "/placeholder.svg"}
-                              alt={partner.name}
-                              width={150}
-                              height={80}
-                              className="max-h-20 w-auto object-contain"
-                            />
-                          </Link>
-                        ) : (
-                          <div className="bg-gray-200 p-4 rounded-md">
-                            <p className="text-gray-700 font-medium">
-                              {partner.name}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
         </section>
       )}
