@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import { sanityWriteClient } from "@/lib/sanity.write";
 import fs from "fs";
 import path from "path";
+import { syncAbstractsToSheet } from "@/lib/sync-abstracts-to-sheet";
 
 export const runtime = "nodejs";
 
@@ -241,6 +242,12 @@ https://geomundus.org
         confirmationEmailError,
       })
       .commit();
+    
+    try {
+      await syncAbstractsToSheet();
+    } catch (sheetError) {
+      console.error("Google Sheet sync failed:", sheetError);
+    }
 
     return NextResponse.json({
       success: true,
