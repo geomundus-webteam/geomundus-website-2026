@@ -30,6 +30,28 @@ export const siteSettingsQuery = tagQuery(
   "siteSettings",
 );
 
+
+export const abstractSubmissionsExportQuery = {
+  query: groq`
+    *[_type == "abstractSubmission"] | order(submittedAt desc) {
+      submissionId,
+      firstName,
+      lastName,
+      institution,
+      email,
+      selectedThemes,
+      title,
+      authors,
+      originalFileName,
+      status,
+      emailDelivered,
+      confirmationEmailDelivered,
+      confirmationEmailError,
+      submittedAt
+    }
+  `,
+};
+
 // Current conference with speakers
 export const currentConferenceQuery = tagQuery(
   groq`*[_type == "conference" && current == true][0]{
