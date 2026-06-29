@@ -12,32 +12,22 @@ export async function submitRegistration(formData: {
   position: string;
   positionOther?: string;
   website: string;
-  attendanceReason: string;
+  attendanceReason: string[];
   attendanceReasonOther?: string;
-  presenting?: string;
-  mapChallenge: boolean;
-  attendingDinner: boolean;
+  presenting: string;
+  attendanceDays: string;
   dietaryRestrictions: string[];
   dietaryRestrictionsOther?: string;
-  beveragePreference: string;
-  workshopPreferences: {
-    hazardModelling: number;
-    earlyWarning: number;
-    decisionSupport: number;
-    emergencyResponse: number;
-    damageAssessment: number;
-  };
-  needsAccommodationHelp: boolean;
-  joinWhatsApp: boolean;
+  beveragePreference: string[];
+  attendingDinner: string;
   consentPublicList: boolean;
   consentPhotography: boolean;
   howDidYouHear?: string;
   howDidYouHearOther?: string;
   additionalComments?: string;
 }) {
-  // Check for duplicate email
   const existing = await sanityWriteClient.fetch(
-    `count(*[_type == "registration" && email == $email])`,
+    `count(*[_type == "registration" && email == $email && registeredAt > "2026-01-01"])`,
     { email: formData.email }
   );
 
@@ -45,7 +35,6 @@ export async function submitRegistration(formData: {
     throw new Error("EMAIL_ALREADY_REGISTERED");
   }
 
-  // Save to Sanity
   const result = await sanityWriteClient.create({
     _type: "registration",
     fullName: formData.fullName,
@@ -57,15 +46,12 @@ export async function submitRegistration(formData: {
     website: formData.website,
     attendanceReason: formData.attendanceReason,
     attendanceReasonOther: formData.attendanceReasonOther || "",
-    presenting: formData.presenting || "no",
-    mapChallenge: formData.mapChallenge,
-    attendingDinner: formData.attendingDinner,
+    presenting: formData.presenting,
+    attendanceDays: formData.attendanceDays,
     dietaryRestrictions: formData.dietaryRestrictions,
     dietaryRestrictionsOther: formData.dietaryRestrictionsOther || "",
     beveragePreference: formData.beveragePreference,
-    workshopPreferences: formData.workshopPreferences,
-    needsAccommodationHelp: formData.needsAccommodationHelp,
-    joinWhatsApp: formData.joinWhatsApp,
+    attendingDinner: formData.attendingDinner,
     consentPublicList: formData.consentPublicList,
     consentPhotography: formData.consentPhotography,
     howDidYouHear: formData.howDidYouHear || "",
@@ -75,55 +61,52 @@ export async function submitRegistration(formData: {
     registeredAt: new Date().toISOString(),
   });
 
-  // Send confirmation email to registrant
   await sendEmail({
     to: formData.email,
     subject: "[GeoMundus 2026] Registration Confirmed",
     text: [
-      `Dear ${formData.fullName},`,
-      ``,
-      `Thank you for registering for GeoMundus 2026 — the 18th Edition of the GeoMundus Conference!`,
-      ``,
-      `Conference Details:`,
-      `- Theme: Geospatial Intelligence for Disaster Resilience`,
-      `- Dates: October 16-17, 2026`,
-      `- Location: Universitat Jaume I, Castellón de la Plana, Spain`,
-      ``,
-      `Your Registration Summary:`,
-      `- Name: ${formData.fullName}`,
-      `- Affiliation: ${formData.affiliation}`,
-      `- Presenting: ${formData.presenting === "oral" ? "Oral presentation" : formData.presenting === "poster" ? "Poster presentation" : "No"}`,
-      `- Conference Dinner: ${formData.attendingDinner ? "Yes" : "No"}`,
-      `- Dietary: ${formData.dietaryRestrictions.join(", ")}`,
-      `- Beverages: ${formData.beveragePreference === "alcoholic_and_non" ? "Alcoholic and non-alcoholic" : "Non-alcoholic only"}`,
-      ``,
-      `We will send you further details as the conference date approaches.`,
-      `If you have any questions, please contact us at program@geomundus.org`,
-      ``,
-      `Best regards,`,
-      `GeoMundus 2026 Organizing Committee`,
-      `https://geomundus.org`,
+      "Dear participant,",
+      "",
+      'Welcome to the GeoMundus 2026 Conference, "Geospatial Intelligence for Disaster Resilience"! We are thrilled to have you join our growing community of students and professionals passionate about geospatial innovation.',
+      "",
+      "The conference will take place at Universitat Jaume I in Castellon (Spain) from October 16-17. The official Conference Dinner will take place on October 16, offering a great opportunity for networking. Spots are limited and are given on a first-come basis and attendance is subject to confirmation by the GeoMundus team closer to the date of the conference. Further details regarding the venue will be communicated together with the confirmation.",
+      "",
+      "Join our WhatsApp Community:",
+      "To stay connected and receive real-time updates before and during the event, we have created a dedicated WhatsApp group.",
+      "Feel free to join via link: https://chat.whatsapp.com/Fvapnehebv575yqUPzwAhG",
+      "",
+      "Also, we invite you to follow us on our official website and social media:",
+      "Website: https://geomundus.org/",
+      "Instagram: https://www.instagram.com/geomundus_conference/",
+      "Facebook: https://www.facebook.com/geomundus/",
+      "LinkedIn: https://www.linkedin.com/company/geomundusconference/",
+      "Twitter: https://x.com/geomundus_conf",
+      "",
+      "We look forward to welcoming you in Castellon soon!!",
+      "",
+      "Best regards,",
+      "GeoMundus 2026 Team",
     ].join("\n"),
   });
 
-  // Send notification to web team
   await sendEmail({
     to: process.env.EMAIL_FROM || "webteam@geomundus.org",
-    subject: `[GeoMundus 2026] New Registration: ${formData.fullName}`,
+    subject: "[GeoMundus 2026] New Registration: " + formData.fullName,
     text: [
-      `New registration received:`,
-      ``,
-      `Name: ${formData.fullName}`,
-      `Email: ${formData.email}`,
-      `Affiliation: ${formData.affiliation}`,
-      `Country: ${formData.country}`,
-      `Position: ${formData.position}`,
-      `Presenting: ${formData.presenting || "no"}`,
-      `Dinner: ${formData.attendingDinner ? "Yes" : "No"}`,
-      `Dietary: ${formData.dietaryRestrictions.join(", ")}`,
-      `Accommodation help: ${formData.needsAccommodationHelp ? "Yes" : "No"}`,
-      ``,
-      `Registration ID: ${result._id}`,
+      "New registration received:",
+      "",
+      "Name: " + formData.fullName,
+      "Email: " + formData.email,
+      "Affiliation: " + formData.affiliation,
+      "Country: " + formData.country,
+      "Position: " + formData.position,
+      "Days: " + formData.attendanceDays,
+      "Presenting: " + formData.presenting,
+      "Dinner: " + formData.attendingDinner,
+      "Dietary: " + formData.dietaryRestrictions.join(", "),
+      "Beverages: " + formData.beveragePreference.join(", "),
+      "",
+      "Registration ID: " + result._id,
     ].join("\n"),
   });
 

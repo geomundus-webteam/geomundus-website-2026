@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { usePostHog } from "posthog-js/react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,7 +17,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -50,6 +48,7 @@ const formSchema = z.object({
   affiliation: z.string().min(1, {
     message: "Affiliation is required.",
   }),
+  affiliationOther: z.string().optional(),
   country: z.string().min(1, {
     message: "Country is required.",
   }),
@@ -68,43 +67,44 @@ const formSchema = z.object({
     },
   ),
   positionOther: z.string().optional(),
-  website: z.string().url({
-    message: "Please enter a valid URL.",
+  website: z.string().min(1, {
+    message: "Please enter your website or LinkedIn URL.",
   }),
-  attendanceReason: z.enum(
-    ["present_research", "attend_sessions", "networking", "other"],
-    {
-      required_error: "Please select your main reason for attending.",
-    },
-  ),
+  attendanceReason: z.array(z.string()).min(1, {
+    message: "Please select at least one reason.",
+  }),
   attendanceReasonOther: z.string().optional(),
-  presenting: z.enum(["oral", "poster", "no"]).optional(),
-  mapChallenge: z.boolean(),
-  attendingDinner: z.boolean(),
+  presenting: z.enum(["submitted", "planning", "no"], {
+    required_error: "Please select an option.",
+  }),
+  attendanceDays: z.enum(["both", "friday", "saturday"], {
+    required_error: "Please select which days you plan to attend.",
+  }),
   dietaryRestrictions: z.array(z.string()).min(1, {
     message: "Please select at least one option.",
   }),
   dietaryRestrictionsOther: z.string().optional(),
-  beveragePreference: z.enum(["alcoholic_and_non", "non_alcoholic_only"], {
-    required_error: "Please select your beverage preference.",
+  beveragePreference: z.array(z.string()).min(1, {
+    message: "Please select at least one option.",
   }),
-  workshopPreferences: z.object({
-    hazardModelling: z.number().min(1).max(5),
-    earlyWarning: z.number().min(1).max(5),
-    decisionSupport: z.number().min(1).max(5),
-    emergencyResponse: z.number().min(1).max(5),
-    damageAssessment: z.number().min(1).max(5),
+  attendingDinner: z.enum(["yes", "still_deciding", "no"], {
+    required_error: "Please select an option.",
   }),
-  needsAccommodationHelp: z.boolean(),
-  joinWhatsApp: z.boolean(),
-  consentPublicList: z.boolean(),
-  consentPhotography: z.boolean(),
+  consentPublicList: z.literal(true, {
+    errorMap: () => ({ message: "This consent is required to register." }),
+  }),
+  consentPhotography: z.literal(true, {
+    errorMap: () => ({ message: "This consent is required to register." }),
+  }),
   howDidYouHear: z
     .enum([
       "university",
-      "social_media",
-      "friend_colleague",
-      "website",
+      "facebook",
+      "instagram",
+      "linkedin",
+      "friend_attended",
+      "friend_not_attended",
+      "geomundus_website",
       "other",
     ])
     .optional(),
@@ -112,339 +112,180 @@ const formSchema = z.object({
   additionalComments: z.string().optional(),
 });
 
+type FormValues = z.infer<typeof formSchema>;
+
 const countries = [
-  "Afghanistan",
-  "Albania",
-  "Algeria",
-  "Argentina",
-  "Armenia",
-  "Australia",
-  "Austria",
-  "Azerbaijan",
-  "Bahrain",
-  "Bangladesh",
-  "Belarus",
-  "Belgium",
-  "Bolivia",
-  "Bosnia and Herzegovina",
-  "Brazil",
-  "Bulgaria",
-  "Cambodia",
-  "Canada",
-  "Chile",
-  "China",
-  "Colombia",
-  "Costa Rica",
-  "Croatia",
-  "Czech Republic",
-  "Denmark",
-  "Ecuador",
-  "Egypt",
-  "Estonia",
-  "Finland",
-  "France",
-  "Georgia",
-  "Germany",
-  "Ghana",
-  "Greece",
-  "Hungary",
-  "Iceland",
-  "India",
-  "Indonesia",
-  "Iran",
-  "Iraq",
-  "Ireland",
-  "Israel",
-  "Italy",
-  "Japan",
-  "Jordan",
-  "Kazakhstan",
-  "Kenya",
-  "Kuwait",
-  "Latvia",
-  "Lebanon",
-  "Lithuania",
-  "Luxembourg",
-  "Malaysia",
-  "Mexico",
-  "Morocco",
-  "Netherlands",
-  "New Zealand",
-  "Norway",
-  "Pakistan",
-  "Peru",
-  "Philippines",
-  "Poland",
-  "Portugal",
-  "Qatar",
-  "Romania",
-  "Saudi Arabia",
-  "Serbia",
-  "Singapore",
-  "Slovakia",
-  "Slovenia",
-  "South Africa",
-  "South Korea",
-  "Spain",
-  "Sweden",
-  "Switzerland",
-  "Thailand",
-  "Turkey",
-  "Ukraine",
-  "United Arab Emirates",
-  "United Kingdom",
-  "United States",
-  "Uruguay",
-  "Venezuela",
-  "Vietnam",
+  "Afghanistan","Albania","Algeria","Andorra","Angola","Argentina",
+  "Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain",
+  "Bangladesh","Barbados","Belarus","Belgium","Belize","Benin",
+  "Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil",
+  "Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon",
+  "Canada","Cape Verde","Central African Republic","Chad","Chile",
+  "China","Colombia","Comoros","Congo","Costa Rica","Croatia","Cuba",
+  "Cyprus","Czech Republic","Denmark","Djibouti","Dominican Republic",
+  "East Timor","Ecuador","Egypt","El Salvador","Equatorial Guinea",
+  "Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France",
+  "Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada",
+  "Guatemala","Guinea","Guyana","Haiti","Honduras","Hungary","Iceland",
+  "India","Indonesia","Iran","Iraq","Ireland","Israel","Italy",
+  "Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kosovo","Kuwait",
+  "Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya",
+  "Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi",
+  "Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius",
+  "Mexico","Moldova","Monaco","Mongolia","Montenegro","Morocco",
+  "Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand",
+  "Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway",
+  "Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay",
+  "Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia",
+  "Rwanda","Saudi Arabia","Senegal","Serbia","Sierra Leone","Singapore",
+  "Slovakia","Slovenia","Somalia","South Africa","South Korea","Spain",
+  "Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria",
+  "Taiwan","Tajikistan","Tanzania","Thailand","Togo","Trinidad and Tobago",
+  "Tunisia","Turkey","Turkmenistan","Uganda","Ukraine",
+  "United Arab Emirates","United Kingdom","United States","Uruguay",
+  "Uzbekistan","Vatican City","Venezuela","Vietnam","Yemen","Zambia",
+  "Zimbabwe",
 ];
 
-export default function RegistrationForm() {
+export function RegistrationForm() {
+  const router = useRouter();
+  const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [currentStep, setCurrentStep] = useState(1);
-  const router = useRouter();
-  const posthog = usePostHog();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       fullName: "",
       email: "",
       affiliation: "",
+      affiliationOther: "",
       country: "",
       positionOther: "",
       website: "",
+      attendanceReason: [],
       attendanceReasonOther: "",
-      presenting: "no",
-      mapChallenge: false,
-      attendingDinner: false,
       dietaryRestrictions: [],
       dietaryRestrictionsOther: "",
-      beveragePreference: undefined,
-      workshopPreferences: {
-        hazardModelling: 1,
-        earlyWarning: 2,
-        decisionSupport: 3,
-        emergencyResponse: 4,
-        damageAssessment: 5,
-      },
-      needsAccommodationHelp: false,
-      joinWhatsApp: false,
-      consentPublicList: false,
-      consentPhotography: false,
+      beveragePreference: [],
+      consentPublicList: undefined as unknown as true,
+      consentPhotography: undefined as unknown as true,
       howDidYouHearOther: "",
       additionalComments: "",
     },
   });
 
+  const watchAffiliation = form.watch("affiliation");
   const watchPosition = form.watch("position");
   const watchAttendanceReason = form.watch("attendanceReason");
 
-  const watchHowDidYouHear = form.watch("howDidYouHear");
-
-  // Track form progression
-  const trackFormStep = (step: number) => {
-    posthog?.capture("registration_form_step", {
-      step,
-      step_name: getStepName(step),
-    });
-  };
+  const totalSteps = 5;
 
   const getStepName = (step: number) => {
     switch (step) {
-      case 1:
-        return "basic_information";
-      case 2:
-        return "participation_details";
-      case 3:
-        return "dinner_preferences";
-      case 4:
-        return "workshop_preferences";
-      case 5:
-        return "additional_information";
-      default:
-        return "unknown";
+      case 1: return "basic_information";
+      case 2: return "participation_details";
+      case 3: return "dietary_preferences";
+      case 4: return "communication_consent";
+      case 5: return "additional_information";
+      default: return "unknown";
     }
   };
 
-  // Track field interactions
-  const trackFieldInteraction = (fieldName: string, value: any) => {
-    posthog?.capture("registration_field_interaction", {
-      field_name: fieldName,
-      field_type: typeof value,
-      has_value: !!value,
-    });
-  };
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: FormValues) {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    // Track registration attempt
-    posthog?.capture("registration_attempt_started", {
-      email: values.email,
-      country: values.country,
-      position: values.position,
-      attendance_reason: values.attendanceReason,
-      presenting: values.presenting,
-      attending_dinner: values.attendingDinner,
-    });
-
     try {
-      // Validate workshop preferences are unique
-      const preferences = [
-        values.workshopPreferences.hazardModelling,
-        values.workshopPreferences.earlyWarning,
-        values.workshopPreferences.decisionSupport,
-        values.workshopPreferences.emergencyResponse,
-        values.workshopPreferences.damageAssessment,
-      ];
-      const uniquePreferences = new Set(preferences);
-      if (uniquePreferences.size !== 5) {
-        const error =
-          "Invalid workshop preferences: Please assign unique ranks (1, 2, 3, 4, 5) to each workshop.";
-        setSubmitError(error);
-
-        posthog?.capture("registration_validation_error", {
-          error_type: "workshop_preferences_not_unique",
-          preferences: preferences,
-        });
-
-        toast({
-          title: "Invalid workshop preferences",
-          description:
-            "Please assign unique ranks (1, 2, 3, 4, 5) to each workshop.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      await submitRegistration(values);
-
-      // Track successful registration
-      posthog?.capture("registration_completed", {
+      await submitRegistration({
+        fullName: values.fullName,
         email: values.email,
+        affiliation:
+          values.affiliation === "other"
+            ? values.affiliationOther || "Other"
+            : values.affiliation,
         country: values.country,
         position: values.position,
-        attendance_reason: values.attendanceReason,
+        positionOther: values.positionOther,
+        website: values.website,
+        attendanceReason: values.attendanceReason,
+        attendanceReasonOther: values.attendanceReasonOther,
         presenting: values.presenting,
-        attending_dinner: values.attendingDinner,
-        map_challenge: values.mapChallenge,
-        join_whatsapp: values.joinWhatsApp,
-        consent_public_list: values.consentPublicList,
-        consent_photography: values.consentPhotography,
-        how_did_you_hear: values.howDidYouHear,
-      });
-
-      // Identify user in PostHog
-      posthog?.identify(values.email, {
-        email: values.email,
-        name: values.fullName,
-        affiliation: values.affiliation,
-        country: values.country,
-        position: values.position,
+        attendanceDays: values.attendanceDays,
+        dietaryRestrictions: values.dietaryRestrictions,
+        dietaryRestrictionsOther: values.dietaryRestrictionsOther,
+        beveragePreference: values.beveragePreference,
+        attendingDinner: values.attendingDinner,
+        consentPublicList: values.consentPublicList,
+        consentPhotography: values.consentPhotography,
+        howDidYouHear: values.howDidYouHear,
+        howDidYouHearOther: values.howDidYouHearOther,
+        additionalComments: values.additionalComments,
       });
 
       toast({
         title: "Registration successful!",
-        description: "Thank you for registering for GeoMundus 2026!",
+        description: "You will receive a confirmation email shortly.",
       });
 
-      // Reset form
-      form.reset();
-
-      // Redirect to confirmation page
-      router.push("/registration/confirmation");
+      router.push("/registration/success");
     } catch (error) {
-      console.error("Registration error:", error);
-
-      let errorMessage =
-        "There was a problem with your registration. Please try again.";
-      let errorType = "unknown_error";
-
-      if (error instanceof Error) {
-        if (error.message === "EMAIL_ALREADY_REGISTERED") {
-          errorMessage =
-            "This email address is already registered. Please use a different email or contact support if you believe this is an error.";
-          errorType = "email_already_registered";
-        } else if (error.message === "REGISTRATION_FAILED") {
-          errorMessage =
-            "Registration failed due to a server error. Please try again in a few minutes.";
-          errorType = "server_error";
-        }
+      if (error instanceof Error && error.message === "EMAIL_ALREADY_REGISTERED") {
+        setSubmitError(
+          "This email address is already registered. If you need to update your registration, please contact us at program@geomundus.org",
+        );
+      } else {
+        setSubmitError(
+          "Something went wrong. Please try again or contact program@geomundus.org for help.",
+        );
       }
-
-      setSubmitError(errorMessage);
-
-      // Track registration error
-      posthog?.capture("registration_error", {
-        error_type: errorType,
-        error_message: error instanceof Error ? error.message : "Unknown error",
-        email: values.email,
-        step: "submission",
-      });
-
-      toast({
-        title: "Registration failed",
-        description: errorMessage,
-        variant: "destructive",
-      });
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  // Track when user starts filling the form
-  const handleFormStart = () => {
-    posthog?.capture("registration_form_started");
+  const nextStep = () => {
+    if (currentStep < totalSteps) {
+      setCurrentStep(currentStep + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
-  // Track form abandonment
-  const handleFormAbandon = () => {
-    const formData = form.getValues();
-    const filledFields = Object.entries(formData).filter(([_, value]) => {
-      if (typeof value === "string") return value.trim() !== "";
-      if (typeof value === "boolean") return value;
-      if (Array.isArray(value)) return value.length > 0;
-      if (typeof value === "object" && value !== null)
-        return Object.values(value).some((v) => v);
-      return false;
-    }).length;
-
-    posthog?.capture("registration_form_abandoned", {
-      filled_fields_count: filledFields,
-      total_fields: Object.keys(formData).length,
-      completion_percentage: Math.round(
-        (filledFields / Object.keys(formData).length) * 100,
-      ),
-      last_step: currentStep,
-    });
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-2xl mx-auto py-8 px-4">
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">
-            GeoMundus 2026 – Registration Form
+          <CardTitle className="text-2xl font-bold">
+            GeoMundus 2026 Registration
           </CardTitle>
-          <CardDescription className="text-lg">
-            Be part of GeoMundus 2026, an international conference focused on
-            Geospatial Intelligence for Disaster Resilience.
+          <CardDescription>
+            Geospatial Intelligence for Disaster Resilience
+            <br />
+            October 16-17, 2026 - Universitat Jaume I, Castellon de la Plana, Spain
           </CardDescription>
-          <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-            <p>
-              <strong>Event Dates:</strong> October 16-17, 2026
-            </p>
-            <p>
-              <strong>Location:</strong> Castellón de la Plana, Spain
-            </p>
-            <p>
-              <strong>Contact:</strong> program@geomundus.org
-            </p>
+          <div className="flex justify-center gap-2 mt-4">
+            {Array.from({ length: totalSteps }, (_, i) => (
+              <div
+                key={i}
+                className={`h-2 w-12 rounded-full transition-colors ${
+                  i + 1 <= currentStep ? "bg-teal-600" : "bg-gray-200"
+                }`}
+              />
+            ))}
           </div>
+          <p className="text-sm text-muted-foreground mt-2">
+            Step {currentStep} of {totalSteps}:{" "}
+            {getStepName(currentStep).replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+          </p>
         </CardHeader>
+
         <CardContent>
           {submitError && (
             <Alert variant="destructive" className="mb-6">
@@ -454,421 +295,241 @@ export default function RegistrationForm() {
           )}
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              {/* Basic Information */}
-              <div className="space-y-6">
-                <h3 className="text-lg font-semibold">Basic Information</h3>
+            <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
 
-                <FormField
-                  control={form.control}
-                  name="fullName"
-                  render={({ field }) => (
+              {currentStep === 1 && (
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-1">Section 1: Basic Information</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Some of the information below will be printed on your entrance badge.
+                    </p>
+                  </div>
+
+                  <FormField control={form.control} name="fullName" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Full Name *</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="John Doe"
-                          {...field}
-                          onFocus={() => {
-                            handleFormStart();
-                            trackFieldInteraction("fullName", field.value);
-                          }}
-                          onChange={(e) => {
-                            field.onChange(e);
-                            trackFieldInteraction("fullName", e.target.value);
-                          }}
-                        />
-                      </FormControl>
+                      <FormLabel>1. Full Name *</FormLabel>
+                      <FormControl><Input placeholder="Your full name" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
+                  )} />
 
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
+                  <FormField control={form.control} name="email" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email Address *</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="john.doe@example.com"
-                          {...field}
-                          onChange={(e) => {
-                            field.onChange(e);
-                            trackFieldInteraction("email", e.target.value);
-                          }}
-                        />
-                      </FormControl>
+                      <FormLabel>2. Email Address *</FormLabel>
+                      <FormControl><Input type="email" placeholder="your.email@example.com" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
+                  )} />
 
-                <FormField
-                  control={form.control}
-                  name="affiliation"
-                  render={({ field }) => (
+                  <FormField control={form.control} name="affiliation" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>
-                        Affiliation (University / Organization) *
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Universitat Jaume I"
-                          {...field}
-                          onChange={(e) => {
-                            field.onChange(e);
-                            trackFieldInteraction(
-                              "affiliation",
-                              e.target.value,
-                            );
-                          }}
-                        />
-                      </FormControl>
+                      <FormLabel>3. Affiliation (University / Organization) *</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger><SelectValue placeholder="Select your affiliation" /></SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="NOVA IMS">NOVA IMS</SelectItem>
+                          <SelectItem value="UJI">UJI</SelectItem>
+                          <SelectItem value="IFGI">IFGI</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
+                  )} />
 
-                <FormField
-                  control={form.control}
-                  name="country"
-                  render={({ field }) => (
+                  {watchAffiliation === "other" && (
+                    <FormField control={form.control} name="affiliationOther" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Please specify your affiliation</FormLabel>
+                        <FormControl><Input placeholder="Your university or organization" {...field} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  )}
+
+                  <FormField control={form.control} name="country" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Country of Residence *</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction("country", value);
-                          }}
-                          defaultValue={field.value}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select your country" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {countries.map((country) => (
-                              <SelectItem key={country} value={country}>
-                                {country}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
+                      <FormLabel>4. Country of Residence *</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger><SelectValue placeholder="Select your country" /></SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {countries.map((c) => (
+                            <SelectItem key={c} value={c}>{c}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
+                  )} />
 
-                <FormField
-                  control={form.control}
-                  name="position"
-                  render={({ field }) => (
+                  <FormField control={form.control} name="position" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Position / Role *</FormLabel>
+                      <FormLabel>5. Position / Role * (select one option)</FormLabel>
                       <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction("position", value);
-                          }}
-                          defaultValue={field.value}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="bachelor_student"
-                              id="bachelor_student"
-                            />
-                            <Label htmlFor="bachelor_student">
-                              Bachelor Student
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="master_student"
-                              id="master_student"
-                            />
-                            <Label htmlFor="master_student">
-                              Master Student
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="phd_student"
-                              id="phd_student"
-                            />
-                            <Label htmlFor="phd_student">PhD Student</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="researcher"
-                              id="researcher"
-                            />
-                            <Label htmlFor="researcher">Researcher</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="professor" id="professor" />
-                            <Label htmlFor="professor">
-                              Professor / Lecturer
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="industry" id="industry" />
-                            <Label htmlFor="industry">
-                              Industry Professional
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="other" id="other" />
-                            <Label htmlFor="other">Other</Label>
-                          </div>
+                        <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-2">
+                          {[
+                            { value: "bachelor_student", label: "Bachelor Student" },
+                            { value: "master_student", label: "Master Student" },
+                            { value: "phd_student", label: "PhD Student" },
+                            { value: "researcher", label: "Researcher" },
+                            { value: "professor", label: "Professor / Lecturer" },
+                            { value: "industry", label: "Industry Professional" },
+                            { value: "other", label: "Other" },
+                          ].map((opt) => (
+                            <div key={opt.value} className="flex items-center space-x-2">
+                              <RadioGroupItem value={opt.value} id={`pos_${opt.value}`} />
+                              <Label htmlFor={`pos_${opt.value}`}>{opt.label}</Label>
+                            </div>
+                          ))}
                         </RadioGroup>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
+                  )} />
 
-                {watchPosition === "other" && (
-                  <FormField
-                    control={form.control}
-                    name="positionOther"
-                    render={({ field }) => (
+                  {watchPosition === "other" && (
+                    <FormField control={form.control} name="positionOther" render={({ field }) => (
                       <FormItem>
                         <FormLabel>Please specify your position</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Your position" {...field} />
-                        </FormControl>
+                        <FormControl><Input placeholder="Your position" {...field} /></FormControl>
                         <FormMessage />
                       </FormItem>
-                    )}
-                  />
-                )}
+                    )} />
+                  )}
 
-                <FormField
-                  control={form.control}
-                  name="website"
-                  render={({ field }) => (
+                  <FormField control={form.control} name="website" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Professional website or LinkedIn *</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="url"
-                          placeholder="https://linkedin.com/in/johndoe"
-                          {...field}
-                          onChange={(e) => {
-                            field.onChange(e);
-                            trackFieldInteraction("website", e.target.value);
-                          }}
-                        />
-                      </FormControl>
+                      <FormLabel>6. Professional Website or LinkedIn *</FormLabel>
+                      <p className="text-sm text-muted-foreground">
+                        The link will be available on the QR code on your entrance badge.
+                      </p>
+                      <FormControl><Input type="url" placeholder="https://linkedin.com/in/yourprofile" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
-              </div>
+                  )} />
+                </div>
+              )}
 
-              {/* Participation Details */}
-              <div className="space-y-6">
-                <h3 className="text-lg font-semibold">Participation Details</h3>
+              {currentStep === 2 && (
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-1">Section 2: Participation Details</h3>
+                  </div>
 
-                <FormField
-                  control={form.control}
-                  name="attendanceReason"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        What is your main reason for attending GeoMundus 2026? *
-                      </FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction("attendanceReason", value);
-                          }}
-                          defaultValue={field.value}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="present_research"
-                              id="present_research"
-                            />
-                            <Label htmlFor="present_research">
-                              To present research
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="attend_sessions"
-                              id="attend_sessions"
-                            />
-                            <Label htmlFor="attend_sessions">
-                              To attend sessions
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="networking"
-                              id="networking"
-                            />
-                            <Label htmlFor="networking">Networking</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="other" id="reason_other" />
-                            <Label htmlFor="reason_other">Other</Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {watchAttendanceReason === "other" && (
-                  <FormField
-                    control={form.control}
-                    name="attendanceReasonOther"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Please specify your reason</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Your reason for attending"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
-
-                <FormField
-                  control={form.control}
-                  name="presenting"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Will you be presenting at the conference?
-                      </FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction("presenting", value);
-                          }}
-                          defaultValue={field.value}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="oral" id="oral" />
-                            <Label htmlFor="oral">
-                              Yes – Oral presentation
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="poster" id="poster" />
-                            <Label htmlFor="poster">
-                              Yes – Poster presentation
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="no" id="no_presentation" />
-                            <Label htmlFor="no_presentation">No</Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="mapChallenge"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction("mapChallenge", value);
-                          }}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Would you like to submit an entry for the Map+
-                          Challenge?
-                        </FormLabel>
-                        <FormDescription>
-                          <a
-                            href="https://drive.google.com/file/d/1vnhaJYTAdU8iFC78bMjdh6KV9PQMqLKl/view?usp=sharing"
-                            className="text-blue-600 hover:underline"
-                            target="_blank"
-                          >
-                            See guidelines of participation here
-                          </a>
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Conference Dinner & Drinks */}
-              <div className="space-y-6">
-                <h3 className="text-lg font-semibold">
-                  Conference Dinner & Drinks
-                </h3>
-
-                <FormField
-                  control={form.control}
-                  name="attendingDinner"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Will you attend the conference dinner? *
-                      </FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            const boolValue = value === "yes";
-                            field.onChange(boolValue);
-                            trackFieldInteraction("attendingDinner", boolValue);
-                          }}
-                          defaultValue={field.value ? "yes" : "no"}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="yes" id="dinner_yes" />
-                            <Label htmlFor="dinner_yes">Yes</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="no" id="dinner_no" />
-                            <Label htmlFor="dinner_no">No</Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="dietaryRestrictions"
-                  render={() => (
+                  <FormField control={form.control} name="attendanceReason" render={() => (
                     <FormItem>
                       <div className="mb-4">
                         <FormLabel className="text-base">
-                          Do you have any dietary restrictions or food allergies? (Select all that apply) *
+                          7. What is your main reason for attending GeoMundus 2026? (Select all that apply) *
+                        </FormLabel>
+                      </div>
+                      {[
+                        { id: "present_research", label: "To present research" },
+                        { id: "attend_sessions", label: "To attend sessions" },
+                        { id: "networking", label: "Networking" },
+                        { id: "other", label: "Other" },
+                      ].map((item) => (
+                        <FormField key={item.id} control={form.control} name="attendanceReason" render={({ field }) => (
+                          <FormItem key={item.id} className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(item.id)}
+                                onCheckedChange={(checked) => {
+                                  const newValue = checked
+                                    ? [...(field.value || []), item.id]
+                                    : field.value?.filter((v: string) => v !== item.id);
+                                  field.onChange(newValue);
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal">{item.label}</FormLabel>
+                          </FormItem>
+                        )} />
+                      ))}
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  {watchAttendanceReason?.includes("other") && (
+                    <FormField control={form.control} name="attendanceReasonOther" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Please specify</FormLabel>
+                        <FormControl><Input placeholder="Your reason for attending" {...field} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  )}
+
+                  <FormField control={form.control} name="presenting" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>8. Do you plan to submit your work for the conference? *</FormLabel>
+                      <FormControl>
+                        <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-2">
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="submitted" id="pres_submitted" />
+                            <Label htmlFor="pres_submitted">Yes, I have already submitted an abstract or map.</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="planning" id="pres_planning" />
+                            <Label htmlFor="pres_planning">Yes, I am planning to submit it.</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="no" id="pres_no" />
+                            <Label htmlFor="pres_no">No.</Label>
+                          </div>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  <FormField control={form.control} name="attendanceDays" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>9. On which days are you planning to attend? *</FormLabel>
+                      <FormControl>
+                        <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-2">
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="both" id="days_both" />
+                            <Label htmlFor="days_both">Both days</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="friday" id="days_friday" />
+                            <Label htmlFor="days_friday">Friday (October 16th)</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="saturday" id="days_saturday" />
+                            <Label htmlFor="days_saturday">Saturday (October 17th)</Label>
+                          </div>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                </div>
+              )}
+
+              {currentStep === 3 && (
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-1">Section 3: Dietary Preferences</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      We will have coffee breaks and lunches on both days, as well as a conference
+                      dinner on Friday, October 16th (on a first-come basis, attendance is subject
+                      to confirmation by the GeoMundus team). Please specify your dietary restrictions
+                      and preferences below.
+                    </p>
+                  </div>
+
+                  <FormField control={form.control} name="dietaryRestrictions" render={() => (
+                    <FormItem>
+                      <div className="mb-4">
+                        <FormLabel className="text-base">
+                          10. Do you have any dietary restrictions or food allergies? (Select all that apply) *
                         </FormLabel>
                       </div>
                       {[
@@ -876,615 +537,205 @@ export default function RegistrationForm() {
                         { id: "vegetarian", label: "Vegetarian" },
                         { id: "halal", label: "Halal" },
                         { id: "gluten_free", label: "Gluten-free" },
-                        { id: "nut_allergy", label: "Nut allergy" },
-                        { id: "seafood_allergy", label: "Seafood allergy" },
+                        { id: "lactose_free", label: "Lactose-free" },
+                        { id: "allergies", label: "Allergies (please specify)" },
                         { id: "other", label: "Other (please specify)" },
                       ].map((item) => (
-                        <FormField
-                          key={item.id}
-                          control={form.control}
-                          name="dietaryRestrictions"
-                          render={({ field }) => {
-                            return (
-                              <FormItem
-                                key={item.id}
-                                className="flex flex-row items-start space-x-3 space-y-0"
-                              >
-                                <FormControl>
-                                  <Checkbox
-                                    checked={field.value?.includes(item.id)}
-                                    onCheckedChange={(checked) => {
-                                      const newValue = checked
-                                        ? [...field.value, item.id]
-                                        : field.value?.filter(
-                                            (value: string) => value !== item.id,
-                                          );
-                                      field.onChange(newValue);
-                                      trackFieldInteraction(
-                                        "dietaryRestrictions",
-                                        newValue,
-                                      );
-                                    }}
-                                  />
-                                </FormControl>
-                                <FormLabel className="font-normal">
-                                  {item.label}
-                                </FormLabel>
-                              </FormItem>
-                            );
-                          }}
-                        />
+                        <FormField key={item.id} control={form.control} name="dietaryRestrictions" render={({ field }) => (
+                          <FormItem key={item.id} className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(item.id)}
+                                onCheckedChange={(checked) => {
+                                  const newValue = checked
+                                    ? [...(field.value || []), item.id]
+                                    : field.value?.filter((v: string) => v !== item.id);
+                                  field.onChange(newValue);
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal">{item.label}</FormLabel>
+                          </FormItem>
+                        )} />
                       ))}
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
+                  )} />
 
-                <FormField
-                  control={form.control}
-                  name="dietaryRestrictionsOther"
-                  render={({ field }) => (
+                  {(form.watch("dietaryRestrictions")?.includes("allergies") ||
+                    form.watch("dietaryRestrictions")?.includes("other")) && (
+                    <FormField control={form.control} name="dietaryRestrictionsOther" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Please specify</FormLabel>
+                        <FormControl><Input placeholder="Please describe your dietary restrictions or allergies" {...field} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  )}
+
+                  <FormField control={form.control} name="beveragePreference" render={() => (
                     <FormItem>
-                      <FormLabel>
-                        If you selected "Other" or would like to provide additional details, please specify below:
-                      </FormLabel>
-                      <FormControl>
-                        <Input placeholder="Please specify" {...field} />
-                      </FormControl>
+                      <div className="mb-4">
+                        <FormLabel className="text-base">
+                          11. What are your beverage preferences? (Select all that apply) *
+                        </FormLabel>
+                      </div>
+                      {[
+                        { id: "alcoholic", label: "Alcoholic" },
+                        { id: "non_alcoholic", label: "Non-alcoholic" },
+                      ].map((item) => (
+                        <FormField key={item.id} control={form.control} name="beveragePreference" render={({ field }) => (
+                          <FormItem key={item.id} className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(item.id)}
+                                onCheckedChange={(checked) => {
+                                  const newValue = checked
+                                    ? [...(field.value || []), item.id]
+                                    : field.value?.filter((v: string) => v !== item.id);
+                                  field.onChange(newValue);
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal">{item.label}</FormLabel>
+                          </FormItem>
+                        )} />
+                      ))}
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
+                  )} />
 
-                <FormField
-                  control={form.control}
-                  name="beveragePreference"
-                  render={({ field }) => (
+                  <FormField control={form.control} name="attendingDinner" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>
-                        What are your beverage preferences? *
-                      </FormLabel>
+                      <FormLabel>12. Are you interested in attending the conference dinner on Friday, October 16th? *</FormLabel>
                       <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction("beveragePreference", value);
-                          }}
-                          defaultValue={field.value}
-                          className="flex flex-col space-y-2"
-                        >
+                        <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-2">
                           <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="alcoholic_and_non" id="bev_both" />
-                            <Label htmlFor="bev_both">Alcoholic and non-alcoholic beverages</Label>
+                            <RadioGroupItem value="yes" id="dinner_yes" />
+                            <Label htmlFor="dinner_yes">Yes.</Label>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="non_alcoholic_only" id="bev_non" />
-                            <Label htmlFor="bev_non">Non-alcoholic beverages only</Label>
+                            <RadioGroupItem value="still_deciding" id="dinner_maybe" />
+                            <Label htmlFor="dinner_maybe">I&apos;m still deciding.</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="no" id="dinner_no" />
+                            <Label htmlFor="dinner_no">No.</Label>
                           </div>
                         </RadioGroup>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Workshop Participation */}
-              <div className="space-y-6">
-                <h3 className="text-lg font-semibold">
-                  Workshop Participation
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Please rank the following workshop topics in order of interest.
-                  Assign a rank from 1 (most preferred) to 5 (least preferred).
-                </p>
-
-                <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="workshopPreferences.hazardModelling"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="space-y-2">
-                          <FormLabel className="text-base font-medium">
-                            Hazard Modelling & Risk Assessment
-                          </FormLabel>
-                          <p className="text-sm text-muted-foreground">
-                            GIS mapping, Remote Sensing, AI & ML for predictive analytics, urban risk intelligence.
-                          </p>
-                          <FormControl>
-                            <Select
-                              onValueChange={(value) => {
-                                const numValue = Number.parseInt(value);
-                                field.onChange(numValue);
-                                trackFieldInteraction(
-                                  "workshopPreferences.hazardModelling",
-                                  numValue,
-                                );
-                              }}
-                              defaultValue={field.value?.toString()}
-                            >
-                              <SelectTrigger className="w-48">
-                                <SelectValue placeholder="Select rank" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="1">
-                                  1 (Most preferred)
-                                </SelectItem>
-                                <SelectItem value="2">2</SelectItem>
-                                <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="4">4</SelectItem>
-                                <SelectItem value="5">
-                                  5 (Least preferred)
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="workshopPreferences.earlyWarning"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="space-y-2">
-                          <FormLabel className="text-base font-medium">
-                            Early Warning & Monitoring Systems
-                          </FormLabel>
-                          <p className="text-sm text-muted-foreground">
-                            Multi-hazard alert systems, IoT sensors, real-time monitoring networks.
-                          </p>
-                          <FormControl>
-                            <Select
-                              onValueChange={(value) => {
-                                const numValue = Number.parseInt(value);
-                                field.onChange(numValue);
-                                trackFieldInteraction(
-                                  "workshopPreferences.earlyWarning",
-                                  numValue,
-                                );
-                              }}
-                              defaultValue={field.value?.toString()}
-                            >
-                              <SelectTrigger className="w-48">
-                                <SelectValue placeholder="Select rank" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="1">
-                                  1 (Most preferred)
-                                </SelectItem>
-                                <SelectItem value="2">2</SelectItem>
-                                <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="4">4</SelectItem>
-                                <SelectItem value="5">
-                                  5 (Least preferred)
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="workshopPreferences.decisionSupport"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="space-y-2">
-                          <FormLabel className="text-base font-medium">
-                            Geospatial Decision Support Systems
-                          </FormLabel>
-                          <p className="text-sm text-muted-foreground">
-                            Spatial Data Infrastructure (SDI), crisis management DSS, multi-criteria decision analysis, data fusion.
-                          </p>
-                          <FormControl>
-                            <Select
-                              onValueChange={(value) => {
-                                const numValue = Number.parseInt(value);
-                                field.onChange(numValue);
-                                trackFieldInteraction(
-                                  "workshopPreferences.decisionSupport",
-                                  numValue,
-                                );
-                              }}
-                              defaultValue={field.value?.toString()}
-                            >
-                              <SelectTrigger className="w-48">
-                                <SelectValue placeholder="Select rank" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="1">
-                                  1 (Most preferred)
-                                </SelectItem>
-                                <SelectItem value="2">2</SelectItem>
-                                <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="4">4</SelectItem>
-                                <SelectItem value="5">
-                                  5 (Least preferred)
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="workshopPreferences.emergencyResponse"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="space-y-2">
-                          <FormLabel className="text-base font-medium">
-                            Emergency Response & Logistics
-                          </FormLabel>
-                          <p className="text-sm text-muted-foreground">
-                            Routing optimization, resource allocation, UAVs/drones, mobile GIS, accessibility analysis.
-                          </p>
-                          <FormControl>
-                            <Select
-                              onValueChange={(value) => {
-                                const numValue = Number.parseInt(value);
-                                field.onChange(numValue);
-                                trackFieldInteraction(
-                                  "workshopPreferences.emergencyResponse",
-                                  numValue,
-                                );
-                              }}
-                              defaultValue={field.value?.toString()}
-                            >
-                              <SelectTrigger className="w-48">
-                                <SelectValue placeholder="Select rank" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="1">
-                                  1 (Most preferred)
-                                </SelectItem>
-                                <SelectItem value="2">2</SelectItem>
-                                <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="4">4</SelectItem>
-                                <SelectItem value="5">
-                                  5 (Least preferred)
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="workshopPreferences.damageAssessment"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="space-y-2">
-                          <FormLabel className="text-base font-medium">
-                            Rapid Damage Assessment & Recovery
-                          </FormLabel>
-                          <p className="text-sm text-muted-foreground">
-                            Damage mapping, change detection, AI classification, infrastructure assessment, recovery planning.
-                          </p>
-                          <FormControl>
-                            <Select
-                              onValueChange={(value) => {
-                                const numValue = Number.parseInt(value);
-                                field.onChange(numValue);
-                                trackFieldInteraction(
-                                  "workshopPreferences.damageAssessment",
-                                  numValue,
-                                );
-                              }}
-                              defaultValue={field.value?.toString()}
-                            >
-                              <SelectTrigger className="w-48">
-                                <SelectValue placeholder="Select rank" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="1">
-                                  1 (Most preferred)
-                                </SelectItem>
-                                <SelectItem value="2">2</SelectItem>
-                                <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="4">4</SelectItem>
-                                <SelectItem value="5">
-                                  5 (Least preferred)
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  )} />
                 </div>
-              </div>
+              )}
 
-              {/* Travel & Accommodation */}
-              <div className="space-y-6">
-                <h3 className="text-lg font-semibold">
-                  Travel & Accommodation
-                </h3>
+              {currentStep === 4 && (
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-1">Section 4: Communication and Consent</h3>
+                  </div>
 
-                <FormField
-                  control={form.control}
-                  name="needsAccommodationHelp"
-                  render={({ field }) => (
+                  <FormField control={form.control} name="consentPublicList" render={({ field }) => (
                     <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                       <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction(
-                              "needsAccommodationHelp",
-                              value,
-                            );
-                          }}
-                        />
+                        <Checkbox checked={field.value === true} onCheckedChange={field.onChange} />
                       </FormControl>
                       <div className="space-y-1 leading-none">
                         <FormLabel>
-                          Do you need help or information regarding
-                          accommodation in Castellón de la Plana?
+                          13. I consent to my name and affiliation being included in the public participants list.{" "}
+                          <span className="text-red-500 font-semibold">(REQUIRED)</span>
                         </FormLabel>
                       </div>
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Communication & Consent */}
-              <div className="space-y-6">
-                <h3 className="text-lg font-semibold">
-                  Communication & Consent
-                </h3>
-
-                <FormField
-                  control={form.control}
-                  name="joinWhatsApp"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Would you like to join the GeoMundus WhatsApp group for
-                        updates? *
-                      </FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            const boolValue = value === "yes";
-                            field.onChange(boolValue);
-                            trackFieldInteraction("joinWhatsApp", boolValue);
-                          }}
-                          defaultValue={field.value ? "yes" : "no"}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="yes" id="whatsapp_yes" />
-                            <Label htmlFor="whatsapp_yes">Yes</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="no" id="whatsapp_no" />
-                            <Label htmlFor="whatsapp_no">No</Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
+                  )} />
 
-                <FormField
-                  control={form.control}
-                  name="consentPublicList"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Do you consent for your name and affiliation to be
-                        included in the public participants list? *
-                      </FormLabel>
+                  <FormField control={form.control} name="consentPhotography" render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                       <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            const boolValue = value === "yes";
-                            field.onChange(boolValue);
-                            trackFieldInteraction(
-                              "consentPublicList",
-                              boolValue,
-                            );
-                          }}
-                          defaultValue={field.value ? "yes" : "no"}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="yes" id="public_list_yes" />
-                            <Label htmlFor="public_list_yes">Yes</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="no" id="public_list_no" />
-                            <Label htmlFor="public_list_no">No</Label>
-                          </div>
-                        </RadioGroup>
+                        <Checkbox checked={field.value === true} onCheckedChange={field.onChange} />
                       </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="consentPhotography"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Do you consent to be photographed or recorded during the
-                        event for promotional and archival purposes? *
-                      </FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            const boolValue = value === "yes";
-                            field.onChange(boolValue);
-                            trackFieldInteraction(
-                              "consentPhotography",
-                              boolValue,
-                            );
-                          }}
-                          defaultValue={field.value ? "yes" : "no"}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="yes" id="photo_yes" />
-                            <Label htmlFor="photo_yes">Yes</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="no" id="photo_no" />
-                            <Label htmlFor="photo_no">No</Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Additional Information */}
-              <div className="space-y-6">
-                <h3 className="text-lg font-semibold">
-                  Additional Information
-                </h3>
-
-                <FormField
-                  control={form.control}
-                  name="howDidYouHear"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        How did you hear about GeoMundus 2026?
-                      </FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={(value) => {
-                            field.onChange(value);
-                            trackFieldInteraction("howDidYouHear", value);
-                          }}
-                          defaultValue={field.value}
-                          className="flex flex-col space-y-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="university"
-                              id="hear_university"
-                            />
-                            <Label htmlFor="hear_university">University</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="social_media"
-                              id="social_media"
-                            />
-                            <Label htmlFor="social_media">Social Media</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem
-                              value="friend_colleague"
-                              id="friend_colleague"
-                            />
-                            <Label htmlFor="friend_colleague">
-                              Friend / Colleague
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="website" id="hear_website" />
-                            <Label htmlFor="hear_website">
-                              GeoMundus Website
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="other" id="hear_other" />
-                            <Label htmlFor="hear_other">Other</Label>
-                          </div>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {watchHowDidYouHear === "other" && (
-                  <FormField
-                    control={form.control}
-                    name="howDidYouHearOther"
-                    render={({ field }) => (
-                      <FormItem>
+                      <div className="space-y-1 leading-none">
                         <FormLabel>
-                          Please specify how you heard about us
+                          14. By attending this conference, I consent to being photographed and/or recorded during the event for promotional and archival purposes.{" "}
+                          <span className="text-red-500 font-semibold">(REQUIRED)</span>
                         </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="How did you hear about GeoMundus 2026?"
-                            {...field}
-                          />
-                        </FormControl>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+                </div>
+              )}
+
+              {currentStep === 5 && (
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-1">Section 5: Additional Information</h3>
+                  </div>
+
+                  <FormField control={form.control} name="howDidYouHear" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>15. How did you hear about GeoMundus 2026?</FormLabel>
+                      <FormControl>
+                        <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-2">
+                          {[
+                            { value: "university", label: "University" },
+                            { value: "facebook", label: "Facebook" },
+                            { value: "instagram", label: "Instagram post" },
+                            { value: "linkedin", label: "LinkedIn post" },
+                            { value: "friend_attended", label: "Friend / Colleague who has attended a GeoMundus conference in the past" },
+                            { value: "friend_not_attended", label: "Friend / Colleague who has not attended" },
+                            { value: "geomundus_website", label: "GeoMundus Website" },
+                            { value: "other", label: "Other" },
+                          ].map((opt) => (
+                            <div key={opt.value} className="flex items-center space-x-2">
+                              <RadioGroupItem value={opt.value} id={`hear_${opt.value}`} />
+                              <Label htmlFor={`hear_${opt.value}`}>{opt.label}</Label>
+                            </div>
+                          ))}
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  {form.watch("howDidYouHear") === "other" && (
+                    <FormField control={form.control} name="howDidYouHearOther" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Please specify</FormLabel>
+                        <FormControl><Input placeholder="How did you hear about us?" {...field} /></FormControl>
                         <FormMessage />
                       </FormItem>
-                    )}
-                  />
-                )}
+                    )} />
+                  )}
 
-                <FormField
-                  control={form.control}
-                  name="additionalComments"
-                  render={({ field }) => (
+                  <FormField control={form.control} name="additionalComments" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>
-                        Any comments, requests, or special needs?
-                      </FormLabel>
+                      <FormLabel>16. Any comments, requests, or special needs?</FormLabel>
                       <FormControl>
-                        <Textarea
-                          placeholder="Optional - Please share any additional information, special requirements, or comments"
-                          className="min-h-[100px]"
-                          {...field}
-                          onChange={(e) => {
-                            field.onChange(e);
-                            trackFieldInteraction(
-                              "additionalComments",
-                              e.target.value,
-                            );
-                          }}
-                        />
+                        <Textarea placeholder="Optional" className="min-h-[100px]" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
-                  )}
-                />
-              </div>
+                  )} />
+                </div>
+              )}
 
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={isSubmitting}
-                onClick={() => {
-                  posthog?.capture("registration_submit_clicked");
-                }}
-              >
-                {isSubmitting
-                  ? "Submitting Registration..."
-                  : "Submit Registration"}
-              </Button>
+              <div className="flex justify-between pt-4">
+                {currentStep > 1 ? (
+                  <Button type="button" variant="outline" onClick={prevStep}>Previous</Button>
+                ) : (
+                  <div />
+                )}
+                {currentStep < totalSteps ? (
+                  <Button type="button" onClick={nextStep}>Next</Button>
+                ) : (
+                  <Button type="button" disabled={isSubmitting} onClick={form.handleSubmit(onSubmit)}>
+                    {isSubmitting ? "Submitting..." : "Submit Registration"}
+                  </Button>
+                )}
+              </div>
             </form>
           </Form>
         </CardContent>
@@ -1492,3 +743,5 @@ export default function RegistrationForm() {
     </div>
   );
 }
+
+export default RegistrationForm;
