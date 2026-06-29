@@ -47,7 +47,7 @@ export default async function sendEmail({
 
   try {
     const res = await transporter.sendMail({
-      from: EMAIL_FROM,
+      from: `GeoMundus 2026 Conference <${EMAIL_FROM}>`,
       to,
       subject,
       text,
