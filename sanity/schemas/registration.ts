@@ -13,7 +13,7 @@ export default defineType({
     }),
     defineField({
       name: "email",
-      title: "Email Address",
+      title: "Email",
       type: "string",
       validation: (Rule) => Rule.required().email(),
     }),
@@ -48,7 +48,7 @@ export default defineType({
     }),
     defineField({
       name: "positionOther",
-      title: "Other Position (if selected Other above)",
+      title: "Position (Other)",
       type: "string",
       hidden: ({ parent }) => parent?.position !== "other",
     }),
@@ -60,8 +60,9 @@ export default defineType({
     }),
     defineField({
       name: "attendanceReason",
-      title: "Main Reason for Attending",
-      type: "string",
+      title: "Reason for Attending",
+      type: "array",
+      of: [{ type: "string" }],
       options: {
         list: [
           { title: "To present research", value: "present_research" },
@@ -70,36 +71,37 @@ export default defineType({
           { title: "Other", value: "other" },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: "attendanceReasonOther",
-      title: "Other Reason (if selected Other above)",
+      title: "Attendance Reason (Other)",
       type: "string",
-      hidden: ({ parent }) => parent?.attendanceReason !== "other",
     }),
     defineField({
       name: "presenting",
-      title: "Will you be presenting at the conference?",
+      title: "Plan to Present",
       type: "string",
       options: {
         list: [
-          { title: "Yes – Oral presentation", value: "oral" },
-          { title: "Yes – Poster presentation", value: "poster" },
+          { title: "Yes, already submitted", value: "submitted" },
+          { title: "Yes, planning to submit", value: "planning" },
           { title: "No", value: "no" },
         ],
       },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "mapChallenge",
-      title: "Submit entry for Map+ Challenge",
-      type: "boolean",
-      initialValue: false,
-    }),
-    defineField({
-      name: "attendingDinner",
-      title: "Will you attend the conference dinner (Friday October 16th)?",
-      type: "boolean",
+      name: "attendanceDays",
+      title: "Attendance Days",
+      type: "string",
+      options: {
+        list: [
+          { title: "Both days", value: "both" },
+          { title: "Friday (October 16th)", value: "friday" },
+          { title: "Saturday (October 17th)", value: "saturday" },
+        ],
+      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -113,147 +115,86 @@ export default defineType({
           { title: "Vegetarian", value: "vegetarian" },
           { title: "Halal", value: "halal" },
           { title: "Gluten-free", value: "gluten_free" },
-          { title: "Nut allergy", value: "nut_allergy" },
-          { title: "Seafood allergy", value: "seafood_allergy" },
-          { title: "Other", value: "other" },
+          { title: "Lactose-free", value: "lactose_free" },
+          { title: "Allergies (please specify)", value: "allergies" },
+          { title: "Other (please specify)", value: "other" },
         ],
       },
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: "dietaryRestrictionsOther",
-      title: "Other Dietary Restrictions (details)",
+      title: "Dietary Restrictions (Details)",
       type: "string",
     }),
     defineField({
       name: "beveragePreference",
       title: "Beverage Preference",
+      type: "array",
+      of: [{ type: "string" }],
+      options: {
+        list: [
+          { title: "Alcoholic", value: "alcoholic" },
+          { title: "Non-alcoholic", value: "non_alcoholic" },
+        ],
+      },
+      validation: (Rule) => Rule.required().min(1),
+    }),
+    defineField({
+      name: "attendingDinner",
+      title: "Interested in Conference Dinner",
       type: "string",
       options: {
         list: [
-          { title: "Alcoholic and non-alcoholic beverages", value: "alcoholic_and_non" },
-          { title: "Non-alcoholic beverages only", value: "non_alcoholic_only" },
+          { title: "Yes", value: "yes" },
+          { title: "I'm still deciding", value: "still_deciding" },
+          { title: "No", value: "no" },
         ],
       },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "workshopPreferences",
-      title: "Workshop Preferences (Ranked 1-4)",
-      type: "object",
-      fields: [
-        defineField({
-          name: "disasterManagement",
-          title:
-            "Geospatial data for disaster management and climate resilience",
-          type: "number",
-          options: {
-            list: [
-              { title: "1 (Most preferred)", value: 1 },
-              { title: "2", value: 2 },
-              { title: "3", value: 3 },
-              { title: "4 (Least preferred)", value: 4 },
-            ],
-          },
-          validation: (Rule) => Rule.required().min(1).max(4),
-        }),
-        defineField({
-          name: "digitalTwins",
-          title: "Introduction to digital twins for smart cities",
-          type: "number",
-          options: {
-            list: [
-              { title: "1 (Most preferred)", value: 1 },
-              { title: "2", value: 2 },
-              { title: "3", value: 3 },
-              { title: "4 (Least preferred)", value: 4 },
-            ],
-          },
-          validation: (Rule) => Rule.required().min(1).max(4),
-        }),
-        defineField({
-          name: "participatoryMapping",
-          title: "Participatory mapping for smarter cities",
-          type: "number",
-          options: {
-            list: [
-              { title: "1 (Most preferred)", value: 1 },
-              { title: "2", value: 2 },
-              { title: "3", value: 3 },
-              { title: "4 (Least preferred)", value: 4 },
-            ],
-          },
-          validation: (Rule) => Rule.required().min(1).max(4),
-        }),
-        defineField({
-          name: "participatoryMappingChallenge",
-          title:
-            "Participatory Mapping and the Smart Lisbon Cartographic Challenge (Solenn Reeves Long)",
-          type: "number",
-          options: {
-            list: [
-              { title: "1 (Most preferred)", value: 1 },
-              { title: "2", value: 2 },
-              { title: "3", value: 3 },
-              { title: "4 (Least preferred)", value: 4 },
-            ],
-          },
-          validation: (Rule) => Rule.required().min(1).max(4),
-        }),
-      ],
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "needsAccommodationHelp",
-      title: "Need help with accommodation in Castellón de la Plana?",
-      type: "boolean",
-    }),
-    defineField({
-      name: "joinWhatsApp",
-      title: "Join GeoMundus WhatsApp group for updates?",
-      type: "boolean",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: "consentPublicList",
-      title: "Consent for name and affiliation in public participants list?",
+      title: "Consent - Public Participants List",
       type: "boolean",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "consentPhotography",
-      title: "Consent to be photographed/recorded for promotional purposes?",
+      title: "Consent - Photography and Recording",
       type: "boolean",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "howDidYouHear",
-      title: "How did you hear about GeoMundus 2026?",
+      title: "How Did You Hear About GeoMundus",
       type: "string",
       options: {
         list: [
           { title: "University", value: "university" },
-          { title: "Social Media", value: "social_media" },
-          { title: "Friend / Colleague", value: "friend_colleague" },
-          { title: "GeoMundus Website", value: "website" },
+          { title: "Facebook", value: "facebook" },
+          { title: "Instagram post", value: "instagram" },
+          { title: "LinkedIn post", value: "linkedin" },
+          { title: "Friend / Colleague who has attended before", value: "friend_attended" },
+          { title: "Friend / Colleague who has not attended", value: "friend_not_attended" },
+          { title: "GeoMundus Website", value: "geomundus_website" },
           { title: "Other", value: "other" },
         ],
       },
     }),
     defineField({
       name: "howDidYouHearOther",
-      title: "Other Source (if selected Other above)",
+      title: "How Did You Hear (Other)",
       type: "string",
-      hidden: ({ parent }) => parent?.howDidYouHear !== "other",
     }),
     defineField({
       name: "additionalComments",
-      title: "Comments, requests, or special needs",
+      title: "Additional Comments",
       type: "text",
     }),
     defineField({
       name: "status",
-      title: "Registration Status",
+      title: "Status",
       type: "string",
       options: {
         list: [
@@ -265,24 +206,15 @@ export default defineType({
       initialValue: "pending",
     }),
     defineField({
-      name: "qrCode",
-      title: "QR Code",
-      type: "image",
-      description: "QR code for guest verification",
+      name: "registeredAt",
+      title: "Registered At",
+      type: "datetime",
     }),
   ],
   preview: {
     select: {
       title: "fullName",
       subtitle: "email",
-      media: "qrCode",
-    },
-    prepare(selection) {
-      const { title, subtitle } = selection;
-      return {
-        title: title || "No name",
-        subtitle: subtitle || "No email",
-      };
     },
   },
 });
