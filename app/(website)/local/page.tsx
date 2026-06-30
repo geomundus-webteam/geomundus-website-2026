@@ -142,39 +142,47 @@ export default async function TravelPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
-              {
-                airport: "Valencia Airport (VLC)",
-                distance: "~75 km · Closest major airport",
-                options: [
-                  { mode: "Train", desc: "Take the Cercanías C6 or regional train from Valencia Joaquín Sorolla or Valencia Nord station to Castellón. Journey time approximately 1h 15min. Trains run frequently throughout the day." },
-                  { mode: "Bus", desc: "Direct bus services operate between Valencia Airport and Castellón. Journey time approximately 1h 30min." },
-                  { mode: "Taxi / Rideshare", desc: "A taxi or rideshare from Valencia Airport to Castellón costs approximately €70–90 and takes around 1 hour depending on traffic." },
-                ],
-              },
-              {
-                airport: "Reus Airport (REU)",
-                distance: "~170 km · Via Tarragona",
-                options: [
-                  { mode: "Train", desc: "Take a bus or taxi to Tarragona or Reus train station, then catch a regional train south to Castellón. Total journey approximately 2–2.5 hours." },
-                  { mode: "Car rental", desc: "Renting a car at Reus Airport is a convenient option. Drive south via the AP-7 motorway to Castellón, approximately 1h 45min." },
-                ],
-              },
-              {
-                airport: "Barcelona El Prat (BCN)",
-                distance: "~300 km · High-speed train available",
-                options: [
-                  { mode: "High-speed train (AVE)", desc: "Take the AVE from Barcelona Sants to Valencia, then connect to a regional train to Castellón. Total journey approximately 2.5–3 hours." },
-                  { mode: "Regional train", desc: "Direct regional trains run from Barcelona to Castellón via the Mediterranean corridor. Journey time approximately 3.5–4 hours." },
-                ],
-              },
-              {
-                airport: "Madrid Barajas (MAD)",
-                distance: "~420 km · High-speed train recommended",
-                options: [
-                  { mode: "High-speed train (AVE)", desc: "Take the AVE from Madrid Atocha to Valencia (approximately 1h 45min), then connect to a regional train to Castellón (approximately 1h 15min). Total journey around 3–3.5 hours." },
-                  { mode: "Flight + train", desc: "Fly from Madrid to Valencia (approx 1 hour), then take the train to Castellón." },
-                ],
-              },
+                          {
+              airport: "Valencia Airport (VLC)",
+              distance: "~75 km · Closest major international airport",
+              options: [
+                { mode: "Train", desc: "Take the metro from Valencia Airport to Valencia Joaquín Sorolla or Valencia Nord station, then board a direct Renfe train to Castelló de la Plana. Total journey time is approximately 1.5–2 hours." },
+                { mode: "Bus", desc: "Direct bus services operate between Valencia Airport and Castelló de la Plana. Journey time is approximately 1.5 hours." },
+                { mode: "Taxi / Rideshare", desc: "Taxis and rideshare services are available outside the airport terminal. Journey time is approximately 1 hour, depending on traffic." },
+              ],
+            },
+            {
+              airport: "Castellón–Costa Azahar Airport (CDT)",
+              distance: "~35 km · Closest airport",
+              options: [
+                { mode: "Airport Shuttle Bus", desc: "Airport shuttle buses connect Castellón Airport with Castelló de la Plana. Journey time is approximately 40–50 minutes." },
+                { mode: "Taxi", desc: "Taxis are available outside the terminal and provide a direct transfer to Castelló de la Plana. Journey time is approximately 30–40 minutes." },
+              ],
+            },
+            {
+              airport: "Reus Airport (REU)",
+              distance: "~170 km · Convenient regional airport",
+              options: [
+                { mode: "Train", desc: "Take a bus or taxi to Reus or Tarragona railway station, then board a regional or long-distance train to Castelló de la Plana. Total journey time is approximately 2–2.5 hours." },
+                { mode: "Car Rental", desc: "Car rental services are available at the airport. Driving via the AP-7 motorway to Castelló de la Plana takes approximately 1 hour 45 minutes." },
+              ],
+            },
+            {
+              airport: "Barcelona El Prat Airport (BCN)",
+              distance: "~300 km · Direct high-speed train available",
+              options: [
+                { mode: "High-Speed Train", desc: "Travel to Barcelona Sants station and take a direct AVE, Euromed, or Intercity train to Castelló de la Plana. Journey time is approximately 2.5–3 hours." },
+                { mode: "Regional Train", desc: "Regional train services also connect Barcelona and Castelló de la Plana via the Mediterranean corridor. Journey time is approximately 3.5–4 hours." },
+              ],
+            },
+            {
+              airport: "Madrid–Barajas Airport (MAD)",
+              distance: "~420 km · Direct high-speed train available",
+              options: [
+                { mode: "High-Speed Train", desc: "Travel from the airport to Madrid Chamartín station and take a direct AVE or Avlo high-speed train to Castelló de la Plana. Journey time is approximately 2.5–3 hours." },
+                { mode: "Flight + Train", desc: "Alternatively, fly from Madrid to Valencia (approximately 1 hour) and continue by train to Castelló de la Plana. This option is generally less convenient than the direct high-speed train." },
+              ],
+            },
             ].map((item) => (
               <div key={item.airport} className="rounded-2xl border border-[#e0eada] bg-white p-5">
                 <p className="text-[15px] font-medium text-[#1d1d1f] mb-1">{item.airport}</p>
