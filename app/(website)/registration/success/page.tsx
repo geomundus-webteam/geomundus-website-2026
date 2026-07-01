@@ -15,8 +15,8 @@ export default function RegistrationSuccess() {
             Thank you for registering for GeoMundus 2026!
           </p>
           <p className="text-muted-foreground">
-            You will receive a confirmation email shortly with further details
-            about the conference.
+            You will receive a confirmation email shortly with further details  Make sure to check your spam folder.
+            
           </p>
           <p className="text-muted-foreground">
             Join our WhatsApp community for real-time updates:{" "}

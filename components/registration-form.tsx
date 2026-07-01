@@ -52,6 +52,9 @@ const formSchema = z.object({
   country: z.string().min(1, {
     message: "Country is required.",
   }),
+  nationality: z.string().min(1, {
+    message: "Nationality is required.",
+  }),
   position: z.enum(
     [
       "bachelor_student",
@@ -161,6 +164,7 @@ export function RegistrationForm() {
       affiliation: "",
       affiliationOther: "",
       country: "",
+      nationality: "",
       positionOther: "",
       website: "",
       attendanceReason: [],
@@ -205,6 +209,7 @@ export function RegistrationForm() {
             ? values.affiliationOther || "Other"
             : values.affiliation,
         country: values.country,
+        nationality: values.nationality,
         position: values.position,
         positionOther: values.positionOther,
         website: values.website,
@@ -254,6 +259,36 @@ export function RegistrationForm() {
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const validateStep = async () => {
+    let fieldsToValidate: (keyof FormValues)[] = [];
+    switch (currentStep) {
+      case 1:
+        fieldsToValidate = ["fullName", "email", "affiliation", "country", "nationality", "position", "website"];
+        if (watchAffiliation === "other") fieldsToValidate.push("affiliationOther");
+        if (watchPosition === "other") fieldsToValidate.push("positionOther");
+        break;
+      case 2:
+        fieldsToValidate = ["attendanceReason", "presenting", "attendanceDays"];
+        break;
+      case 3:
+        fieldsToValidate = ["dietaryRestrictions", "beveragePreference", "attendingDinner"];
+        break;
+      case 4:
+        fieldsToValidate = ["consentPublicList", "consentPhotography"];
+        break;
+    }
+    const result = await form.trigger(fieldsToValidate);
+    return result;
+  };
+
+  const handleNext = async () => {
+    const valid = await validateStep();
+    if (valid && currentStep < totalSteps) {
+      setCurrentStep(currentStep + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -367,9 +402,26 @@ export function RegistrationForm() {
                     </FormItem>
                   )} />
 
+                  <FormField control={form.control} name="nationality" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>5. What is your nationality? *</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger><SelectValue placeholder="Select your nationality" /></SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {countries.map((c) => (
+                            <SelectItem key={c} value={c}>{c}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
                   <FormField control={form.control} name="position" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>5. Position / Role * (select one option)</FormLabel>
+                      <FormLabel>6. Position / Role * (select one option)</FormLabel>
                       <FormControl>
                         <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-2">
                           {[
@@ -404,7 +456,7 @@ export function RegistrationForm() {
 
                   <FormField control={form.control} name="website" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>6. Professional Website or LinkedIn *</FormLabel>
+                      <FormLabel>7. Professional Website or LinkedIn *</FormLabel>
                       <p className="text-sm text-muted-foreground">
                         The link will be available on the QR code on your entrance badge.
                       </p>
@@ -425,7 +477,7 @@ export function RegistrationForm() {
                     <FormItem>
                       <div className="mb-4">
                         <FormLabel className="text-base">
-                          7. What is your main reason for attending GeoMundus 2026? (Select all that apply) *
+                          8. What is your main reason for attending GeoMundus 2026? (Select all that apply) *
                         </FormLabel>
                       </div>
                       {[
@@ -467,7 +519,7 @@ export function RegistrationForm() {
 
                   <FormField control={form.control} name="presenting" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>8. Do you plan to submit your work for the conference? *</FormLabel>
+                      <FormLabel>9. Do you plan to submit your work for the conference? *</FormLabel>
                       <FormControl>
                         <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-2">
                           <div className="flex items-center space-x-2">
@@ -490,7 +542,7 @@ export function RegistrationForm() {
 
                   <FormField control={form.control} name="attendanceDays" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>9. On which days are you planning to attend? *</FormLabel>
+                      <FormLabel>10. On which days are you planning to attend? *</FormLabel>
                       <FormControl>
                         <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-2">
                           <div className="flex items-center space-x-2">
@@ -529,7 +581,7 @@ export function RegistrationForm() {
                     <FormItem>
                       <div className="mb-4">
                         <FormLabel className="text-base">
-                          10. Do you have any dietary restrictions or food allergies? (Select all that apply) *
+                          11. Do you have any dietary restrictions or food allergies? (Select all that apply) *
                         </FormLabel>
                       </div>
                       {[
@@ -577,7 +629,7 @@ export function RegistrationForm() {
                     <FormItem>
                       <div className="mb-4">
                         <FormLabel className="text-base">
-                          11. What are your beverage preferences? (Select all that apply) *
+                          12. What are your beverage preferences? (Select all that apply) *
                         </FormLabel>
                       </div>
                       {[
@@ -607,7 +659,7 @@ export function RegistrationForm() {
 
                   <FormField control={form.control} name="attendingDinner" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>12. Are you interested in attending the conference dinner on Friday, October 16th? *</FormLabel>
+                      <FormLabel>13. Are you interested in attending the conference dinner on Friday, October 16th? *</FormLabel>
                       <FormControl>
                         <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-2">
                           <div className="flex items-center space-x-2">
@@ -643,7 +695,7 @@ export function RegistrationForm() {
                       </FormControl>
                       <div className="space-y-1 leading-none">
                         <FormLabel>
-                          13. I consent to my name and affiliation being included in the public participants list.{" "}
+                          14. I consent to the publication of my name and affiliation on the official GeoMundus 2026 participants list.{" "}
                           <span className="text-red-500 font-semibold">(REQUIRED)</span>
                         </FormLabel>
                       </div>
@@ -658,7 +710,7 @@ export function RegistrationForm() {
                       </FormControl>
                       <div className="space-y-1 leading-none">
                         <FormLabel>
-                          14. By attending this conference, I consent to being photographed and/or recorded during the event for promotional and archival purposes.{" "}
+                          15. By attending this conference, I consent to being photographed and/or recorded during the event for promotional and archival purposes.{" "}
                           <span className="text-red-500 font-semibold">(REQUIRED)</span>
                         </FormLabel>
                       </div>
@@ -676,7 +728,7 @@ export function RegistrationForm() {
 
                   <FormField control={form.control} name="howDidYouHear" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>15. How did you hear about GeoMundus 2026?</FormLabel>
+                      <FormLabel>16. How did you hear about GeoMundus 2026?</FormLabel>
                       <FormControl>
                         <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-2">
                           {[
@@ -712,7 +764,7 @@ export function RegistrationForm() {
 
                   <FormField control={form.control} name="additionalComments" render={({ field }) => (
                     <FormItem>
-                      <FormLabel>16. Any comments, requests, or special needs?</FormLabel>
+                      <FormLabel>17. Any comments, requests, or special needs?</FormLabel>
                       <FormControl>
                         <Textarea placeholder="Optional" className="min-h-[100px]" {...field} />
                       </FormControl>
@@ -729,7 +781,7 @@ export function RegistrationForm() {
                   <div />
                 )}
                 {currentStep < totalSteps ? (
-                  <Button type="button" onClick={nextStep}>Next</Button>
+                  <Button type="button" onClick={handleNext}>Next</Button>
                 ) : (
                   <Button type="button" disabled={isSubmitting} onClick={form.handleSubmit(onSubmit)}>
                     {isSubmitting ? "Submitting..." : "Submit Registration"}

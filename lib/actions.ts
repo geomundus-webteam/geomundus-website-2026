@@ -9,6 +9,7 @@ export async function submitRegistration(formData: {
   email: string;
   affiliation: string;
   country: string;
+  nationality: string;
   position: string;
   positionOther?: string;
   website: string;
@@ -41,6 +42,7 @@ export async function submitRegistration(formData: {
     email: formData.email,
     affiliation: formData.affiliation,
     country: formData.country,
+    nationality: formData.nationality,
     position: formData.position,
     positionOther: formData.positionOther || "",
     website: formData.website,
@@ -99,6 +101,7 @@ export async function submitRegistration(formData: {
       "Email: " + formData.email,
       "Affiliation: " + formData.affiliation,
       "Country: " + formData.country,
+      "Nationality: " + formData.nationality,
       "Position: " + formData.position,
       "Days: " + formData.attendanceDays,
       "Presenting: " + formData.presenting,
