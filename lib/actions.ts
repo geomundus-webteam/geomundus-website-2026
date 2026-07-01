@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { sanityWriteClient } from "@/lib/sanity.write";
 import sendEmail from "@/lib/email";
+import fs from "fs";
+import path from "path";
 
 export async function submitRegistration(formData: {
   fullName: string;
@@ -63,9 +65,39 @@ export async function submitRegistration(formData: {
     registeredAt: new Date().toISOString(),
   });
 
+  const signaturePath = path.join(process.cwd(), "public", "email", "signature.jpg");
+  const signatureBuffer = fs.existsSync(signaturePath) ? fs.readFileSync(signaturePath) : null;
+
+  const htmlBody = `
+    <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+      <p>Dear participant,</p>
+      <p>Welcome to the GeoMundus 2026 Conference, <strong>"Geospatial Intelligence for Disaster Resilience"</strong>! We are thrilled to have you join our growing community of students and professionals passionate about geospatial innovation.</p>
+      <p>The conference will take place at <strong>Universitat Jaume I in Castellon (Spain)</strong> from <strong>October 16-17</strong>. The official Conference Dinner will take place on October 16, offering a great opportunity for networking. Spots are limited and are given on a first-come basis and attendance is subject to confirmation by the GeoMundus team closer to the date of the conference. Further details regarding the venue will be communicated together with the confirmation.</p>
+      <p><strong>Join our WhatsApp Community:</strong><br/>
+      To stay connected and receive real-time updates before and during the event, we have created a dedicated WhatsApp group.<br/>
+      Feel free to join via link: <a href="https://chat.whatsapp.com/Fvapnehebv575yqUPzwAhG">https://chat.whatsapp.com/Fvapnehebv575yqUPzwAhG</a></p>
+      <p>Also, we invite you to follow us on our official website and social media:<br/>
+      Website: <a href="https://geomundus.org/">https://geomundus.org/</a><br/>
+      Instagram: <a href="https://www.instagram.com/geomundus_conference/">https://www.instagram.com/geomundus_conference/</a><br/>
+      Facebook: <a href="https://www.facebook.com/geomundus/">https://www.facebook.com/geomundus/</a><br/>
+      LinkedIn: <a href="https://www.linkedin.com/company/geomundusconference/">https://www.linkedin.com/company/geomundusconference/</a><br/>
+      Twitter: <a href="https://x.com/geomundus_conf">https://x.com/geomundus_conf</a></p>
+      <p>We look forward to welcoming you in Castellon soon!!</p>
+      <p>Best regards,<br/>GeoMundus 2026 Team</p>
+      ${signatureBuffer ? '<p style="margin-top: 20px;"><img src="cid:signature@geomundus" alt="GeoMundus Web Team" style="max-width: 600px; width: 100%; height: auto;" /></p>' : ''}
+    </div>
+  `;
+
   await sendEmail({
     to: formData.email,
     subject: "[GeoMundus 2026] Registration Confirmed",
+    html: htmlBody,
+    attachments: signatureBuffer ? [{
+      filename: "signature.jpg",
+      content: signatureBuffer,
+      contentType: "image/jpeg",
+      cid: "signature@geomundus",
+    } as any] : undefined,
     text: [
       "Dear participant,",
       "",
