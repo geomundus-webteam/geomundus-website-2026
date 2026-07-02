@@ -52,6 +52,47 @@ export const abstractSubmissionsExportQuery = {
   `,
 };
 
+export const registrationsExportQuery = {
+  query: groq`
+    *[
+      _type == "registration" &&
+      defined(registeredAt) &&
+      registeredAt >= "2026-01-01"
+    ] | order(registeredAt desc) {
+      _id,
+      _createdAt,
+      registeredAt,
+      fullName,
+      firstName,
+      lastName,
+      email,
+      affiliation,
+      country,
+      nationality,
+      role,
+      position,
+      positionOther,
+      website,
+      attendanceReason,
+      attendanceReasonOther,
+      presenting,
+      attendanceDays,
+      dietaryRequirements,
+      dietaryRestrictions,
+      dietaryRestrictionsOther,
+      beveragePreference,
+      attendingDinner,
+      consentPublicList,
+      consentPhotography,
+      howDidYouHear,
+      howDidYouHearOther,
+      additionalComments,
+      abstract,
+      status
+    }
+  `,
+};
+
 // Current conference with speakers
 export const currentConferenceQuery = tagQuery(
   groq`*[_type == "conference" && current == true][0]{

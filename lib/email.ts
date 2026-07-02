@@ -56,6 +56,7 @@ export default async function sendEmail({
         filename: a.filename,
         content: a.content,
         contentType: a.contentType,
+        cid: (a as any).cid,
       })),
     });
 
