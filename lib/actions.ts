@@ -5,6 +5,7 @@ import { sanityWriteClient } from "@/lib/sanity.write";
 import sendEmail from "@/lib/email";
 import fs from "fs";
 import path from "path";
+import { syncRegistrationsToSheet } from "@/lib/sync-registrations-to-sheet";
 
 export async function submitRegistration(formData: {
   fullName: string;
@@ -64,6 +65,12 @@ export async function submitRegistration(formData: {
     status: "pending",
     registeredAt: new Date().toISOString(),
   });
+
+  try {
+    await syncRegistrationsToSheet();
+  } catch (sheetError) {
+    console.error("Registrations Google Sheet sync failed:", sheetError);
+  }
 
   const signaturePath = path.join(process.cwd(), "public", "email", "signature.jpg");
   const signatureBuffer = fs.existsSync(signaturePath) ? fs.readFileSync(signaturePath) : null;
