@@ -74,8 +74,7 @@ export default async function RegistrationPage() {
               Interested in presenting your work?
             </h3>
             <p className="mb-6">
-              GeoMundus is accepting short papers and posters from young
-              professionals in the field of Geospatial Technologies.
+              GeoMundus is accepting abstracts from students and young professionals in the field of Geospatial Technologies. If you are interested in presenting your work at the conference, please review our submission guidelines.
             </p>
             <Button asChild className="bg-emerald-700 hover:bg-emerald-800">
               <Link href="/submissions" className="flex items-center gap-2">
