@@ -162,24 +162,25 @@ export default async function Home() {
         )}
 
         {/* Meta pills */}
-        <Link href="/#schedule">
-          <div className="inline-flex flex-col sm:flex-row border border-[#b2d8d4] rounded-2xl overflow-hidden bg-white w-full max-w-[900px] cursor-pointer hover:border-[#058a78] transition-colors duration-200">
-            <div className="flex-1 py-4 px-5 text-center sm:border-r sm:border-b-0 border-b border-[#d0ecea]">
+        <div className="inline-flex flex-col sm:flex-row border border-[#b2d8d4] rounded-2xl overflow-hidden bg-white w-full max-w-[900px] cursor-pointer hover:border-[#058a78] transition-colors">
+          <Link href="/#schedule" className="flex-1">
+            <div className="py-4 px-5 text-center sm:border-r sm:border-b-0 border-b border-[#d0ecea]">
               <p className="text-[14px] font-bold text-[#058a78] uppercase tracking-wider mb-1">Date</p>
-            <p className="text-[16px] font-bold text-[#1d1d1f]">
-              {startDay && endDay && month ? `${month} ${startDay} - ${endDay}, ${year}` : "TBD · 2026"}
-            </p>
-          </div>
-        </Link>
+              <p className="text-[16px] font-bold text-[#1d1d1f]">
+                {startDay && endDay && month ? `${month} ${startDay} - ${endDay}, ${year}` : "TBD · 2026"}
+              </p>
+            </div>
+          </Link>
 
-        <Link href="/#contact">
-          <div className="flex-1 py-4 px-5 text-center sm:border-r sm:border-b-0 border-b border-[#d0ecea]">
-            <p className="text-[14px] font-bold text-[#058a78] uppercase tracking-wider mb-1">Location</p>
-            <p className="text-[16px] font-bold text-[#1d1d1f]">
-              {siteSettings?.conferenceLocation ?? "Castellón, Spain"}
-            </p>
-          </div>
-        </Link>
+          <Link href="/#contact" className="flex-1">
+            <div className="py-4 px-5 text-center sm:border-r sm:border-b-0 border-b border-[#d0ecea]">
+              <p className="text-[14px] font-bold text-[#058a78] uppercase tracking-wider mb-1">Location</p>
+              <p className="text-[16px] font-bold text-[#1d1d1f]">
+                {siteSettings?.conferenceLocation ?? "Castellón, Spain"}
+              </p>
+            </div>
+          </Link>
+
           <div className="flex-1 py-4 px-5 text-center">
             <p className="text-[14px] font-bold text-[#058a78] uppercase tracking-wider mb-1">Edition</p>
             <p className="text-[16px] font-bold text-[#1d1d1f]">18th</p>
