@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { trackEvent } from "@/lib/posthog-client";
+
 
 const THEMES = [
   "Citizen Science and Volunteered Geographic Information for Disaster Response",
@@ -40,6 +42,11 @@ export default function AbstractSubmissionForm() {
         : [...prev, theme],
     );
   }
+  useEffect(() => {
+    trackEvent("abstract_form_started", {
+      page_path: "/submissions/abstract",
+    });
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -215,7 +222,19 @@ export default function AbstractSubmissionForm() {
         <input
           type="file"
           accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
+          // onChange={(e) => setFile(e.target.files?.[0] || null)}
+          onChange={(e) => {
+            const selectedFile = e.target.files?.[0] || null;
+            setFile(selectedFile);
+
+            if (selectedFile) {
+              trackEvent("abstract_file_selected", {
+                file_name: selectedFile.name,
+                file_type: selectedFile.type,
+                file_size: selectedFile.size,
+              });
+            }
+          }}
           className="block w-full rounded-[24px] border border-[#d8dde3] px-4 py-4 text-[15px] text-[#1d1d1f]"
           required
         />

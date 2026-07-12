@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -37,6 +37,7 @@ import { submitRegistration } from "@/lib/actions";
 import { Label } from "@/components/ui/label";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { trackEvent } from "@/lib/posthog-client";
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -151,6 +152,12 @@ const countries = [
 ];
 
 export function RegistrationForm() {
+
+  useEffect(() => {
+    trackEvent("registration_form_started", {
+      page_path: "/registration",
+    });
+  }, []);
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);

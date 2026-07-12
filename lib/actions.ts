@@ -6,6 +6,7 @@ import sendEmail from "@/lib/email";
 import fs from "fs";
 import path from "path";
 import { syncRegistrationsToSheet } from "@/lib/sync-registrations-to-sheet";
+import { getPostHogServer } from "@/lib/posthog-server";
 
 export async function submitRegistration(formData: {
   fullName: string;
@@ -70,6 +71,28 @@ export async function submitRegistration(formData: {
     await syncRegistrationsToSheet();
   } catch (sheetError) {
     console.error("Registrations Google Sheet sync failed:", sheetError);
+  }
+  try {
+    const posthog = getPostHogServer();
+
+    posthog.capture({
+      distinctId: formData.email,
+      event: "registration_submitted",
+      properties: {
+        registration_id: result._id,
+        country: formData.country,
+        affiliation: formData.affiliation,
+        position: formData.position,
+        attendance_days: formData.attendanceDays,
+        presenting: formData.presenting,
+        attending_dinner: formData.attendingDinner,
+        status: "pending",
+      },
+    });
+
+    await posthog.shutdown();
+  } catch (posthogError) {
+    console.error("PostHog registration tracking failed:", posthogError);
   }
 
   const signaturePath = path.join(process.cwd(), "public", "email", "signature.jpg");
@@ -154,6 +177,7 @@ export async function submitRegistration(formData: {
 
   revalidatePath("/registration");
   return { success: true, data: result };
+  
 }
 
 export async function verifyAdminToken(token: string) {

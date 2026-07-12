@@ -4,6 +4,7 @@ import { sanityWriteClient } from "@/lib/sanity.write";
 import fs from "fs";
 import path from "path";
 import { syncAbstractsToSheet } from "@/lib/sync-abstracts-to-sheet";
+import { getPostHogServer } from "@/lib/posthog";
 
 export const runtime = "nodejs";
 
@@ -246,7 +247,44 @@ https://geomundus.org
     try {
       await syncAbstractsToSheet();
     } catch (sheetError) {
-      console.error("Google Sheet sync failed:", sheetError);
+      console.error("Abstracts Google Sheet sync failed:", sheetError);
+    }
+
+    try {
+      const posthog = getPostHogServer();
+
+      posthog.capture({
+        distinctId: email,
+        event: "abstract_submitted",
+        properties: {
+          submission_id: submissionId,
+          email,
+          title,
+          selected_themes: selectedThemes,
+          selected_themes_count: selectedThemes.length,
+          original_file_name: file.name,
+          status: "submitted",
+        },
+      });
+
+      for (const theme of selectedThemes) {
+        posthog.capture({
+          distinctId: email,
+          event: "abstract_theme_tagged",
+          properties: {
+            submission_id: submissionId,
+            email,
+            title,
+            theme,
+            original_file_name: file.name,
+            status: "submitted",
+          },
+        });
+      }
+
+      await posthog.shutdown();
+    } catch (posthogError) {
+      console.error("PostHog abstract tracking failed:", posthogError);
     }
 
     return NextResponse.json({
@@ -258,6 +296,19 @@ https://geomundus.org
     });
   } catch (error) {
     console.error("Submission error FULL:", error);
+    try {
+      const posthog = getPostHogServer();
+
+      posthog.capture({
+        distinctId: "unknown",
+        event: "abstract_submission_failed",
+        properties: {
+          error_message: error instanceof Error ? error.message : "unknown_error",
+        },
+      });
+
+      await posthog.shutdown();
+    } catch {}
 
     return NextResponse.json(
       {
