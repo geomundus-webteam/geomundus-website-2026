@@ -1,5 +1,7 @@
-import { SiteSettings } from "@/sanity.types";
+"use client";
+
 import Link from "next/link";
+import { trackEvent } from "@/lib/posthog-client";
 import {
   AiOutlineTwitter,
   AiOutlineFacebook,
@@ -22,6 +24,12 @@ export function SocialLinks(socialLinks: SocialLinksProps) {
       {socialLinks?.twitter && (
         <Link
           href={socialLinks.twitter}
+          onClick={() =>
+            trackEvent("social_link_clicked", {
+              platform: "twitter",
+              page_path: window.location.pathname,
+            })
+          }
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-600 hover:text-emerald-700"
@@ -30,9 +38,16 @@ export function SocialLinks(socialLinks: SocialLinksProps) {
           <span className="sr-only">Twitter</span>
         </Link>
       )}
+
       {socialLinks?.facebook && (
         <Link
           href={socialLinks.facebook}
+          onClick={() =>
+            trackEvent("social_link_clicked", {
+              platform: "facebook",
+              page_path: window.location.pathname,
+            })
+          }
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-600 hover:text-emerald-700"
@@ -41,9 +56,16 @@ export function SocialLinks(socialLinks: SocialLinksProps) {
           <span className="sr-only">Facebook</span>
         </Link>
       )}
+
       {socialLinks?.instagram && (
         <Link
           href={socialLinks.instagram}
+          onClick={() =>
+            trackEvent("social_link_clicked", {
+              platform: "instagram",
+              page_path: window.location.pathname,
+            })
+          }
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-600 hover:text-emerald-700"
@@ -52,9 +74,16 @@ export function SocialLinks(socialLinks: SocialLinksProps) {
           <span className="sr-only">Instagram</span>
         </Link>
       )}
+
       {socialLinks?.linkedin && (
         <Link
           href={socialLinks.linkedin}
+          onClick={() =>
+            trackEvent("social_link_clicked", {
+              platform: "linkedin",
+              page_path: window.location.pathname,
+            })
+          }
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-600 hover:text-emerald-700"
@@ -63,9 +92,16 @@ export function SocialLinks(socialLinks: SocialLinksProps) {
           <span className="sr-only">LinkedIn</span>
         </Link>
       )}
+
       {socialLinks?.github && (
         <Link
           href={socialLinks.github}
+          onClick={() =>
+            trackEvent("social_link_clicked", {
+              platform: "github",
+              page_path: window.location.pathname,
+            })
+          }
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-600 hover:text-emerald-700"

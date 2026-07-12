@@ -90,8 +90,8 @@ export default async function SubmissionsPage() {
             ) : (
               <div className="prose max-w-none text-gray-700 space-y-4 text-justify">
                 <p>
-                  The GeoMundus Conference is opening its forum to young
-                  professionals looking to present their work in the field of
+                  The GeoMundus Conference is accepting abstracts from students and young
+                  professionals in the field of
                   Geospatial Technologies, Geoinformatics & GI Applications.
                 </p>
                 <p>

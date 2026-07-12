@@ -8,18 +8,24 @@ import { usePathname, useSearchParams } from "next/navigation";
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+    const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST;
 
     if (!posthogKey) {
       console.warn("PostHog disabled: NEXT_PUBLIC_POSTHOG_KEY is missing");
       return;
     }
 
+    if (!posthogHost) {
+      console.warn("PostHog disabled: NEXT_PUBLIC_POSTHOG_HOST is missing");
+      return;
+    }
+
     posthog.init(posthogKey, {
-      api_host: "/ingest",
-      ui_host:
-        process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com",
+      api_host: posthogHost,
       capture_pageview: false,
       capture_pageleave: true,
+      capture_exceptions: true,
+      disable_session_recording: true,
       debug: process.env.NODE_ENV === "development",
     });
   }, []);
