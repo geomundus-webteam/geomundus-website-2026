@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<head>
+    <title>Program</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <meta http-equiv="expires" content="0"><!-- Never caches the page -->
+    <link id="favicon" rel="shortcut icon" href="images\LogoIcon\geomundus2021_logo_czL_icon.ico">
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/gallery.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/elastislide.css"/>
+    <script src="https://kit.fontawesome.com/b37653d681.js"></script>
+</head>
+
+<body onload="initMap()">
+
+    <!-- MENU -->
+    <nav>
+        <ul class="menu">
+            <a href="index.html#header"><img class='menu_logo' src="images/main/geomundus2021_logo.png" alt=""></a>
+            <li class="item"><a href="index.html">Introduction</li>
+            <li class="item has-dropdown"><a>Program</a>
+                <ul class="main-menu-dropdown">
+                    <li><a href="program.html">Schedule</a></li>
+                    <li><a href="speakers.html#keynotes">Keynote Speakers</a></li>
+                    <li><a href="speakers.html#workshops">Workshop Leaders</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="registration.html">Registration</a></li>
+            <li class="item has-dropdown"><a>Submissions</a>
+                <ul class="main-menu-dropdown">
+                    <li><a href="submission.html#papers">Papers</a></li>
+                    <li><a href="submission.html#app">Applications</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="mapathon.html">Mapathon</a></li>
+            <li class="item"><a href="index.html#sponsors" >Sponsors</a></li>
+            <li class="item"><a href="team.html">Team</a></li>
+            <li class="item"><a href="index.html#contact">Contact</a></li>
+            <li class="toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
+        </ul>
+    </nav>
+
+    <!-- SCHEDULE -->
+    <section id="program" class="main style2">
+        <div class="container">
+            <header class="major">
+                <h2>Schedule</h2>
+            </header>
+            <p>All time slots below refer to the Greenwich Mean Time (GMT).</p>
+            <div id="responsiveTabsDemo" class="css3-tabstrip">
+                <ul class="table_list">
+                    <li>
+                        <input type="radio" name="css3-tabstrip-0" checked id="css3-tabstrip-0-2" /><label for="css3-tabstrip-0-2">Friday, 26th</label>
+                        <div class="table-wrapper" style="height: fit-content">
+                            <table class="alt">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">Time</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>9:00</td>
+                                        <td>Registration and Early-Bird Networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9:45</td>
+                                        <td>Opening Ceremony & Keynote Speakers Introduction</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:00</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Keynote Presentation 1: Martin Raubal</a>
+                                            <span style="display: none;">
+                                                <a class="program-dropdown-sub" href="./speakers.html#speaker-1" target="_blank">Title: Spatial decision-making for sustainability</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:00</td>
+                                        <td>Coffee Break</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:10</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Papers Presentations</a>
+                                            <span style="display: none;">
+                                                Jhon Eric Aunta Duarte - <a href="./docs/papers/Short_Paper_Geomundus_2021_Jhon_Eric_Aunta_Duarte.pdf" target="_blank" class ="intext_link">Change Detection Analysis Using Radar Images in the Quito River, Colombia</a>
+                                                <br>
+                                                Nianhua Liu - <a href="./docs/papers/Short_Paper_Geomundus_2021_Nianhua_Liu.pdf" target="_blank" class ="intext_link">The overview, outcome, and outlook of GIS-based football visualization</a>
+                                                <br>
+                                                Safianou Ousmanou - <a href="./docs/papers/Short_Paper_Geomundus_2021_Safianou_Ousmanou.pdf" target="_blank" class ="intext_link">Hydrothermal mineral mapping using Landsat 7 ETM+ Bands and GIS techniques in Banyo, Adamawa-Cameroon</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:45</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">Networking & Alumni Session</a>
+                                            <!--
+                                            <span style="display:none;"> This session is meant for past GeoTech students to shed light on what they have continued to pursue after their graduation. <br>
+                                                Guests: <br>
+                                                - <a class="program-dropdown-sub" href="https://www.linkedin.com/in/ignponsoda/" target="_blank"> Ignacio Ponsoda Llorens</a> <br>
+                                                - <a class="program-dropdown-sub" href="https://www.linkedin.com/in/daria-ludtke/" target="_blank"> Daria Ludtke </a> <br>
+                                                - <a class="program-dropdown-sub" href="https://www.linkedin.com/in/mahesh-thapa-44507456/" target="_blank"> Mahesh Thapa </a>  
+                                            </span>
+                                            -->
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>12:30 </td>
+                                        <td> Lunch Break </td>
+                                    </tr>
+                                    <tr>
+                                        <td>13:30</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Keynote Presentation 2: Gilberto Câmara</a>
+                                            <span style="display: none;">
+                                                <a class="program-dropdown-sub" href="./speakers.html#speaker-3" target="_blank">Title: Satellite Image Time Series Analysis for Big Earth Observation Data</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>14:30</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Sponsor Presentation: con terra</a>
+                                            <span style="display: none;">
+                                                <a class="program-dropdown-sub">- Presenter: Alaa Bakry Abdelfattah</a>                                  
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>14:40</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Sponsor Presentation: 52º North</a>
+                                            <span style="display: none;">
+                                                <a class="program-dropdown-sub">- Presenter: Dr. Benedikt Gräler</a>                                      
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>14:45</td>
+                                        <td>Coffee Break</td>
+                                    </tr>
+                                    <tr>
+                                        <td>15:00</td>
+                                        <td>
+                                            <a onclick='toggle(this)' class="program-dropdown-main">+ Workshop Session</a>
+                                            <p style="display: none;">
+                                                <a class="program-dropdown-sub">Workshop session A: Environmental Citizen Science with senseBox and openSenseMap</a>
+                                                </a>
+                                                <br>
+                                                Workshop leaders:
+                                                <br> 
+                                                - Dr. Thomas Bartoschek (WWU Münster)
+                                                <br> 
+                                                - Mario Pesch (WWU Münster)
+                                                <br>
+                                                <a class="program-dropdown-sub">Workshop session B: Open data and models for mapping ecosystem services</a>
+                                                <br>
+                                                Workshop leaders:
+                                                <br> 
+                                                - Dr. Pedro Cabral (NOVA IMS)
+                                                <br> 
+                                                - Dr. Felipe Campos (NOVA IMS)
+                                                <br> 
+                                                - João David (NOVA IMS)
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>17:00</td>
+                                        <td>End of Day 1</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="radio" name="css3-tabstrip-0" id="css3-tabstrip-0-3" /><label for="css3-tabstrip-0-3">Saturday, 27th</label>
+                        <div class="table-wrapper">
+                            <table class="alt">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">Time</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>9:00</td>
+                                        <td>Registration and Early-Bird Networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9:45</td>
+                                        <td>Opening & Keynote Speakers Introduction</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:00</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Keynote Presentation 3: Brendan O’Neill</a>
+                                            <span style="display: none;">
+                                                <a class="program-dropdown-sub" href="./speakers.html#speaker-4" target="_blank">Title: Geographic Information Systems in the Humanitarian and Global Development Communities</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:00</td>
+                                        <td>Coffee Break</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:10</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Apps Presentations</a>
+                                            <span style="display: none;">
+                                                Helder Guimaraes Aragão - <a href="./docs/applications/Application_Geomundus_2021_Helder_Guimaraes_Aragao.pdf" target="_blank" class ="intext_link">Geoweb: A GIS Web of a company sanitation based on open source software</a>
+                                                <br>
+                                                Jaskaran Singh Puri - <a href="./docs/applications/Application_Geomundus_2021_Jaskaran_Singh_Puri.pdf" target="_blank" class ="intext_link">digisat: Sentinel-2 Resolution Enhancer</a>
+                                                <br>
+                                                Jhon Eric Aunta Duarte - <a href="./docs/applications/Application_Geomundus_2021_Jhon_Eric_Aunta_Duarte.pdf" target="_blank" class ="intext_link">SINUPOT: Information System for Urban Regulations and Planning</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12:00</td>
+                                        <td> <a onclick="toggle(this)" class="program-dropdown-main">Networking & Alumni Session</a>
+                                            <!--
+                                            <span style="display:none;"> This session is meant for past GeoTech students to shed light on what they have continued to pursue after their graduation. <br>
+                                                Guests: <br>
+                                                - <a class="program-dropdown-sub" href="https://www.linkedin.com/in/ignponsoda/" target="_blank"> Ignacio Ponsoda Llorens</a> <br>
+                                                - <a class="program-dropdown-sub" href="https://www.linkedin.com/in/daria-ludtke/" target="_blank"> Daria Ludtke </a> <br>
+                                                - <a class="program-dropdown-sub" href="https://www.linkedin.com/in/mahesh-thapa-44507456/" target="_blank"> Mahesh Thapa </a>  
+                                            </span>
+                                            -->
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>12:30</td>
+                                        <td>Lunch Break</td>
+                                    </tr>
+                                    <tr>
+                                        <td>13:30</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Keynote Presentation 4: Dr. Linnet Taylor</a>
+                                            <span style="display: none;">
+                                                <a class="program-dropdown-sub" href="./speakers.html#speaker-2" target="_blank">Title: The God’s eye view? Geospatial data, power and politics</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>14:30</td>
+                                        <td> <a onclick="toggle(this)" class="program-dropdown-main">+ Sponsor Presentation: ESRI Portugal</a>
+                                            <span style="display: none;">
+                                                <a class="program-dropdown-sub">Presenter: Rui Santos</a>
+                                            </span> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>14:40</td>
+                                        <td>Mapathon & Session with John Nelson</td>
+                                    </tr>
+                                    <tr>
+                                        <td>15:15</td>
+                                        <td>Coffee Break</td>
+                                    </tr>
+                                    <tr>
+                                        <td>15:30</td>
+                                        <td> <a onclick="toggle(this)" class="program-dropdown-main">+ Career Development Panel Session</a>
+                                            <span style="display:none;">
+                                                This is a panel made up of experts from academia, private and public GIS organizations with abundant experience in the field. 
+                                                The speakers will have time to talk about their history and experiences in GIS, and give insight into the industry.
+                                                <br>
+                                                Panelists:
+                                                <br>
+                                                - <a class="program-dropdown-sub" href="https://www.linkedin.com/in/alexander-strotmann" target="_blank"> Alex Strotmann (Project Manager, con terra)</a> <br>
+                                                - <a class="program-dropdown-sub" href="https://jwagemann.com/" target="_blank"> Julia Wagemann (Independent Consultant, Co-founder of Women in Geospatial+)</a> <br>
+                                                - <a class="program-dropdown-sub" href="http://ben.graeler.org/" target="_blank"> Dr. Benedikt Gräler (Managing Director, 52° North)</a> <br>
+                                                - <a class="program-dropdown-sub" href="https://www.linkedin.com/in/stefana-cioban-650bb810b/" target="_blank"> Stefana Cioban (Data Scientist, Endava) </a> <br>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>17:00</td>
+                                        <td>End of Day 2 & Closing Ceremony</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer: SOCIAL NETWORKS -->
+    <section id="footer">
+        <div class="container">
+            <br>
+            <section id="social_networks">
+                <ul class="icons">
+                    <li><a href="https://twitter.com/geomundus" class="icon alt fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+                    <li><a href="https://www.facebook.com/geomundus/?fref=ts" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://www.instagram.com/geomundus_conference/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+                    <li><a href="https://github.com/erasmus-mundus-geotech-master/" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                </ul>
+            </section>
+    
+            <ul class="copyright">
+                <li><a href="https://github.com/erasmus-mundus-geotech-master/Geomundus2021" target="_blank"> &copy; GeoMundus 2021</a></li>
+                <li>Designed by GeoMundus Web Team</li>
+            </ul>
+        </div>
+    </section>
+
+</body>
+</html>

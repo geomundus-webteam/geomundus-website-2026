@@ -1,0 +1,494 @@
+<!DOCTYPE HTML>
+<!--
+    Photon by HTML5 UP
+    html5up.net | @n33co
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+    <base href="/2020/">
+    <title>GeoMundus 2020</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/globe-24.png" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168265389-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-168265389-1');
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1K1qI88SQ1rk9N6zQ7yHk8vDnm_ldINc"></script>
+    <script src="js/main.js"></script>
+    <script src="js/includeHTML.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/elastislide.css" />
+    <!-- <link href='https://fonts.googleapis.com/css?family=PT+Sans+Narrow&v1' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css' /> -->
+    <noscript>
+        <style>
+            .es-carousel ul{
+                display:block;
+            }
+        </style>
+    </noscript>
+    <script id="img-wrapper-tmpl" type="text/x-jquery-tmpl">
+        <div class="rg-image-wrapper">
+            {{if itemsCount > 1}}
+            <div class="rg-image-nav">
+                <a href="#" class="rg-image-nav-prev">Previous Image</a>
+                <a href="#" class="rg-image-nav-next">Next Image</a>
+            </div>
+            {{/if}}
+            <div class="rg-image"></div>
+            <div class="rg-loading"></div>
+            <div class="rg-caption-wrapper">
+                <div class="rg-caption" style="display:none;">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </script>
+</head>
+
+<body onload="initMap()">
+    <ul class="topnav" id="hide">
+        <a href="index.html#header"><img class='menu_home' src="images/geomundus2020_logo.png" alt=""></a>
+        <li class="has-dropdown"><a>Intro</a>
+            <ul class="main-menu-dropdown">
+                <li><a href="index.html#info">Information</a></li>
+                <li><a href="index.html#footer">History</a></li>
+            </ul>            
+        </li>
+        <li class="has-dropdown"><a>Programme</a>
+            <ul class="main-menu-dropdown">
+                <li><a href="program.html">Schedule</a></li>
+                <li><a href="index.html#speakers">Speakers</a></li>
+            </ul>
+        </li>
+        <li><a href="registration.html">Registration</a></li>
+        <li><a href="submission.html">Papers and Posters Submission</a></li>
+        <li class="has-dropdown"><a>Mapathon</a>
+            <ul class="main-menu-dropdown">
+                <li><a href="mapathon.html">Info</a></li>
+                <li><a href="map_gallery.html">Gallery</a></li>
+            </ul>
+        </li>
+        <li><a href="team.html">The Team</a></li>
+        <li><a href="index.html#sponsors" >Sponsors</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <ul class="mobile_menu">
+        <a href="index.html#header"><img class='mobile_menu_home' src="images/geomundus2020_logo.png" alt=""></a>
+        <li class="icon">
+            <a style="font-size:20px;" id='menu_btn'>☰</a>
+        </li>
+    </ul>
+  
+ 
+    <!-- Header: GeoMundus PRESENTATION -->
+    <section id="header" align="center">
+        <div class="inner">
+            <div align="center">
+
+                <div>
+                    <img src="images/website_logo.png" style="vertical-align: middle; margin: 2%;" alt="" height="150" width="150" />
+                    <img src="images/erasmus-mundus.png" style="vertical-align: middle;margin-top: 2%;" alt="" height="50" width="185">
+                </div >      
+                <div>
+                    <h1> <strong>GeoMundus 2020</strong><br /></h1>    
+                    <strong><h2>Be Special, Think Spatial</h2></strong>
+                    <h2>Digital Edition <strong><br/>27<sup>th</sup> and 28<sup>th</sup> November </strong> </h2>
+                    <!--<strong><h3 style="color:#FFCD03">*GeoMundus 2020 cannot take place physically but will be held virtually</h3></strong> -->
+                    <strong><h3 style="color:#FFCD03">A huge thanks to everyone that contributed to the success of Geomundus 2020. <br>
+                        See you next year in the virtual or in the real world!
+                    </h3></strong>
+                    <p> The registration for the virtual conference is now <strong> <span style="color: #BC0000;"> closed</span></strong>.
+
+                </div>
+                <!-- <div class="marquee">    
+                </div> -->
+                <ul class="actions">
+                    <li><a href="#info" class="button  scrolly">Discover</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info: WHAT IS GeoMundus -->
+    <section id="info" class="main style">
+        <div class="container">
+            <div class="row 150%">
+                <div class="12u 12u$(medium)">
+                    <header class="major">
+                        <h2>What is GeoMundus?<br></h2>
+                    </header>
+                    <p>
+                        GeoMundus is a free international Conference organized <b>by students for students</b>. The organizing committee is the students from the <a href="http://mastergeotech.info/" class ='intext_link' target="_blank">Erasmus Mundus Master of Science in Geospatial Technologies</a>.
+                        The conference aims to share cutting-edge scientific research, knowledge, and skills in the fields of Geospatial Technologies, Geoinformatics, and Geosciences, including but not limited to geographic information systems and sciences,
+                        spatial cognition, geography, and spatial data sciences.
+                        <br>
+                        Please see <a href="#programme" class ='intext_link'>Programme Section</a> for more detailed information.
+                    </p>
+                </div>
+
+                <img src="images/geomundus2019groupphoto.jpg" alt="" style="width: 100%"/>
+
+                <div class="container" style="text-align: justify;">
+                    <header class="major">
+                        <h2><br>Why GeoMundus?<br></h2>
+                    </header>
+                    <p>
+                        GeoMundus is an opportunity to learn about and share scientific research, knowledge, and skills with other students and researchers of all things ‘Geo’. Every year it will give participants the chance to learn about technological advancements of GI, research activities and applications of geospatial technologies in today’s world. GeoMundus is unique, featuring workshops where participants can experience first-hand the future of the field as well as a career session specially designed for students interested in a geospatial career.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="main style2 special">
+        <div style="text-align: left;margin-left: 10%;">
+            <header>
+                <h2>Who should participate in GeoMundus 2020?</h2>
+            </header>
+            <p>
+                Everyone who is curious about geospatial technologies and their applications. We especially welcome students, researchers, industry leaders, and interested members of the public. It is not only a great opportunity to learn, but also to network with the brightest minds in this exciting field.
+            </p>
+            <p> The registration for the virtual conference is now <strong> <span style="color:#BC0000;"> closed</span></strong>.
+        </div>
+    </section>
+
+
+    <!--2020 SPEAKERS -->
+    <section id="speakers" class="main style1 special">   
+        <div class="container" style="text-align: justify;">
+            <header>
+                <h2>Keynote Speakers</h2>
+            </header>
+
+            <p> 
+                We are happy to introduce our keynote speakers, Dr. Paula Moraga, Dr. Gerald Blasch, Dr. Arun Kumar Pratihast, and Dr. Linda Beale. Please visit their personal websites to find out more about them.
+            </p>
+    
+            <div class="row 150%" id="speaker_one">
+                <div align="center" class="4u 12u$(medium)">
+                    <span class="image fit2"><img src="images/speakers/paula.jpg" alt="" /></span>
+                </div>
+                <div class="8u 12u$(medium)">
+                    <h3 align="center" style="background-color:#8addaa; color:white;text-align: center;"><strong> 
+                        <a  href = "https://paula-moraga.github.io/" target="_blank">Dr. Paula Moraga</a> </strong>
+                    </h3>
+                    <p align="justify">
+                        <a class="link_keynote" href="https://www.paulamoraga.com/" target="_blank"><strong>Dr. Paula Moraga</strong></a> is an Assistant Professor of Statistics at the King Abdullah University of Science and Technology (KAUST) and the Principal Investigator of the Geospatial Statistics and Health Surveillance Research Group. Paula's research focuses on the development of innovative statistical methods and computational tools for geospatial data analysis and health surveillance, and the impact of her work has directly informed strategic policy in reducing disease burden in several countries. She has developed modeling architectures to understand the spatial and spatio-temporal patterns and identify targets for intervention of diseases such as malaria in Africa, leptospirosis in Brazil, and cancer in Australia, and has worked on the development of a number of R packages for Bayesian risk modeling, detection of disease clusters, and risk assessment of travel-related spread of disease. Paula has published extensively in leading journals and is the author of the book 'Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny' (2019, Chapman & Hall/CRC). Paula received her Ph.D. degree in Mathematics from the University of Valencia, and her Master's degree in Biostatistics from Harvard University.
+                        <br>
+                    </p>
+                    <h4 style="color: #FFCD03; font-weight: bold; text-align: center;">KEYNOTE: <br> “Geospatial Data Science for Public Health Surveillance”</h4> 
+                    <p align="justify"> 
+                        Geospatial health data are essential to inform public health and policy. These data can be used to quantify disease burden, understand geographic and temporal patterns, identify risk factors, and measure inequalities. In this talk, Paula will give an overview of her research which focuses on the development of innovative statistical methods and interactive visualization applications for geospatial data analysis and health surveillance. 
+                    </p>
+                </div>
+            </div>
+
+            <hr align="center" width="100%">
+            
+            <div class="row 150%" id="speaker_two">
+                <div align="center" class="4u 12u$(medium)">
+                    <span class="image fit2"><img src="images/speakers/Gerald.jpg" alt="" /></span>
+                </div>
+                <div class="8u 12u$(medium)">
+                    <h3 align="center" style="background-color:#8addaa; color:white;text-align: center;"><strong> 
+                        <a  href = "https://www.cimmyt.org/people/gerald-blasch/" target="_blank"> Dr. Gerald Blasch</a> </strong>
+                    </h3>
+                    <p align="justify">
+                        <a class="link_keynote" href="https://www.linkedin.com/in/gerald-blasch/" target="_blank"><strong> Dr. Gerald Blasch</strong></a> is a Crop Disease Geo-Spatial Data Scientist at the International Maize and Wheat Improvement Center (CIMMYT). His work focuses on R4D of remote sensing (RS) and geospatial solutions for large-scale crop disease early warning systems, whereby he explores the potential of UAV-based high-throughput phenotyping for biotic stresses and satellite-based crop disease detection. 
+                        <br> 
+                        Overall, Gerald has 13 years of research and consultancy experience in (inter)national projects in the agriculture and development sectors of several countries (e.g. Australia, China, Ethiopia, Germany, Mexico, and the UK). As a researcher, he developed RS and GIS tools for precision and conservation agriculture, digital soil mapping, and environmental monitoring during his Post-Doc (Newcastle University, UK) and Ph.D. studies (GFZ German Research Centre for Geosciences, Germany), and consultancy activities (CIMMYT, Mexico). For instance, to optimize farm management, Gerald developed an easy-to-use tool for deriving yield zones in crop production system by applying Spatio-temporal analysis to large yield map time series using image analysis techniques such as pattern recognition and unsupervised learning. As a GIS expert (GIZ German agency of international cooperation, Germany; SEMARNAT, Mexico) he built and managed a GIS for waste management for the Mexican Federal Ministry of Environment and Natural Resources (SEMARNAT).
+                        <br>
+                    </p>
+                    <h4 style="color: #FFCD03; font-weight: bold; text-align: center;">KEYNOTE: <br> “Wheat Rust Early Warning System in Ethiopia – Using New Technologies to Combat Crop Disease”</h4> 
+                    <p align="justify"> 
+                        Wheat rusts pose a major threat to food security in Ethiopia, with several devastating epidemics in recent history. To help prevent major disease outbreaks, early detection and timely control are essential. In response to the wheat rust problem in Ethiopia, a consortium of national and international partners have created one of the most advanced, operational crop disease early warning and advisory systems in the world. This early warning system includes several advanced technologies and operates in near real-time within the wheat season. Key elements include near real-time field and mobile phone surveillance data, mobile nanopore sequencing diagnostics, meteorologically-driven spore dispersal, disease environmental suitability forecasting, and a platform for timely communication to policy-makers, extension agents and small-holder farmers. This keynote talk describes the existing early warning system and the planned development of additional, new components for enhancement based on artificial intelligence, machine learning, and remote sensing, such as UAV-based high throughput phenotyping for biotic stresses. 
+                    </p>
+                </div>
+            </div>
+
+            <hr align="center" width="100%">
+
+            <div class="row 150%" id="speaker_three">
+                <div align="center" class="4u 12u$(medium)">
+                    <span class="image fit2"><img src="images/speakers/Arun.jpg" alt="" /></span>
+                </div>
+                <div class="8u 12u$(medium)">
+                    <h3 align="center" style="background-color:#8addaa; color:white;text-align: center;"><strong> 
+                        <a target="_blank">Dr. Arun Kumar Pratihast</a> </strong>
+                    </h3>
+                    <p align="justify">
+                        <a class="link_keynote" target="_blank"> <strong> Dr. Arun Pratihast</strong></a> is a Senior Data scientist at Wageningen Environmental Research, team Earth Informatics, Wageningen, The Netherlands with a passion for the effective application of data and technology for forest, biodiversity, and agriculture monitoring. He focuses on citizen Science, geoinformation technologies, mobile application development, open and big data flow, data standardisation, software engineering and how these can lead to user-friendly applications and quality decision making. He is also actively engaged in the training and capacity building activities of World Bank, SilvaCarbon Global Forest Observation Initiative in many countries around the world. He has also received Google Earth Engine Award 2015.
+                    </p>
+                    <p> 
+                        Arun  has a PhD from Wageningen University entitled "Interactive community-based tropical forest monitoring using emerging technologies”. This PhD project was funded by Centers for Natural Resources and Development (CNRD), DAAD Fellowship Programme and was in collaboration with  Institute for Technology & Resources Management in the Tropics & Subtropics (ITT), Cologne University of Applied Sciences, Cologne, Germany and the Laboratory of Geoinformation Science and Remote Sensing , Wageningen University, Wageningen, The Netherlands.  Prior to coming to Wageningen, he completed his MSc. at ITC, University of Twente, Enschede, The Netherlands and  his undergraduate degree in Computer Engineering from, Tribhuvan University, Nepal. A full list of publications can be found via his GoogleScholar or ResearchGate profile. 
+                    </p>
+                    <h4 style="color: #FFCD03; font-weight: bold; text-align: center;">KEYNOTE: <br> “Community-based Tropical Forest Monitoring Using Emerging Technologies”</h4> 
+                    <p align="justify">
+                        The unprecedented destruction of tropical forest cover has serious negative consequences on the regulation of the world’s climate cycle, biodiversity and other environmental variables. With rising global temperatures, improved forest monitoring, especially at the landscape scale has become increasingly important.  Because forest changes manifest at a variety of spatial and temporal scales, effective monitoring will likely require an integrated approach, where detailed community-based in-situ observations are combined with remote sensing satellites. With these considerations in mind, this presentation will describe an integrated community based tropical forest monitoring system which combines emerging technologies, remote sensing and community-based observation in support of REDD+ monitoring, reporting and verification implementation.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row 150%" id="speaker_fourth">
+                <div align="center" class="4u 12u$(medium)">
+                    <span class="image fit2"><img src="images/speakers/LindaBeale_cropped.jpg" alt="" /></span>
+                </div>
+                <div class="8u 12u$(medium)">
+                    <h3 align="center" style="background-color:#8addaa; color:white;text-align: center;"><strong> 
+                        <a target="_blank">Dr. Linda Beale</a> </strong>
+                    </h3>
+                    <p align="justify">
+                        <a class="link_keynote" target="_blank"> <strong> Dr. Linda Beale</strong></a> is the Group Lead for Location Analytics at Esri, with an interest in sharing the value of spatial analysis with an audience ranging from those new to the discipline to those who are seeking fresh approaches and techniques. A geographer by training, Linda gained her PhD in GIS, statistics and modelling, and led the geospatial health group in the Small Area Health Statistics Unit at Imperial College London. Linda has extensive experience in the field of spatial epidemiology and has worked closely with Health Departments, the World Health Organisation and Center for Disease Control. She developed the award-winning Rapid Inquiry Facility program for chronic disease modelling and was co-author on the landmark Environment and Health Atlas for England and Wales. Linda is the author of the first Esri MOOC, Going Places with Spatial Analysis, and she has published numerous peer-reviewed papers, book chapters, and been invited to keynote, present and deliver workshops at national and international conferences. Linda has worked at Esri since 2011, where her experience helps shape location analytics to provide the community with better and more powerful tools, and where she helps teach best practices and sharing of knowledge to develop understanding across the wider community. 
+                    </p>
+                    <p> 
+                        
+                    </p>
+                    <h4 style="color: #FFCD03; font-weight: bold; text-align: center;">KEYNOTE SUMMARY <br> 
+                    </h4> 
+                    <p align="justify">
+                        Epidemiology sits at an intersection of a number of different disciplines and uses techniques from, for example, the fields of health, medicine, statistics and geography.  Although the importance of the geographical component has historically been understood, interdisciplinary approaches to epidemiology and spatial analysis, where each discipline contributes and advances, are still a rarity. A number of geographical limitations impact epidemiological analysis, such as inconsistent geography, data scale/resolution, health and population data issues. In terms of epidemiological research, exposure misclassification, selection and ecological bias, rare diseases and confounding impact study design and methods. Combining the lessons learnt from both disciplines with advanced statistical approaches enables advances in both. In a world where epidemiology has gone from an almost unknown discipline to being a part of our everyday language and lives, due to COVID-19, this talk will explore the importance of the relationship between epidemiology and the geographical perspective.
+                    </p>
+                </div>
+            </div>
+
+            <hr align="center" width="100%">
+
+            <header>
+                <h2>Workshops</h2>
+            </header>
+            <div class="row 150%" id="speaker_five">
+                <div align="center" class="4u 12u$(medium)">
+                    <span class="image fit2"><img src="images/speakers/Julio_cropped.JPG" alt="" /></span>
+                </div>
+                <div class="8u 12u$(medium)">
+                    <h3 align="center" style="background-color:#8addaa; color:white;text-align: center;"><strong> 
+                        <a target="_blank">Dr. Julio Pedrassoli</a> </strong>
+                    </h3>
+                    <p align="justify">
+                        
+                        <a class="link_keynote" target="_blank" href="https://www.linkedin.com/in/julio-pedrassoli-82217820/"><strong> Dr. Julio Pedrassoli </strong></a> has a PhD. in Geography from the University of São Paulo (USP) and a Bachelor's Degree in Geography from São Paulo State University (UNESP). Worked as Research Scholar at Columbia University/New York and as a consultant in Geographic Information Systems and Remote Sensing for the Pólis Institute on projects for monitoring, analysis, and evaluation in urban areas and natural environments. Nowadays is a Professor at the Federal University of Bahia (Brazil). Currently, develop scientific research for assessment of changes in Earth's surface using satellite images, spatial analysis, and application of spectral mixture models. 
+                    </p>
+                    <h4 style="color: #FFCD03; font-weight: bold; text-align: center;">WORKSHOP: <br> “Accessing, mapping and exporting Nitrogen Dioxide data on Google Earth Engine”</h4> 
+                    <p align="justify">
+                        In this workshop, we will cover how to access the air pollution data collected by the TROPOMI orbital sensor on Google Earth Engine, with an emphasis on nitrogen dioxide measurement, which has been used in many media examples as a proxy for mapping the intensity of activities during pandemic and lockdown periods. Nitrogen dioxide is strongly associated with urban activities and the burning of fossil fuels, such as diesel oil and also industrial activities, and analysing its temporal space distribution can give some interesting indications about human activities and their intensity on the Earth's surface.
+                    </p>
+                    <strong>Materials and Equipment:</strong>
+                    <ol>
+                        <li>Laptop or Computer</li>
+                        <li>Internet Connection</li>
+                        <li>Google Earth Engine Account</li>
+                    </ol>                    
+                </div>
+            </div>     
+            <div class="row 150%" id="speaker_six">
+                <div align="center" class="4u 12u$(medium)">
+                    <span class="image fit2"><img src="images/speakers/paula.jpg" alt="" /></span>
+                </div>
+                <div class="8u 12u$(medium)">
+                    <h3 align="center" style="background-color:#8addaa; color:white;text-align: center;"><strong> 
+                        <a target="_blank">Dr. Paula Moraga</a> </strong>
+                    </h3>
+                    <p align="justify">
+                        <a class="link_keynote" href="https://www.paulamoraga.com/" target="_blank"><strong> Dr. Paula Moraga</strong></a> who is also the keynote speaker of the conference, is an Assistant Professor of Statistics at the King Abdullah University of Science and Technology (KAUST) and the Principal Investigator of the Geospatial Statistics and Health Surveillance Research Group. Paula has published extensively in leading journals and is the author of the book 'Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny' (2019, Chapman & Hall/CRC). Paula received her Ph.D. degree in Mathematics from the University of Valencia, and her Master's degree in Biostatistics from Harvard University.
+                    </p>
+                    <h4 style="color: #FFCD03; font-weight: bold; text-align: center;">WORKSHOP: <br> Disease Risk Modeling and Visualization using R-INLA </h4> 
+                    <p align="justify">
+                        Disease risk models are essential to inform public health and policy. These models can be used to quantify disease burden, understand geographic and temporal patterns, identify risk factors, and measure inequalities. In this workshop we will learn how to estimate disease risk and quantify risk factors using aerial and geostatistical data. We will also create interactive maps of disease risk and risk factors, and introduce presentation options such as interactive dashboards. We will work through two disease mapping examples using data of malaria in The Gambia and cancer in Pennsylvania, USA. We will cover the following topics:
+                    </p>
+                    <ul>
+                        <li>Model disease risk in different settings</li>
+                        <li>Manipulate and transform point, areal and raster data using spatial packages</li>
+                        <li>Retrieve high resolution spatially referenced environmental data using the raster package</li> 
+                        <li>Fit and interpret spatial models using <a href="http://www.r-inla.org/" target="_blank"> <i class="icon fa-link"></i> Integrated Nested Laplace Approximations (INLA)</a> </li>
+                        <li>Map disease risk and risk factors using <a href="https://rstudio.github.io/leaflet/" target="_blank"> <i class="icon fa-link"></i> leaflet </a> and <a href="https://ggplot2.tidyverse.org/" target="_blank"><i class="icon fa-link"></i> ggplot2 </a></li>
+                    </ul>
+                    <p>The workshop examples will focus on health applications, but the approaches covered are also applicable to other fields that use georeferenced data including ecology, demography or the environment. The workshop materials are drawn from the book 'Geospatial Health Data: Modeling and Visualization with R-INLA and Shiny' by Paula Moraga (2019, Chapman & Hall/CRC).</p>
+                </div>
+            </div>         
+        </div>
+    </section>
+
+   
+
+    <!-- CONTACT -->
+    <section id="contact" class="main style2">
+        <div class="container">
+            <header class="major">
+                <h2>Contact</h2>
+            </header>
+            <p>If you have any questions, please contact us via email. Alternatively, please write to us at our mailing address listed below.</p>
+            <div class="row 150%">
+                <div class="4u 12u$(medium)">
+                    <h4>Email</h4>
+                    <strong><a href="mailto:info@geomundus.org">info@geomundus.org<br/></a></strong>
+                    <p></p>
+                </div>
+
+                <div class="4u 12u$(medium)" style="text-align: left;">
+                    <h4>Mailing address</h4>
+                    <strong>Institute for Geoinformatics<br>Heisenbergstraβe 2, D-48149 <br>Münster Germany</strong>
+                </div>
+                <div class="4u 12u$(medium)" style="text-align: left;">
+                    <h4>Twitter Feed</h4>
+                    <a class="twitter-timeline" data-width="300" data-height="300" href="https://twitter.com/GeoMundus?ref_src=twsrc%5Etfw">Tweets by GeoMundus</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Sponsors -->
+    <section id="sponsors" class="main style1 special">
+        <div class="container">
+            <header class="major">
+                <h2>Sponsors & Partners</h2>
+            </header>
+            <p>
+                GeoMundus is looking for sponsors and partners from all the spatial, technological, public or private, scientific, governmental, academic and more fields. We will be thrilled to have all the support and participation in this international event.
+            </p>
+            <p>
+                Please feel free to contact the budget team at <strong><a href="mailto:budget@geomundus.org">budget@geomundus.org</a></strong> for more information on how to help and contribute! We will be glad to hear all the wishes to sponsor the 2020 GeoMundus conference and future years.
+            </p>
+
+            <h2>Partners</h2>
+
+            <div class="row row-centered justify-content-center">
+                <div class="col img-circle-div col-centered">
+                    <a href="https://www.isegi.unl.pt/" target="_blank">
+                        <img class="img-circle" src="images/nova.png" width="150" height="150">
+                    </a>
+                </div>
+                <div class="col img-circle-div col-centered">
+                    <a href="https://geotec.uji.es/" target="_blank">
+                        <img class="img-circle" src="images/uji.png" width="150" height="150">
+                    </a>
+                </div>
+                <div class="col img-circle-div col-centered">
+                    <a href="https://www.uni-muenster.de/Geoinformatics/en/" target="_blank">
+                        <img class="img-circle" style="padding: 20px" src="images/wwm.gif" width="150" height="150">
+                    </a>
+                </div>
+            </div>
+            <br>
+            <h2>Sponsors</h2>
+            <div class="row row-centered justify-content-center">
+                <div class="col img-circle-div col-centered">
+                    <a href="https://www.conterra.de/" target="_blank">
+                        <img src="https://www.conterra.de/themes/conterra/logo.svg" width="150" height="150">
+                        <br><br>
+                        <strong>con terra</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer: SOCIAL NETWORKS -->
+    <section id="footer">
+        <div class="container">
+            <header class="major">
+                <h2>GeoMundus History</h2>
+                <p>The first GeoMundus conference was held successfully in 2009 at ISEGI, Lisbon, Portugal. Since then, the conference has been held annually always alternating between Castellón (Spain), Münster (Germany) and Lisbon (Portugal) as central locations.
+                </p>
+                <br>
+                <div class="videoWrapper">
+                    <iframe width="100%" height="500" src="https://www.youtube.com/embed/1l--VBTPv_Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <br>
+            </header>
+            <div class="select-wrapper">
+                <select onchange="location.href=this.options[this.selectedIndex].value" name="elige" size="1">
+                    <option value="placeholder" selected>
+                        <span class="red-black-text">Select previous GeoMundus Conference...</span>
+                    </option>
+                    <option value="https://geomundus.org/2019/">
+                        <span class="red-black-text">Castell&oacute;n, Spain 2019 <img src="https://geomundus.org/2014/images/spain.png" alt="SmashingConf Freiburg 2014" /></span> <span class="date">29<sup>th</sup>-30<sup>th</sup> of November 2019</span>
+                    </option>
+                    <option value="https://geomundus.org/2018/">
+                        <span class="red-black-text">Lisbon, Portugal 2018 <img src="https://geomundus.org/2014/images/portugal.png" alt="SmashingConf Freiburg 2014" /></span> <span class="date">7<sup>th</sup>-8<sup>th</sup> of December 2018</span>
+                    </option>
+                    <option value="https://geomundus.org/2017/">
+                        <span class="red-black-text">M&uuml;nster, Germany 2017 <img src="https://geomundus.org/2014/images/german.png" alt="SmashingConf Freiburg 2014" /></span> <span class="date">10<sup>th</sup>-11<sup>th</sup> of November 2017</span>
+                    </option>
+                    <option value="https://geomundus.org/2016/" >
+                        <span class="red-black-text">Castell&oacute;n, Spain 2016 <img src="https://geomundus.org/2014/images/spain.png" alt="SmashingConf Freiburg 2014" /></span> <span class="date">04<sup>th</sup>-05<sup>th</sup> of November 2016</span>
+                    </option>
+                    <option value="https://geomundus.org/2015/" >
+                        <span class="red-black-text">Lisbon, Portugal 2015 <img src="https://geomundus.org/2014/images/portugal.png" alt="SmashingConf Freiburg 2014" /></span> <span class="date">20<sup>th</sup>-21<sup>th</sup> of November 2015</span>
+                    </option>
+                    <option value="https://geomundus.org/2014/">
+                        <span class="red-black-text">M&uuml;nster, Germany 2014 <img src="https://geomundus.org/2014/images/german.png"  alt="SmashingConf M&uuml;nster, Germany 2014" /></span> <span class="date">7<sup>th</sup>-8<sup>th</sup> of November 2014</span>
+                    </option>
+                    <option value="https://geomundus.org/2013/">
+                        <span class="red-black-text">Castell&oacute;n, Spain 2013 <img src="https://geomundus.org/2014/images/spain.png" alt="SmashingConf Freiburg 2014" /></span> <span class="date">15<sup>th</sup>-16<sup>th</sup> of November 2013</span>
+                    </option>
+                    <option value="https://geomundus.org/2012/index-2.html">
+                        <span class="red-black-text">Lisbon, Portugal 2012 <img src="https://geomundus.org/2014/images/portugal.png" alt="SmashingConf Freiburg 2014" /></span> <span class="date">9<sup>th</sup>-10<sup>th</sup> of November 2012</span>
+                    </option>
+                    <option value="https://geomundus.org/2011/index2011.php">
+                        <span class="red-black-text">M&uuml;nster, Germany 2011 <img src="https://geomundus.org/2014/images/german.png"  alt="SmashingConf Freiburg 2014" /></span> <span class="date">28<sup>th</sup>-29<sup>th</sup> of October 2011</span>
+                    </option>
+                    <option value="https://geomundus.wordpress.com/">
+                        <span class="red-black-text">Castell&oacute;n, Spain 2010 <img src="https://geomundus.org/2014/images/spain.png" alt="SmashingConf Freiburg 2014" /></span> <span class="date">22<sup>th</sup>-23<sup>th</sup> of October 2010</span>
+                    </option>
+                    <option value="https://geomundus.wordpress.com/previous-editions/geomundus-2009/">
+                        <span class="red-black-text">Lisbon, Portugal 2009 <img src="https://geomundus.org/2014/images/portugal.png" alt="SmashingConf Freiburg 2014" /></span> <span class="date">29<sup>th</sup>-30<sup>th</sup> of October 2009</span>
+                    </option>
+                </select>
+            </div>
+
+            <br>
+            <section id="social_networks">
+                <ul class="icons">
+                    <li><a href="https://twitter.com/geomundus" class="icon alt fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+                    <li><a href="https://www.facebook.com/geomundus/?fref=ts" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://www.instagram.com/geomundus_conference/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+                    <li><a href="https://github.com/GeomundusConference" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+                    <li><a href="https://t.me/geomundus" class="icon alt fa fa-telegram" target="_blank"><span class="label">Telegram</span></a></li>
+                </ul>
+            </section>
+    
+            <ul class="copyright">
+                <li><a href="https://github.com/erasmus-mundus-geotech-master/Geomundus2020" target="_blank"> &copy; GeoMundus 2020</a></li>
+                <li>Designed by GeoMundus WebTeam</li>
+            </ul>
+        </div>
+    </section>
+  
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="assets/js/main.js"></script>
+    <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+    <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="js/jquery.elastislide.js"></script>
+    <script type="text/javascript" src="js/gallery.js"></script>
+
+
+    <script>
+        includeHTML();
+    </script>
+
+
+</body>
+</html>

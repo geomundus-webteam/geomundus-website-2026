@@ -1,0 +1,766 @@
+<!DOCTYPE HTML>
+<!--
+	Photon by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+    <base href="/2019/">
+    <title>GeoMundus 2019</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="shortcut icon" href="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/globe-24.png" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138647151-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-138647151-1');
+    </script>
+
+
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1K1qI88SQ1rk9N6zQ7yHk8vDnm_ldINc"></script>
+    <script src="js/main.js"></script>
+    <script src="js/includeHTML.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/elastislide.css" />
+    <!-- <link href='https://fonts.googleapis.com/css?family=PT+Sans+Narrow&v1' rel='stylesheet' type='text/css' />
+		<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css' /> -->
+    <noscript>
+			<style>
+				.es-carousel ul{
+					display:block;
+				}
+			</style>
+		</noscript>
+    <script id="img-wrapper-tmpl" type="text/x-jquery-tmpl">
+        <div class="rg-image-wrapper">
+            {{if itemsCount > 1}}
+            <div class="rg-image-nav">
+                <a href="#" class="rg-image-nav-prev">Previous Image</a>
+                <a href="#" class="rg-image-nav-next">Next Image</a>
+            </div>
+            {{/if}}
+            <div class="rg-image"></div>
+            <div class="rg-loading"></div>
+            <div class="rg-caption-wrapper">
+                <div class="rg-caption" style="display:none;">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </script>
+</head>
+
+<body onload="initMap()">
+    <ul class="topnav" id="hide">
+        <li><a href="#header" onclick="display_inline()">Home</a></li>
+        <li><a href="#one" onclick="display_inline()">Information</a></li>
+        <li><a href="#two" onclick="display_inline()">Speakers</a></li>
+        <li><a href="#three" onclick="display_inline()">Location</a></li>
+        <li><a href="#map_section" onclick="display_inline()">Map</a></li>
+        <li><a href="#four" onclick="display_inline()">Programme</a></li>
+        <li><a href="#five" onclick="display_inline()">Papers and Posters Submission</a></li>
+        <li><a href="#nine" onclick="display_inline()">Registration</a></li>
+        <!-- <li><a href="#ten" onclick="display_inline()">Submission</a></li> -->
+        <li><a href="#six" onclick="display_inline()">About us</a></li>
+        <li><a href="#seven" onclick="display_inline()">Contact</a></li>
+        <li><a href="#eight" onclick="display_inline()">Sponsors</a></li>
+        <li><a href="#footer" onclick="display_inline()">History</a></li>
+        <li class="icon">
+            <a style="font-size:15px;" onclick="myFunction()">☰</a>
+        </li>
+    </ul>
+    <!--</nav>-->
+
+    <script>
+        function myFunction() {
+            document.getElementsByClassName("topnav")[0].classList.toggle("responsive");
+            document.getElementById("hide").style.display = 'block';
+        }
+
+        function display_inline() {
+            if (document.getElementById("hide").style.display === 'block') {
+                document.getElementsByClassName("topnav")[0].classList.toggle("responsive");
+            }
+        }
+    </script>
+
+
+    <!-- Header: GEOMUNDUS PRESENTATION -->
+    <section id="header" align="center">
+        <div class="inner">
+            <div align="center">
+
+                <div>
+                    <img src="images/logogm_11.png" style="vertical-align: middle;" alt="" height="185" width="185" />
+
+                </div>
+
+                <img src="images/erasmus-mundus.png" style="vertical-align: middle;margin-top: 2%;" alt="" height="40" width="185" />
+                <h1> <strong>GeoMundus 2019</strong><br /></h1>
+
+                <strong><h2>"Be Special, Think Spatial"</h2></strong>
+                <h2>UJI - Universitat Jaume I - Spain <strong><br/>29<sup>th</sup> and 30<sup>th</sup> November </strong> </h2>
+
+                <h3 style="text-shadow: 2px 3px 14px red;font-style: italic;">A huge thanks to everyone who made <b>GeoMundus</b> possible this year!<br> We all are very proud and happy to have had this amazing experience.<br> See you at <b>GeoMundus 2020</b>!<br> Be sure to check 2019 conference photos <a href="#galleryheader"
+                        style="text-decoration: underline;">here</a>!</h3>
+                <div class="marquee">
+                    <p>
+                        <!-- GeoMundus 2019 photo gallery available. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Keynote presentations available. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Check out our GeoMundus 11th Anniversary documentary in the <i>History</i> section &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                        Registration period is now <strong>closed</strong>. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Poster sessions and Workshop details updated. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gifts kindly provided by <strong>HERE Technologies/strong>. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        We are happy to announce that<strong>
+                    <!-- <a href="https://agile-online.org/" target="_blank">AGILE - Association of Geographic Information in Europe </a> </strong> will be our sponsor in <strong>GeoMundus the 10<sup>th</sup> edition.</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        -->
+                        <!-- <span style="color:black">Submission Period for posters is now closed</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dr Goodchild's keynote session's details updated &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We are happy to announce that the renowned -->
+                        <!--  <strong><a href="https://www.here.com/en" target="_blank">HERE Technologies</a> </strong> will be our sponsor in <strong>GeoMundus the 10<sup>th</sup> edition.</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->The submission period for short papers is now <strong>closed</strong>. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </p>
+                </div>
+                <ul class="actions">
+                    <li><a href="#one" class="button  scrolly">Discover</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- One: WHAT IS GEOMUNDUS -->
+    <section id="one" class="main style1">
+        <div class="container">
+            <div class="row 150%">
+                <div class="12u 12u$(medium)">
+                    <header class="major">
+                        <h2>What is GeoMundus?<br />
+                        </h2>
+                    </header>
+                    <p>
+                        GeoMundus is a free international Conference organized <b>by students for students</b>.The organizing committee is the students from the <a href="https://www.mastergeotech.info/" style="color: #6bd4c8" target="_blank">Erasmus Mundus Master's of Science in Geospatial Technologies</a>.
+                        The conference aims to share cutting-edge scientific research, knowledge, and skills in the fields of Geospatial Technologies, Geoinformatics, and Geosciences, including but not limited to geographic information systems and sciences,
+                        spatial cognition, geography, and spatial data sciences.
+                        </br>Please see <a href="#four" style="color: #6bd4c8">Programme Section</a> for more detailed information.
+                    </p>
+                    <!--
+                    <iframe src="https://ivv6.maps.arcgis.com/apps/MapJournal/index.html?appid=c0d6351b6c6b4541bf42c7be536bf4c1" alt="StoryMap" style="width: 100%; height:600px"></iframe>
+                -->
+                    <img src="images\geomundus2018groupphoto.jpg" alt="" style="width: 100%" />
+                    <header>
+                        <h2>Why GeoMundus?<br /></h2>
+                    </header>
+                    <p>
+                        GeoMundus is an opportunity to learn about and share scientific research, knowledge, and skills with other students and researchers of all things ‘Geo’. Every year it will give participants the chance to learn about technological advancements of GI, research
+                        activities and applications on geospatial technologies in today’s world. GeoMundus is unique, featuring workshops where participants can experience first-hand the future of the field as well as a career session specially designed
+                        for students interested in a geospatial career.
+                    </p>
+
+                    <header>
+                        <h2>Who should participate in GeoMundus 2019?<br /></h2>
+                    </header>
+
+                    <p>Everyone who is curious about geospatial technologies and their applications. We especially welcome students, researchers, industry leaders, and interested members of the public. It is not only a great opportunity to learn, but also
+                        to network with the brightest minds in this exciting field.
+                        <header id="galleryheader">
+                            <h2>2019 Conference photos</h2>
+                        </header>
+                        <div id="rg-gallery" class="rg-gallery" style="margin:0px 25px 30px 25px;">
+                            <div class="rg-thumbs">
+                                <!-- Elastislide Carousel Thumbnail Viewer -->
+                                <div class="es-carousel-wrapper">
+                                    <div class="es-nav">
+                                        <span class="es-nav-prev">Previous</span>
+                                        <span class="es-nav-next">Next</span>
+                                    </div>
+                                    <div class="es-carousel">
+                                        <ul>
+                                            <li>
+                                                <a href="#"><img src="images/gallery/thumbs/1_tn.jpg" data-large="images/gallery/1.jpg" alt="image01"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img src="images/gallery/thumbs/2_tn.jpg" data-large="images/gallery/2.jpg" alt="image02"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img src="images/gallery/thumbs/3_tn.jpg" data-large="images/gallery/3.jpg" alt="image03"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/4_tn.jpg" data-large="images/gallery/4.jpg" alt="image04"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/5_tn.jpg" data-large="images/gallery/5.jpg" alt="image05"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/6_tn.jpg" data-large="images/gallery/6.jpg" alt="image06"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/7_tn.jpg" data-large="images/gallery/7.jpg" alt="image07"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/8_tn.jpg" data-large="images/gallery/8.jpg" alt="image08"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/9_tn.jpg" data-large="images/gallery/9.jpg" alt="image09"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/10_tn.jpg" data-large="images/gallery/10.jpg" alt="image10"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/11_tn.jpg" data-large="images/gallery/11.jpg" alt="image11"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/12_tn.jpg" data-large="images/gallery/12.jpg" alt="image12"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/13_tn.jpg" data-large="images/gallery/13.jpg" alt="image13"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/14_tn.jpg" data-large="images/gallery/14.jpg" alt="image14"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/15_tn.jpg" data-large="images/gallery/15.jpg" alt="image15"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/16_tn.jpg" data-large="images/gallery/16.jpg" alt="image16"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/17_tn.jpg" data-large="images/gallery/17.jpg" alt="image17"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/18_tn.jpg" data-large="images/gallery/18.jpg" alt="image18"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/19_tn.jpg" data-large="images/gallery/19.jpg" alt="image19"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/20_tn.jpg" data-large="images/gallery/20.jpg" alt="image20"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/21_tn.jpg" data-large="images/gallery/21.jpg" alt="image21"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/22_tn.jpg" data-large="images/gallery/22.jpg" alt="image22"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/23_tn.jpg" data-large="images/gallery/23.jpg" alt="image23"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/24_tn.jpg" data-large="images/gallery/24.jpg" alt="image24"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/25_tn.jpg" data-large="images/gallery/25.jpg" alt="image25"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/26_tn.jpg" data-large="images/gallery/26.jpg" alt="image26"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/27_tn.jpg" data-large="images/gallery/27.jpg" alt="image27"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/28_tn.jpg" data-large="images/gallery/28.jpg" alt="image28"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/29_tn.jpg" data-large="images/gallery/29.jpg" alt="image29"></a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#"><img src="images/gallery/thumbs/30_tn.jpg" data-large="images/gallery/30.jpg" alt="image30"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/31_tn.jpg" data-large="images/gallery/31.jpg" alt="image31"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/32_tn.jpg" data-large="images/gallery/32.jpg" alt="image32"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/33_tn.jpg" data-large="images/gallery/33.jpg" alt="image33"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/34_tn.jpg" data-large="images/gallery/34.jpg" alt="image34"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/35_tn.jpg" data-large="images/gallery/35.jpg" alt="image35"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/36_tn.jpg" data-large="images/gallery/36.jpg" alt="image36"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/37_tn.jpg" data-large="images/gallery/37.jpg" alt="image37"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/38_tn.jpg" data-large="images/gallery/38.jpg" alt="image38"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/39_tn.jpg" data-large="images/gallery/39.jpg" alt="image39"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/40_tn.jpg" data-large="images/gallery/40.jpg" alt="image40"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/41_tn.jpg" data-large="images/gallery/41.jpg" alt="image41"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/42_tn.jpg" data-large="images/gallery/42.jpg" alt="image42"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/43_tn.jpg" data-large="images/gallery/43.jpg" alt="image43"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/44_tn.jpg" data-large="images/gallery/44.jpg" alt="image44"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/45_tn.jpg" data-large="images/gallery/45.jpg" alt="image45"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/46_tn.jpg" data-large="images/gallery/46.jpg" alt="image46"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/47_tn.jpg" data-large="images/gallery/47.jpg" alt="image47"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/48_tn.jpg" data-large="images/gallery/48.jpg" alt="image48"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/49_tn.jpg" data-large="images/gallery/49.jpg" alt="image49"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/50_tn.jpg" data-large="images/gallery/50.jpg" alt="image50"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/51_tn.jpg" data-large="images/gallery/51.jpg" alt="image51"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/52_tn.jpg" data-large="images/gallery/52.jpg" alt="image52"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/53_tn.jpg" data-large="images/gallery/53.jpg" alt="image53"></a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img src="images/gallery/thumbs/54_tn.jpg" data-large="images/gallery/54.jpg" alt="image54"></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- End Elastislide Carousel Thumbnail Viewer -->
+                            </div>
+                            <!-- rg-thumbs -->
+                        </div>
+                        <!-- <iframe width="100%" height="500" src="https://www.youtube.com/embed/iE3QapLTNuM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                        <!-- <br/><br/><br/> Registration is <strong>free</strong>, so <a href="#nine" style="color:red;">sign up now!</a> -->
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            // debugger;
+            $d = $("[data-large]");
+            $d.addClass('thumbs');
+            $d.css({
+                height: '4em'
+            });
+        </script>
+    </section>
+    <!--2019 SPEAKERS -->
+    <section id="two" class="main style2" w3-include-html='speakers.html'></section>
+
+    <!-- Three: LOCATION of  CASTELLON -->
+    <section id="three" class="main style1">
+        <div class="container">
+            <div class="row 150%">
+                <div align="left" class="6u 12u$(medium)">
+                    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+                    <script type="text/javascript">
+                        $(function() {
+                            var scroller = $('#scroller div.innerScrollArea');
+                            var scrollerContent = scroller.children('ul');
+                            scrollerContent.children().clone().appendTo(scrollerContent);
+                            var curX = 0;
+                            scrollerContent.children().each(function() {
+                                var $this = $(this);
+                                $this.css('left', curX);
+                                curX += $this.outerWidth(true);
+                            });
+                            var fullW = curX / 2;
+                            var viewportW = scroller.width();
+
+                            // Scrolling speed management
+                            var controller = {
+                                curSpeed: 0,
+                                fullSpeed: 2
+                            };
+                            var $controller = $(controller);
+                            var tweenToNewSpeed = function(newSpeed, duration) {
+                                if (duration === undefined)
+                                    duration = 600;
+                                $controller.stop(true).animate({
+                                    curSpeed: newSpeed
+                                }, duration);
+                            };
+
+                            // Pause on hover
+                            scroller.hover(function() {
+                                tweenToNewSpeed(0);
+                            }, function() {
+                                tweenToNewSpeed(controller.fullSpeed);
+                            });
+
+                            // Scrolling management; start the automatical scrolling
+                            var doScroll = function() {
+                                var curX = scroller.scrollLeft();
+                                var newX = curX + controller.curSpeed;
+                                if (newX > fullW * 2 - viewportW)
+                                    newX -= fullW;
+                                scroller.scrollLeft(newX);
+                            };
+                            setInterval(doScroll, 20);
+                            tweenToNewSpeed(controller.fullSpeed);
+                        });
+                    </script>
+                    <div id="scroller" style=" max-width:100%; width: 550px; height: 400px;">
+                        <div class="innerScrollArea">
+                            <ul>
+                                <!-- Define photos here -->
+                                <li style="left: 0px;"><img src="images/image5.jpg" width="600" height="400"></li>
+                                <li style="left: 600px;"><img src="images/image6.jpg" width="600" height="400"></li>
+                                <li style="left: 1200px;"><img src="images/image7.jpg" width="600" height="400"></li>
+                                <li style="left: 1800px;"><img src="images/image8.jpg" width="600" height="400"></li>
+                                <li style="left: 2400px;"><img src="images/image5.jpg" width="600" height="400"></li>
+                                <li style="left: 3000px;"><img src="images/image6.jpg" width="600" height="400"></li>
+                                <li style="left: 3600px;"><img src="images/image7.jpg" width="600" height="400"></li>
+                                <li style="left: 4200px;"><img src="images/image8.jpg" width="600" height="400"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="6u$ 12u$(medium)">
+                    <header align="center" class="major">
+                        <h2 align="center"> <a href="https://www.uji.es" style="color: #6bd4c8" target="_blank">  Universitat Jaume I</a></h2>
+                        <p align="center"> INIT - Institute of New Imaging Technologies</p>
+                        <p>
+                            <h2>Castellón de la Plana</h2>
+                        </p>
+                    </header>
+                    <p>GeoMundus 2019 will be held in Castellón de la Plana, a pleasant, sunlit town that lies between the Desert de les Palmes hills and the Mediterranean Sea, and is surrounded by orange groves. It is the capital of the province of Castellon,
+                        Spain and is situated 65 km north of Valencia and 285 km south of Barcelona. The venue is Universitat Jaume I, Avenida de Vicent Sos Baynat, 12071 Castellón, Spain.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="three" class="main style2 special">
+        <div id="map_section">
+            <ul class="major-icons">
+                <li><span onclick="setMapVisibility('flight');" class="icon style3 major fa-plane"></span></li>
+                <li><span onclick="setMapVisibility('publicTransport');" class="icon style3 major fa-train"></span></li>
+                <li><span onclick="setMapVisibility('location');" class="icon style3 major fa-map-marker"></span></li>
+                <li><span onclick="setMapVisibility('meetup');" class="icon style3 major fas fa-handshake-o"></span></li>
+                <li><span onclick="setMapVisibility('dinner');" class="icon style3 major fas fa-cutlery"></span></li>
+            </ul>
+
+            <div id="map" class="container submission"></div>
+        </div>
+        <br>
+    </section>
+
+    <section id="loc" class="main style1 special">
+        <div style="text-align: left;margin-left: 10%;">
+            <div class="row 100%">
+                <div class="4u 12u$(medium)">
+                    <h2>Pre Conference Meetup</h2>
+                    <a href="https://www.google.com/maps/place/Supermercado+El+Corte+Inglés/@39.9879839,-0.0478293,17.93z/data=!4m8!1m2!2m1!1sEl+Corte+Inglés,+Passeig+de+Morella,+1,+12006!3m4!1s0x0:0x60172b9a7bb66d18!8m2!3d39.9880215!4d-0.0473973
+                    " target="_blank">
+                        <p> El Corte Inglés, Passeig de Morella, 1, 12006 <br>Castellón de la Plana, Castellón, Spain<br></a>
+                    <b>Thursday at 19:00 </b></p>
+                    <u style="color:#4FA49A; text-align: center;"><a href="https://uji.maps.arcgis.com/apps/MapTour/index.html?appid=c27f1ecbabfe408b8d633ba0e18e23c4" target="_blank">Click here to see the scheduled route for the tour</a></u>
+                </div>
+                <div class="4u 12u$(medium)">
+                    <a href="https://www.google.com/maps/place/Fundaci%C3%B3n+f2e/@39.9937823,-0.073097,18.56z/data=!4m12!1m6!3m5!1s0xd5ffe0fca9b5147:0x1368bf53b3a7fb3f!2sJaume+I+University!8m2!3d39.9945711!4d-0.0689003!3m4!1s0x0:0xd50e11a2dfa65003!8m2!3d39.9937759!4d-0.0737178?hl=en-US">
+                        <h2>Conference Venue</h2>
+                        <p> Universitat Jaume I - Espaitec 2, 2nd floor <br> Avenida de Vicent Sos Baynat, 12071 <br>Castellón de la Plana<br>
+                            <b>Friday and Saturday </b></p>
+                    </a>
+                </div>
+                <div class="4u 12u$(medium)">
+                    <h2>Conference Dinner</h2>
+                    <p> Cervecería Gambrinus <br> C/ Prim, 12 - Plaza del Juez Borrull <br>Castellón de la Plana - 12003 <br> <a href="https://goo.gl/maps/MzTdbCy6NAaMMMPV8" target="_blank">View on Map</a> <br> Telephone: 964 22 99 00 / 607115523 <br> Contact
+                        Name: Vicente <br> Email: info@beerandfood.es
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- How to get to UJI-->
+    <section id="howto" class="main style2 special">
+        <div style="text-align: left;margin-left: 10%;">
+            <b>
+                <a href="https://www.google.com/maps/place/Espaitec/@39.9945711,-0.071089,17z/data=!4m5!3m4!1s0x0:0x6f1c7cc3683f5793!8m2!3d39.9935617!4d-0.073115" target="_blank"><h2>How to get to Universitat Jaume I (UJI):</h2></a></b>
+
+            <div>
+                <h2 id="fromBarcelona" onclick="toggle(this)">+ From Barcelona:</h2>
+                <p style="display:none;">
+                    It is possible to take a commuter train (departures every 30 minutes) from the airport to the “Barcelona Sants” railway station or to take a taxi. Follow the train signs from the airport arrivals area to the trains to Sants (Rodalies).
+                    </br>
+                    At Sants take a train directly to Castellón, (the ticket costs aprox. 30 Euros). You can consult Renfe (the train agency): <a href="https://www.renfe.es/" target="_blank"><u><b>https://www.renfe.es/</b></u></a> and better to buy your
+                    ticket online in advance. </br>
+                    Be aware that the last train to Castellón is at 20:30 (most days). if you are travelling on Long Distance trains, your ticket includes "Rodalies/Cercanías" ticket (commuter train BCN airport ‐ Barcelona Sants) free of charge. But you have to get the ticket
+                    from auto‐sales machines. So, once you arrive to the commuter train station at the airport, look for the auto‐sales machines in order to get your "Rodalies" ticket. Select "Combo Rodalies", select destination "Barcelona Sants" and
+                    introduce the 5‐digit code(CombinadoCercanias or CombinadoRodalies) on the top of your ticket. You will get the Rodalies ticket for free.</br>
+                    If you are staying in Hotel Voramar in Benicassim, please note that some trains from Barcelona have a stop in Benicàssim. Once in Benicàssim train station, you should take a taxi to get to the hotel.
+                    </br>
+                    There are no flights to Castellon. The nearest Airport from Castellon is in Valencia.
+                </p>
+            </div>
+            <div>
+                <h2 id="fromMadrid" onclick="toggle(this)">+ From Madrid:</h2>
+                <p style="display:none;">
+                    From Barajas Airport you can take the metro underground to Atocha Renfe (the main railway station in Madrid). The journey by taxi from the airport to the station normally costs around 15 Euros, however heavy traffic at certain times of the day can cause
+                    this price to increase dramatically.
+                    </br>
+                    From the Atocha there are direct trains Madrid‐Castellón or Madrid‐Valencia (and then take a 55‐minute commuter train to Castellón). You can consult Renfe (the train agency): <a href="https://www.renfe.es/" target="_blank"><u><b>https://www.renfe.es/</b></u></a>                    and better to buy your ticket online in advance.
+                    </br>
+                    Please be aware that if you are travelling on Long Distance trains; your ticket includes "Rodalies/Cercanías" ticket (commuter train Valencia‐Castellón) free of charge. But you have to get the ticket from auto‐sales machines. So, once you arrive to València
+                    Nord, look for the auto‐sales machines in order to get your "Cercanías" ticket. Select "Combo Cercanías", select destination "Castellón de la Plana" and introduce the 5‐digit code (CombinadoCercanias) on the top of your ticket. You
+                    will get the Cercanías ticket for free.
+                    </br>
+                    <a href="https://www.renfe.com/EN/viajeros/cercanias/valencia/index.html">Check the <u><b>time table.</b></u></a>.</br> For more information you can visit the <a href="https://www.madrid-airport.com/"><u> Airport web site</u></a>
+                    </br>
+                    There are no flights to Castellon. The nearest Airport from Castellon is in Valencia.
+                </p>
+            </div>
+            <div>
+                <h2 id="fromValencia" onclick="toggle(this)">+ From Valencia:</h2>
+                <p style="display:none;">
+                    The best way to get to the València Nord railway station (“Estación del Norte”) from the airport is by metro line directly to the train station (metro stop “Xàtiva”) with lines 3 or 5. The trip is roughly 20 minutes. It is also possible to take a taxi
+                    which costs approximately 15€.</br>
+                    From Xàtiva, take escalators/stairs up to street level and cross the street to València Nord. From Valencia Nord, take the local train (“Rodalies/Cercanías” C‐6) to Valencia Nord‐Castelló de la Plana which leaves every 30 minutes during the weekdays (Monday‐Friday
+                    5:55 to 22:30) and every hour on the weekends (Saturday‐Sunday 5:55 to 22:30). </br>
+                    <a href="https://www.renfe.com/EN/viajeros/cercanias/valencia/index.html"><u><b>Cercanías timetable can be checked here</b></u> </a>. For more information visit the <a href="https://www.aeropuerto-valencia.com/"><u>Airport web site</u> </a>
+                    </br>
+                </p>
+            </div>
+
+        </div>
+    </section>
+    <!---->
+    <!-- Four: PROGRAM AND SCHEDULE -->
+    <section id="four" class="main style1" w3-include-html="program.html"></section>
+    <!-- Five: REGISTRATION AND SUBMISSION -->
+
+    <section id="five" class="main style2 special">
+        <div class="container" style="text-align: justify;">
+            <header class="major">
+                <h2>Short Papers and Posters Submission</h2>
+            </header>
+
+            <p>
+                The submission period for short papers and posters is <b>now CLOSED</b>.
+            </p>
+            <p>
+                The scholarships (<b>3</b> grants, <b>500</b> Euros each) were provided by AGILE to the best short paper submission to the following students:
+            </p>
+            <ul>
+                <li>
+                    <b>Dennis Dizon</b> (Technical University of Munich, Germany) for his paper <i><a href="./docs/papers/DennisDizon.pdf" target="_blank" style="color: #6bd4c8">Spatial Autocorrelation and Crosscorrelation Analysis of Voting Participation in the Philippines</a></i>.
+                </li>
+                <li>
+                    <b>Sapkota Sujan, Thapa Shangharsha, Parajuli Pukar, Bhatta Raj Nabin</b> (Lund University, Sweden) for their paper <i><a href="./docs/papers/SujanSapkota.pdf" target="_blank" style="color: #6bd4c8">Estimation of Soil Deposition in Section of Punyamata River, Nepal, due to Flooding Using Unmanned Aerial Vehicle</a></i>.
+                </li>
+                <li>
+                    <b>Nianhua Liu, Man Xiao, Xin Xu, Xuezhang Li, Qian Shi</b> (Sun Yat-Sen University, P.R. China) for their paper <i><a href="./docs/papers/NianhuaLiu.pdf" target="_blank" style="color: #6bd4c8">Environmental Detection and Management Based on Multi-source Remote Sensing Data from Baiyangdian Lake</a></i>.
+                </li>
+            </ul>
+            Congratulations!
+            <p>
+                <ul class="actions uniform" style="text-align: center;">
+                    <a class="button special" id='bt1' value='Show Layer' style="background-color:darkred;color: white!important;">Paper and Poster Submission is Closed
+                    </a>
+                </ul>
+            </p>
+            <br>
+        </div>
+    </section>
+    <section id="five2" class="main style1 special">
+        <div class="container" style="text-align: justify;">
+            <p>
+                Three best paper submissions from students will be awarded <b>travel grants to GeoMundus 2019 worth up to 500 EUR.</b> The grant covers hotel accommodation of up to 200 EUR and travel costs of up to 300 EUR. Note that travel and accommodation
+                costs supported by documentation will be reimbursed. This grant is ONLY FOR STUDENTS. Those who are willing to apply for the grant should be a current student (till the date of the conference) enrolled in University/College. They should
+                provide documents supporting their current student status from their respective University/College during the paper submission process.
+            </p>
+            <p>
+                <b>Please note that GeoMundus <strong>does not provide</strong> invitations and <strong>does not support </strong>Visa Processes.</b>
+            </p>
+            <p>
+                Selected authors will be notified by email and accepted short papers and posters will be displayed under section "Accepted papers and posters" on the geomundus website. The presentation will be for 15 minutes followed by a 5 minutes question-answer session.
+                The official language of the conference is English.
+            </p>
+            <p>
+                For any questions about templates and formats, please write an email to
+                <a href="mailto:program@geomundus.org"><u>program@geomundus.org</u></a> Please check our website frequently for the latest updates and follow us on our social networks to receive the latest news and announcements.
+            </p>
+    </section>
+
+    <section id="nine" class="main style2">
+        <div class="container">
+            <header class="major">
+                <h2>Participant Registration</h2>
+            </header>
+            <p style="font-size: 20pt">
+                The registration period is now <b>closed</b>.
+            </p>
+    </section>
+
+    <!-- Six: Team -->
+    <section id="six" class="main style1" w3-include-html='team.html'>
+    </section>
+    <section id="seven" class="main style2">
+        <div class="container">
+            <header class="major">
+                <h2>Contact</h2>
+            </header>
+            <p>If you have any questions, please contact us via email. Alternatively, please write to us at our mailing address listed below.</p>
+            <div class="row 150%">
+                <div class="4u 12u$(medium)">
+                    <h4>Email</h4>
+                    <strong><a href="mailto:info@geomundus.org">info@geomundus.org<br/></a></strong>
+                    <p></p>
+                </div>
+
+                <div class="4u 12u$(medium)" style="text-align: left;">
+                    <h4>Mailing address</h4>
+                    <strong>Universitat Jaume I Edificio ESPAITEC 2<br>Campus del Riu Sec<br>Av. Vicent Sos Baynat, s/n 12071 <br>Castellón de la Plana, España</strong>
+                </div>
+                <div class="4u 12u$(medium)" style="text-align: left;">
+                    <h4>Twitter Feed</h4>
+                    <a class="twitter-timeline" data-width="300" data-height="300" href="https://twitter.com/geomundus?ref_src=twsrc%5Etfw">Tweets by geomundus</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Seven -->
+    <section id="eight" class="main style1">
+        <div class="container">
+            <header class="major">
+                <h2>Sponsors & Partners</h2>
+            </header>
+            <p>Geomundus is looking for sponsors and partners from all the spatial, technological, public or private, scientific, governmental, academic and more fields. We will be thrilled to have all the support and participation in this international
+                event.
+            </p>
+            <p>
+
+                Please feel free to contact the budget team at <strong><a href="mailto:budget@geomundus.org">budget@geomundus.org</a></strong> for more information on how to help and contribute! We will glad to hear all the wishes to sponsor the 2019
+                GeoMundus conference and future years. We are looking for sponsors and partners.</p>
+            </p>
+
+            <h2>Partners</h2>
+
+            <div class="row row-centered justify-content-center">
+                <div class="col img-circle-div col-centered">
+                    <a href="https://www.isegi.unl.pt/" target="_blank">
+                        <img class="img-circle" src="https://geomundus.org/2015/img/nova.png" width="150" height="150">
+                    </a>
+                </div>
+                <div class="col img-circle-div col-centered">
+                    <a href="https://geotec.uji.es/" target="_blank">
+                        <img class="img-circle" src="https://geomundus.org/2015/img/uji.png" width="150" height="150">
+                    </a>
+                </div>
+                <div class="col img-circle-div col-centered">
+                    <a href="https://www.uni-muenster.de/Geoinformatics/en/" target="_blank">
+                        <img class="img-circle" style="padding: 20px" src="images/wwm.gif" width="150" height="150">
+                    </a>
+                </div>
+            </div>
+            <br>
+            <h2>Sponsors</h2>
+            <div class="row row-centered justify-content-center">
+                <div class="col col-centered">
+                    <a href="https://agile-online.org/" target="_blank">
+                        <img src="images/agileCrop2.png" width="150" height="150">
+                        <br>
+                        <strong>
+                            Association of Geographic
+                        </strong>
+                        <br>
+                        <strong>
+                            Laboratories in Europe
+                        </strong>
+                    </a>
+                </div>
+                <div class="col col-centered">
+                    <a href="https://www.esri.com/" target="_blank">
+                        <img src="images/esri.jpeg" width="335" height="150">
+                        <br>
+                        <strong>Esri Inc.</strong>
+                    </a>
+                </div>
+                <div class="col col-centered">
+                    <a href="https://www.here.com/en" target="_blank">
+                        <img src="images/HERE_Logo_2016_POS_sRGB.png" width="150" height="150">
+                        <br>
+                        <strong>HERE.com</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer: SOCIAL NETWORKS -->
+    <section id="footer" w3-include-html='footer.html'></section>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="assets/js/main.js"></script>
+    <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+    <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="js/jquery.elastislide.js"></script>
+    <script type="text/javascript" src="js/gallery.js"></script>
+
+    <script>
+        includeHTML();
+    </script>
+</body>
+
+</html>

@@ -137,6 +137,17 @@ export default async function ConferenceArchivePage({ params }: Props) {
                 {conference.description}
               </div>
             )}
+
+            {[2018, 2019, 2020, 2021].includes(parsedYear) && (
+              <div className="mt-6"><a
+                
+                  href={`/${parsedYear}`}
+                  className="inline-block bg-white text-emerald-800 font-semibold px-6 py-3 rounded-lg hover:bg-emerald-50 transition-colors"
+                >
+                  Visit Full Website
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>
