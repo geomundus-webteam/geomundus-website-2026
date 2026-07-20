@@ -465,7 +465,7 @@ export default async function Home() {
       )}
 
       {/* ── FAQ ── */}
-      {faqs && faqs.length > 0 && (
+      {/* {faqs && faqs.length > 0 && (
         <section id="faq" className="py-24 px-6 bg-[#ffffff] border-t border-[#07686f]">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-14">
@@ -475,7 +475,7 @@ export default async function Home() {
             <FaqSection faqs={faqs} />
           </div>
         </section>
-      )}
+      )} */}
 
       {/* ── VENUE ── */}
       <AnimateOnScroll>

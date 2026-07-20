@@ -58,6 +58,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
               { href: "/sponsors", label: "Sponsor" },
               { href: "/local", label: "Venue" },
               { href: "/team", label: "Team" },
+              { href: "/faq", label: "FAQ" }
             ].map(({ href, label }) => (
               <Link
                 key={label}
@@ -92,6 +93,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
                 { href: "/sponsors", label: "Sponsor" },
                 { href: "/local", label: "Venue" },
                 { href: "/team", label: "Team" },
+                { href: "/faq", label: "FAQ" }
               ].map(({ href, label }) => (
                 <Link
                   key={label}

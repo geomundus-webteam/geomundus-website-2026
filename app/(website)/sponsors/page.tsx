@@ -55,7 +55,7 @@ export default async function SponsorsPage() {
           </p>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mt-6">
             <p className="text-sm font-medium">
-              TBD 2026 • Castellón de la Plana, Spain
+              16-17 Oct 2026 • Castellón de la Plana, Spain
             </p>
             <p className="text-xs mt-1">
               Theme: Geospatial Intelligence for Disaster Resilience
