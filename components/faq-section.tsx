@@ -50,7 +50,7 @@ export default function FaqSection({ faqs }: FAQSectionProps) {
               </AccordionTrigger>
               <AccordionContent>
                 <div className="prose max-w-none">
-                  <PortableTextRenderer value={faq.answer || []} />
+                  <PortableTextRenderer content={faq.answer || []} />
                 </div>
               </AccordionContent>
             </AccordionItem>

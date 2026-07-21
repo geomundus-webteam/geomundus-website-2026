@@ -264,7 +264,7 @@ export default async function Home() {
             <RevealText text="Geospatial Intelligence for Disaster Resilience" />
           </h2>
           <p className="text-[17px] text-[#6e6e73] leading-relaxed mb-12 max-w-[580px] mx-auto">
-            From early warning to recovery - geospatial tools at every stage of disaster.
+            From prevention to reconstruction - geospatial tools at every stage of disaster management.
           </p>
 
           <GlowCard className="bg-white rounded-2xl border border-[#deeada] p-10 text-left overflow-hidden mb-6">
@@ -276,9 +276,14 @@ export default async function Home() {
             </h3>
             <ul className="space-y-3">
               {[
-                "Natural Disasters - earthquakes, floods, cyclones, droughts, landslides, avalanches, heatwaves, volcanic eruptions",
-                "Man-Made Disasters - industrial accidents, chemical spills, nuclear incidents, terrorist attacks, structural failures",
-                "Complex / Hybrid Disasters - epidemics, armed conflicts, or combination of natural and human-induced factors",
+                "Natural Hazards - caused by natural processes",
+                "Anthropogenic Hazards - caused by human activities",
+                "Socionatural Hazards - caused by the combination of natural and anthropogenic factors",
+                "Geological - earthquakes, volcanic activity, landslides, rockslides, surface collapses, debris or mud flows",
+                "Hydrometeorological - floods, droughts, heatwaves, hurricanes/typhoons/cyclones",
+                "Biological - pandemics, epidemics",
+                "Technological - industrial pollution, nuclear radiation, toxic wastes, dam failures, transport accidents, factory explosions, fires and chemical spills",
+                "Environmental - soil degradation, deforestation, loss of biodiversity, sea-level rise, air/water/soil pollution",
               ].map((item) => (
                 <li key={item} className="flex gap-3 text-[14px] text-[#6e6e73] leading-[1.7]">
                   <span className="mt-1 w-2 h-2 rounded-full bg-[#058a78] shrink-0" />
@@ -297,11 +302,10 @@ export default async function Home() {
             </h3>
             <ol className="space-y-4">
               {[
-                { n: "01", t: "Hazard Modelling & Risk Assessment", d: "GIS mapping, Remote Sensing, AI & ML for predictive analytics, urban risk intelligence" },
-                { n: "02", t: "Early Warning & Monitoring Systems", d: "Multi-hazard alert systems, IoT Sensors" },
-                { n: "03", t: "Geospatial Decision Support Systems", d: "Spatial Data Infrastructure (SDI), DSS for crisis management, MCDA in disaster planning, Data Fusion (IoT + Remote Sensing + GIS)" },
-                { n: "04", t: "Emergency Response & Logistics", d: "Routing optimization, resource allocation, UAVs/drones for rapid situational awareness, mobile GIS, accessibility analysis" },
-                { n: "05", t: "Rapid Damage Assessment & Recovery", d: "Damage mapping, change detection, AI automated damage classification, infrastructure assessment, recovery planning, VGI" },
+                { n: "01", t: "Hazard Intelligence & Risk Modeling", d: "SAR satellites, AI/ML hazard prediction, LiDAR for terrain analysis, Data fusion" },
+                { n: "02", t: "Early Warning & Preparedness Systems", d: "IoT sensor networks, Mobile GIS apps, Multi-hazard alert platforms, AI hazard forecasting" },
+                { n: "03", t: "Emergency Response & Humanitarian Logistics", d: "High-resolution satellite imagery for situational awareness, UAVs for rapid damage assessment, GIS for resources allocation, Crowdsourced VGI, Accessibility analysis" },
+                { n: "04", t: "Recovery & Resilient Reconstruction", d: "Change detection AI for damage assessment, Digital Twins simulation, Participatory GIS for community engagement, Spatial planning tools" },
               ].map(({ n, t, d }) => (
                 <li key={n} className="flex gap-4">
                   <span className="mt-1 w-2 h-2 rounded-full bg-[#058a78] shrink-0" aria-hidden="true" />
@@ -461,7 +465,7 @@ export default async function Home() {
       )}
 
       {/* ── FAQ ── */}
-      {faqs && faqs.length > 0 && (
+      {/* {faqs && faqs.length > 0 && (
         <section id="faq" className="py-24 px-6 bg-[#ffffff] border-t border-[#07686f]">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-14">
@@ -471,7 +475,7 @@ export default async function Home() {
             <FaqSection faqs={faqs} />
           </div>
         </section>
-      )}
+      )} */}
 
       {/* ── VENUE ── */}
       <AnimateOnScroll>

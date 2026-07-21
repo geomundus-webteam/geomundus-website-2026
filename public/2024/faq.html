@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Program</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="expires" content="0"><!-- Never caches the page -->
+    <link id="favicon" rel="shortcut icon" href="images/logo_pictures/geomundus_icon.png">
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script src="js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/elastislide.css" />
+    <script src="https://kit.fontawesome.com/b37653d681.js"></script>
+    <style>
+        .accordion-container {
+            position: relative;
+            width: 100%;
+            background-color: white;
+            border: 0px solid var(--cp-mid);
+            color: black;
+            border-top: none;
+            outline: 0;
+            cursor: pointer
+        }
+
+        .accordion-container .question-title {
+            display: block;
+            position: relative;
+            margin: 0;
+            padding: 0.625em 0.625em 0.625em 2em;
+            border-top: 1px solid var(--cp-mid);
+            font-weight: normal;
+            font-style:italic;
+            color: var(--cp-dark)!important;
+            cursor: pointer;
+        }
+
+        .accordion-container .question-title:hover,
+        .accordion-container .question-title:active,
+        .accordion-container .content-entry.open .question-title {
+            color: grey;
+        }
+
+        .accordion-container .question-title:hover i:before,
+        .accordion-container .question-title:hover i:active,
+        .accordion-container .content-entry.open i {
+            color: grey;
+            
+        }
+
+        .accordion-container .content-entry i {
+            position: absolute;
+            top: 3px;
+            left: 12px;
+            font-style: normal;
+            color: var(--cp-mid);
+        }
+
+        .accordion-container .content-entry i:before {
+            content: "+ ";
+        }
+
+        .accordion-container .content-entry.open i:before {
+            content: "- ";
+        }
+
+        .accordion-content {
+            display: none;
+            padding-left: 2.3125em;
+            padding-bottom: 1.5em;
+            padding-right: 2.3125em;
+        }
+
+        .accordion-content p {
+            text-align: justify;
+        }
+    </style>
+    <!-- A script to insert the footer.html content into the foorter-end element -->
+    <script>
+        fetch("footer.html")
+        .then(response => response.text())
+        .then(data => {
+            const footerElement = document.getElementById("footer-end");
+            footerElement.innerHTML = data;
+        })
+        .catch(error => {
+            console.error("Error fetching footer content:", error);
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- MENU -->
+    <!-- The nav-placeholder has its content inserted by the main.js script.
+    The content is a <nav> described in the nav.html file -->
+    <div id="nav-placeholder">
+    </div>
+
+    <!-- SCHEDULE -->
+    <section id="program" class="main style2">
+        <div class="container">
+            <header class="major">
+                <h2 style="color: #ffffff;">Frequently Asked Questions</h2>
+            </header>
+            <br>
+            <div id="accordion" class="accordion-container">
+                <article class="content-entry">
+                    <p class="question-title"><i></i>Is there a registration fees to attend the event?</p>
+                    <div class="accordion-content">
+                        <p>There are no registration fees associated with the event. You only need to register yourself (during the designated registration period) in the forms available <a href="https://www.geomundus.org/2023/registration.html">here</a>.</p>
+                    </div>
+                    <!--/.accordion-content-->
+                </article>
+
+                <article class="content-entry">
+                    <p class="question-title"><i></i>I just finished my academic course, can I attend the conference?</p>
+                    <div class="accordion-content">
+                        <p>Geomundus is a conference that does not require participants to be graduate students, allowing individuals to attend even while pursuing their academic's degree without any issues.</p>
+                    </div>
+                    <!--/.accordion-content-->
+                </article>
+
+                <article class="content-entry">
+                    <p class="question-title"><i></i>Can I present my work in the conference?</p>
+                    <div class="accordion-content">
+                        <p>For attendees who wish to present their work, there is an opportunity to submit papers or posters and compete for travel sponsorship. More information can be find <a href="https://www.geomundus.org/2023/submission.html#papers">here</a>.</p>
+                    </div>
+                    <!--/.accordion-content-->
+                </article>
+
+                <article class="content-entry">
+                    <p class="question-title"><i></i>How can I apply for a travel sponsorship?
+                    </p>
+                    <div class="accordion-content">
+                        <p>Those who choose to submit a paper or poster will also be considered for the travel sponsorships. The conference will offer 2 travel grants: to the authors of the best paper and the best poster.
+                        </p>
+                    </div>
+                    <!--/.accordion-content-->
+                </article>
+
+                <article class="content-entry">
+                    <p class="question-title"><i></i>Who will be the keynote speakers this year?
+                    </p>
+                    <div class="accordion-content">
+                        <p>The keynote speakers are experts, researchers, and specialists in the geospatial field and other related fields from the academia and industry. We will announce them in the next weeks on our website and  social media handles. 
+                        </p>
+                    </div>
+                    <!--/.accordion-content-->
+                </article>
+
+                <article class="content-entry">
+                    <p class="question-title"><i></i>Who are the workshop leaders?
+                    </p>
+                    <div class="accordion-content">
+                        <p>We plan to have interesting workshops from professionals with expertise in the geospatial field and from our sponsors who will support the conference. To see more informations about them, make sure to check the program schedule and follow us on social media.
+                        </p>
+                    </div>
+                    <!--/.accordion-content-->
+                </article>
+
+                <article class="content-entry">
+                    <p class="question-title"><i></i>What is the intended of the travel sponsorship?
+                    </p>
+                    <div class="accordion-content">
+                        <p>This sponsorship is intended to assist with expenses such as tickets, accommodation, and food. However, it's important to note that the sponsorship cannot cover all expenses, nor can it be used for visa fees.
+                        </p>
+                    </div>
+                    <!--/.accordion-content-->
+                </article>
+
+                <article class="content-entry">
+                    <p class="question-title"><i></i>If I win the best paper/poster, when would I receive the travel sponsorship?
+                    </p>
+                    <div class="accordion-content">
+                        <p>By the regulamentations of our university host (UJI), we can only reimburse expenses already incurred.
+                        </p>
+                    </div>
+                    <!--/.accordion-content-->
+                </article>
+
+                <article class="content-entry">
+                    <p class="question-title"><i></i>How to reach Munster? 
+                    </p>
+                    <div class="accordion-content">
+                        <p>Please take a look <a href="https://www.geomundus.org/2023/index.html#contact" style="color: blue"><u>here</u></a> to get more information about how to reach Castellón.
+                        </p>
+                    </div>
+                    <!--/.accordion-content-->
+                </article>
+
+                <article class="content-entry">
+                    <p class="question-title"><i></i>Would my paper be published after the conference?
+                    </p>
+                    <div class="accordion-content">
+                        <p>Short papers accepted and presented at the conference will be published on the GeoMundus Website.
+                        </p>
+                    </div>
+                    <!--/.accordion-content-->
+                </article>
+            </div>
+            <!--/#accordion-->
+        </div>
+    </section>
+
+    <!-- Footer: SOCIAL NETWORKS -->
+    <footer id = "footer-end" style="height:5rem">
+
+    <script>
+        $(document).ready(function () {
+            var Question = function (el, multiple) {
+                this.el = el || {};
+                this.multiple = multiple || false;
+
+                var links = this.el.find('.question-title');
+                links.on('click', {
+                    el: this.el,
+                    multiple: this.multiple
+                }, this.dropdown)
+            }
+
+            Question.prototype.dropdown = function (e) {
+                var $el = e.data.el;
+                $this = $(this),
+                    $next = $this.next();
+
+                $next.slideToggle();
+                $this.parent().toggleClass('open');
+
+                if (!e.data.multiple) {
+                    $el.find('.accordion-content').not($next).slideUp().parent().removeClass('open');
+                };
+            }
+            var accordion = new Question($('.accordion-container'), false);
+        });
+    </script>
+
+</body>
+
+</html>

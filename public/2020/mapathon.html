@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="main style2">
+<head>
+    <title>Mapathon</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/globe-24.png" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <script src="js/includeHTML.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/elastislide.css" />
+</head>
+
+<body onload="initMap()">
+    <ul class="topnav" id="hide">
+        <a href="index.html#header"><img class='menu_home' src="images/geomundus2020_logo.png" alt=""></a>
+        <li class="has-dropdown"><a>Intro</a>
+            <ul class="main-menu-dropdown">
+                <li><a href="index.html#info">Information</a></li>
+                <li><a href="index.html#footer">History</a></li>
+            </ul>
+        </li>
+        <li class="has-dropdown"><a>Programme</a>
+            <ul class="main-menu-dropdown">
+                <li><a href="program.html">Schedule</a></li>
+                <li><a href="index.html#speakers">Speakers</a></li>
+            </ul>
+        </li>
+        <li><a href="registration.html">Registration</a></li>
+        <li><a href="submission.html">Papers and Posters Submission</a></li>
+        <li class="has-dropdown"><a>Mapathon</a>
+            <ul class="main-menu-dropdown">
+                <li><a href="mapathon.html">Info</a></li>
+                <li><a href="map_gallery.html">Gallery</a></li>
+            </ul>
+        </li>        <li><a href="team.html">The Team</a></li>
+        <li><a href="index.html#sponsors" >Sponsors</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <ul class="mobile_menu">
+        <a href="index.html#header"><img class='mobile_menu_home' src="images/geomundus2020_logo.png" alt=""></a>
+        <li class="icon">
+            <a style="font-size:20px;" id='menu_btn'>☰</a>
+        </li>
+    </ul>
+        
+    <section id="mapathon" class="main style2 special">
+        <div class="inner" align="center">
+            <div>
+                <img src="images/website_logo.png" style="vertical-align: middle; margin: 2%;" alt="" height="150" width="150" />
+                <img src="images/erasmus-mundus.png" style="vertical-align: middle;margin-top: 2%;" alt="" height="50" width="185">
+            </div >
+            <div> 
+                <h1> <strong>GeoMundus 2020</strong> </h1>
+            </div>
+            <div class="container" style="text-align: justify;">
+                <header class="major">
+                    <h2>GEOMUNDUS MAPATHON</h2>
+                </header>
+
+                <p>
+                This is a competition that allows participants to showcase their work with the world and share their brilliant ideas and findings. The competition is open worldwide (to registrants) and is aligned with the 12th edition of Geomundus conference which is to be held as a Digital Conference this year. The general theme for this year’s Mapathon is: <b><i> Mapping our future on Earth</i></b>. 
+                </p>
+                <b> Topics: </b>
+                <div class="row 100%" >
+                    <ol style="margin-left:2em">
+                        <li>Covid-19</li>
+                        <li>Green (renewable) energy</li>
+                        <li>Climate Change and environment
+                            <ul>
+                                <li>Risks and natural disasters (Flood mapping, Hurricane frequency, etc.)</li> 
+                                <li>Human-induced changes on the environment (deforestation, pollution, etc.)</li> 
+                            </ul>
+                        </li>
+                    </ol> 
+                    <p>
+                        Share your research results or map an issue that you feel deserves more recognition, we are looking forward to each kind of submission. As cartographers, you have the freedom to visualise and portray any of the above issues on a map. Map your story of the COVID-19 experience, or share the efforts of your country in response to the corona outbreak, an interesting phenomenon resulting from our changing climate or a new visualization technique for renewable energy. 
+                    </p>
+
+                    <p> The submission for mapathon has<strong> <span style="color: #BC0000;"> closed</span></strong>. For the winning submissions, check out the <b><a href="map_gallery.html">Map Gallery</a></b>.</p>
+
+                    <!--
+
+                    <div class="gap">
+                        <header class="major">
+                            <h3 >The Challenge</h3>
+                        </header>
+
+                        <p>
+                            Submission will be in the form of a pdf document of the map product which should be of A3 size (landscape or portrait). Please see the Mapathon Submission Guidelines and Mapathon Evaluation Rubric for more information. 
+                        </p>
+        
+                        <p>
+                            The challenge is to develop a map with all relevant map elements, illustrating the information you would like to highlight or bring awareness. There are two categories: individual and group (maximum 3 members). The selected winners will receive prizes from a pool of 825 Euros (in the form of Paypal gift cards).
+                        </p>
+                    </div>
+
+
+                    <div class="gap">
+                        <header class="major">
+                            <h3>Who can participate?</h3>
+                        </header>
+
+                        <p>
+                            Geomundus Mapathon is open for all students registered for Geomundus 2020 (currently enrolled, enrolling or graduated in 2020). Students from any university or high school can participate. Whether you are a student who started learning Cartography recently or an expert who creates maps routinely, a newcomer to GIS technology or a GIS professional; the challenge is for you. 
+                        </p>        
+                    </div>
+        
+                
+                    <div class="gap">
+                        <header class="major">
+                            <h3>Prize breakdown</h3>
+                        </header>
+                        <p> The competition prize money is broken down as follows: </p>
+                        <div class="row 100%" >
+                            <div class="6u 12u$(medium)">
+                                <b> Individual </b>
+                                <ol>
+                                    <li>€125</li>
+                                    <li>€100</li>
+                                    <li>€75</li>
+                                    <li>€50</li>
+                                    <li>€25</li>
+                                </ol>
+                            </div>  
+                            <div class="6u 12u$(medium)">
+                                <b> Group (2 to 3 members)</b>
+                                <ol>
+                                    <li>€200</li>
+                                    <li>€150</li>
+                                    <li>€100</li>
+                                </ol> 
+                            </div>
+                        </div>
+                        <p>
+                            The prizes will be in the form of e-Gift cards that are available on the Paypal website. Any gift card can be chosen.
+                            <ul>
+                                <li> Winners of the group mapathon must define a point of contact who will be responsible for distributing the prize gift to the rest of the team. </li>
+                                <li> Applications must check to see if PayPal gift cards are available for use in their respective locations. Geomundus 2020 will not be responsible for unredeemed gift cards and prize money cannot be reimbursed in cash. </li> 
+                            </ul>
+                                All winning submissions will be shared on the conference website under the Mapathon Gallery section. Winners will be contacted 2 weeks before the conference and announced during the conference. 
+                        </p>
+                    </div>
+                -->
+            
+                    <!--  submission -->
+                    <div class="gap">
+                        <header class="major">  
+                            <h3>Submission</h3> 
+                        </header>
+    
+                        <p>Before submitting your work, please have a look in submission guideline.</p>
+    
+                        <div class="row 100%" >
+                            <div class="5u 12u$(medium) gap">
+                                <a class="button special" id='bt1' value='Show Layer' style="background-color:darkred;color: white!important;">Submission is Closed</a>
+                            </div>
+         
+                            <div class="4u 12u$(medium) gap">
+                                <a href="docs\Mapathon Submission Guideline.pdf" target='_blank' class="button"> Guidelines for map submission <i class="icon fa-download"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gap">
+                        <p>
+                            <br> <br>
+                            For any questions or further information please send email to <b><a href="mailto:info@geomundus.org"><u>info@geomundus.org</u></a></b>.
+                         </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
