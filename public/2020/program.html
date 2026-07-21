@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html class="main style2">
+<head>
+    <title>Programme</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <link rel="shortcut icon" href="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/globe-24.png"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <script src="js/includeHTML.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/gallery.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/elastislide.css"/>
+</head>
+<style>
+    .customlink {
+    border-bottom-color: rgba(255, 255, 255, 0.5);}
+    .customlink:hover{
+        border-bottom-color: transparent !important;
+        color: #6bd4c8 !important;
+    }
+</style>
+
+<body>
+    <ul class="topnav" id="hide">
+        <a href="index.html#header"><img class='menu_home' src="images/geomundus2020_logo.png" alt=""></a>
+        <li class="has-dropdown"><a>Intro</a>
+            <ul class="main-menu-dropdown">
+                <li><a href="index.html#info">Information</a></li>
+                <li><a href="index.html#footer">History</a></li>
+            </ul>
+        </li>
+        <li class="has-dropdown"><a>Programme</a>
+            <ul class="main-menu-dropdown">
+                <li><a href="program.html">Schedule</a></li>
+                <li><a href="index.html#speakers">Speakers</a></li>
+            </ul>
+        </li>
+        <li><a href="registration.html">Registration</a></li>
+        <li><a href="submission.html">Papers and Posters Submission</a></li>
+        <li class="has-dropdown"><a>Mapathon</a>
+            <ul class="main-menu-dropdown">
+                <li><a href="mapathon.html">Info</a></li>
+                <li><a href="map_gallery.html">Gallery</a></li>
+            </ul>
+        </li>
+        <li><a href="team.html">The Team</a></li>
+        <li><a href="index.html#sponsors" >Sponsors</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <ul class="mobile_menu">
+        <a href="index.html#header"><img class='mobile_menu_home' src="images/geomundus2020_logo.png" alt=""></a>
+        <li class="icon">
+            <a style="font-size:20px;" id='menu_btn'>☰</a>
+        </li>
+    </ul>
+
+    <section id="programme" class="main style2">
+        <div class="container">
+            <header class="major">
+                <h2>PROGRAMME</h2>
+            </header>
+            <p> <b> All time slots below refer to Central European Timezone. </b> </p>
+ 
+            <div id="responsiveTabsDemo" class="css3-tabstrip">
+                <ul class="table_list">
+                    <li>
+                        <input type="radio" name="css3-tabstrip-0" checked id="css3-tabstrip-0-2" /><label for="css3-tabstrip-0-2">Friday, 27th</label>
+                        <div class="table-wrapper" style="height: fit-content">
+                            <table class="alt">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">Time</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>9:45</td>
+                                        <td>Online Registration</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:00</td>
+                                        <td>Opening Ceremony, Keynote Introduction & Short documentary about Geomundus history</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:15</td>
+                                        <td>
+                                            <a onclick="toggle(this)" style="color:#4CAF50">+ Keynote Presentation 1: Paula Moraga </a>
+                                            <p style="display: none;">
+                                                <b style="color:#4CAF50">Title: <a class='customlink' href="./index.html#speaker_one" target="_blank" >Geospatial Data Science for Public Health Surveillance</a>
+                                                </b>
+                                                <br>Talking about the developments of innovative statistical methods and interactive visualization applications for geospatial data analysis and health surveillance
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:00</td>
+                                        <td>
+                                            <a onclick="toggle(this)" style="color:#4CAF50">+ Presentation Session A</a>
+                                            <span style="display: none;">
+                                                1. Abhishek Pandey - <em><a href="./docs/papers/AbhishekPandey.pdf" style="color: #6bd4c8">Effective Radio Frequency Planning for 5G- Spatial Decision Support System (SDSS) </a></em>.
+                                                <br>
+                                                2. Alba Vilanova Cortezón - <em><a href="./docs/papers/AlbaVilanova.pdf" style="color: #6bd4c8">Wind Energy Assessment in Costa Rica using Multicriteria Evaluation</a></em>.
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:30</td>
+                                        <td>Break</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:45</td>
+                                        <td><a onclick="toggle(this)" style="color:#4CAF50">+ Presentation Session B</a>
+                                            <span style="display: none;">
+                                                1. Julio Cesar Pedrassoli, Joice Genaro Gomes - <em><a href="./docs/papers/JulioPedrassoli.pdf" style="color: #6bd4c8">Development of an Interactive Time-Series Sampling Tool for Urban Environment Land Use/Land Cover (LULC) Indicators: Concept Test in Salvador, Bahia, Brazil</a></em>.
+                                                <br>
+                                                2. Jordan Bates - <em><a href="./docs/papers/JordanBates.pdf" style="color: #6bd4c8">Winter Wheat LAI Estimation Using UAV Mounted LiDAR</a></em>.
+                                            </span>
+                                            <!--<a onclick="toggle(this)" style="color:#4CAF50">+ Presentation Session 2</a>
+                                            <span style="display: none;">
+                                                1. <strong>David Enrique Payares Garcia</strong>. <em><a href="./docs/papers/DavidPayares.pdf"  style="color: #6bd4c8">Determinants of Pneumonia Mortality- A Spatial Autoregressive Model Analysis</a></em>
+                                               <br>
+                                                2. <strong>Muhammad Mateen Mahmood</strong>. <em><a href="./docs/papers/MuhammadMateenMahmood.pdf"  style="color: #6bd4c8">Geospatial Framework for Multi Hazard Disaster Information, Response and Mitigation</a></em>
+                                            </span> -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12:15</td>
+                                        <td> <a onclick="toggle(this)" style="color:#4CAF50">+ Sponsor Presentation</a>
+                                            <span style="display: none;">
+                                                <a style="color:#4CAF50; font-weight:bold;" href="https://www.conterra.de/" target="_blank">Con Terra</a>
+                                                <br>
+                                                Presenter: Alexander Strotmann
+                                                <!--
+                                                Title : <strong>From Maps to Location Services</strong>
+                                                <p>
+                                                    Throughout history, location has played a key role in the development and progress of people and societies.
+                                                </p>
+                                                <p>
+                                                    During this session, HERE will show how are they focused on the concept of location and the potential it has to radically improve the way we do business, the way we get around and the way we live, shaping the future by redefining what was formerly known as a map.
+                                                </p>
+                                                <p>
+                                                    We will discover anecdotes and curiosities about mapping technology: From the beginning, when they started digitizing maps to pioneer in-car navigation systems, to the present, representing living three-dimensional maps that grow upwards, breathing with layers of information and insights.
+                                                </p>
+                                                <p>
+                                                    This representation of reality will maximize the possibilities of the different industries to create services and developments that enable people and objects to move, interact and live faster, safer and in a more efficient way than ever before.
+                                                </p>
+                                                -->
+                                            </span> 
+                                        </td>
+                                    </tr> 
+                                    <tr>
+                                        <td>12:30 </td>
+                                        <td> Lunch Break </td>
+                                    </tr>
+                                    <tr>
+                                        <td>13:45</td>
+                                        <td> <a onclick="toggle(this)" style="color:#4CAF50; font-weight:bold;">+ Alumni Session</a>
+                                            <span style="display:none;"> This session is meant for past GeoTech students to shed light on what they have continued to pursue after their graduation. <br>
+                                                Guests: <br>
+                                                - <a style="color:#4CAF50" href="https://www.linkedin.com/in/ignponsoda/" target="_blank"> Ignacio Ponsoda Llorens</a> <br>
+                                                - <a style="color:#4CAF50" href="https://www.linkedin.com/in/daria-ludtke/" target="_blank"> Daria Ludtke </a> <br>
+                                                - <a style="color:#4CAF50" href="https://www.linkedin.com/in/mahesh-thapa-44507456/" target="_blank"> Mahesh Thapa </a>  
+                                            </span>
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>14:10</td>
+                                        <td>
+                                            <a onclick="toggle(this)" style="color:#4CAF50">+ Ras Al Khaimah Municipality Presentation</a>
+                                            <span style="display: none;"> 
+                                                <a class='customlink' href="https://mun.rak.ae/en/pages/InitativeDetail.aspx?ID=3" target="_blank">Ras Al Khaimah (UAE) GIS Center</a>
+                                                <br>
+                                                Presenter: Eng. Aaesha Shehhi
+                                            </span>
+                                        </td>
+                                        <!--
+                                        <td> GIS Center Presentation - <b style="color:#4CAF50"> <a class='customlink' href="https://mun.rak.ae/en/pages/InitativeDetail.aspx?ID=3" target="_blank">)</a>
+                                        -->
+                                    </tr>
+                                    <tr>
+                                        <td>14:20</td>
+                                        <td>
+                                            <a onclick="toggle(this)" style="color:#4CAF50;">+ Erasmus Mundus Association Presentation</a>
+                                            <span style="display:none;">
+                                                Presenter: Gabriella Mikiewicz
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>14:30</td>
+                                        <td> Break </td>
+                                    </tr>
+                                    <tr>
+                                        <td>14:40</td>
+                                        <td> <a onclick="toggle(this)" style="color:#4CAF50; font-weight:bold;">+ Career Development Panel Session</a>
+                                            <span style="display:none;">
+                                                This is a panel made up of experts from academia, private and public GIS organizations with abundant experience in the field. 
+                                                The speakers will have time to talk about their history and experiences in GIS, and give insight into the industry.
+                                                <br>
+                                                Panelists:
+                                                <br>
+                                                - <a style="color:#4CAF50" href="https://www.paulamoraga.com/" target="_blank"> Dr. Paula Moraga (Keynote Speaker)</a> <br>
+                                                - <a style="color:#4CAF50" href='https://www.linkedin.com/in/michael-gould-gis/' target="_blank"> Dr. Michael Gould (Universitat Jaume I, ESRI)</a> <br>
+                                                - <a style="color:#4CAF50" href="https://www.linkedin.com/in/alaabakry/" target="_blank"> Alaa B. Abdelfattah (ConTerra, GeoTech Alumni)</a> <br>
+                                                - <a style="color:#4CAF50" href='https://mun.rak.ae/en/pages/InitativeDetail.aspx?ID=3' target="_blank"> Eng. Aaesha Shehhi (Ras Al Khaimah Municipality)</a> <br>
+                                                - <a style="color:#4CAF50" href="https://52north.org/about-us/our-team/name/ben-graler/" target="_blank"> Dr. Benedikt Gräler (52° North)</a> <br>
+                                                <!--<br>
+                                                Attendees will get to ask our distinguished panelists questions like:
+                                                <br/>
+                                                1. What are the possibilities and options for building your career in geoinformatics?
+                                                <br/>
+                                                2. Should one pursue further studies (PhD), or go into the workforce after the master degree?
+                                                <br/>
+                                                3. What are the critical ideas for geospatial entrepreneurs?
+                                                <br/>
+                                                4. How can we influence society through GI knowledge? What are the challenges in such project?
+                                                <br/>
+                                                5. What tips do you have for advancing a GI career?
+                                                <br/><br>
+                                                Panellists include our keynote speakers, as well as representatives of both academia and industry.-->
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr> 
+                                        <td>15:40</td>
+                                        <td>
+                                           <a onclick="toggle(this)" style="color:#4CAF50">+ Keynote Presentation 2: Linda Beale</a>
+                                            <p style="display: none;">
+                                                In a world where epidemiology has gone from almost an almost unknown discipline to being a part of our everyday language and lives, due to COVID-19,                                        
+                                                this talk will explore the importance of the relationship between epidemiology and the geographical perspective
+                                            </p> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>16:25</td>
+                                        <td>Day 1: End of Technical Program </td>
+                                    </tr>
+                                    <tr>
+                                        <td>16:30</td>
+                                        <td>Networking session </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="radio" name="css3-tabstrip-0" id="css3-tabstrip-0-3" /><label for="css3-tabstrip-0-3">Saturday, 28th</label>
+                        <div class="table-wrapper">
+                            <table class="alt">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">Time</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>9:45</td>
+                                        <td>Online Registration</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:00</td>
+                                        <td>Opening & Keynote Introduction</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:15</td>
+                                        <td>
+                                            <a onclick="toggle(this)" style="color:#4CAF50">+ Keynote Presentation 3: Arun Kumar</a>
+                                            <p style="display: none;">
+                                                <b style="color:#4CAF50">Title: <a class='customlink' href="./index.html#speaker_three" target="_blank">Community-based Tropical Forest Monitoring Using Emerging Technologies</a>
+                                                </b>
+                                                <br><br> This presentation will describe an integrated community based tropical forest monitoring system, which combines emerging technologies, remote sensing and community-based observation.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:00</td>
+                                        <td><a onclick="toggle(this)" style="color:#4CAF50">+ Presentation Session</a>
+                                            <span style="display: none;">
+                                                1. Dennis P. Dizon - <em><a href="./docs/papers/DennisDizon.pdf"  style="color: #6bd4c8">Modeling the Spatial Interaction of Voting Participation vis-à-vis Poverty Using Spatial Regression: A Follow-up Study</a></em>.
+                                                <br>
+                                                2. Elias Nasr Naim Elias, Fabricio Rosa Amorim, Marcio Augusto Reolon Schmidt, Silvana Philippi Camboim - <em><a href="./docs/papers/EliasNaim.pdf"  style="color: #6bd4c8">Data quality analysis tools and their use for the detection of spatio-temporal heterogeneities in VGI contributions</a></em>.
+                                                <br>
+                                                3. Vince Kenneth M. del Mundo - <em><a href="./docs/papers/VinceKennethDelMundo.pdf"  style="color: #6bd4c8">Earthquake Deformation Mapping caused by the Taal Volcano Eruption using InSAR</a></em>.
+                                                <br>
+                                                4. Kshitij Raj Sharma, Ashmeera Dahal, Anish Chhetri, Surya Adhikari, Saugat Nepal - <em><a href="./docs/papers/KshitijRajSharma.pdf"  style="color: #6bd4c8">Assessment of agricultural land pooling using GNSS technologies and GIS software in Gandaki province, Nepal</a></em>.
+                                            </span>
+                                            <!--<a onclick="toggle(this)" style="color:#4CAF50">+ Presentation Session 3</a>
+                                            <span style="display: none;">
+                                                1. <strong>Nianhua Liu, Man Xiao, Xin Xu, Xuezhang Li, Qian Shi</strong>. <em><a href="./docs/papers/NianhuaLiu.pdf"  style="color: #6bd4c8">Environmental Detection and Management Based on Multi-source Remote Sensing Data from Baiyangdian Lake</a></em>
+                                                <br>
+                                                2. <strong>Ponlawat Weerapanpisit</strong>. <em><a href="./docs/papers/PonlawatW.pdf"  style="color: #6bd4c8">Software Engineering Process for Development of Chiang Mai University Bus Information System and Bus Arrival Time Estimation</a></em>
+                                            </span> -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12:00</td>
+                                        <td>Poster Session & Coffee Break</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12:15</td>
+                                        <td>Mapathon Session 
+                                            <!--<a onclick="toggle(this)" style="color:#4CAF50">+ Presentation Session 4</a>
+                                            <span style="display: none;">
+                                            1. <strong>Hiba Mohammad</strong>. <em><a href="./docs/papers/HibaMohammad.pdf"  style="color: #6bd4c8">Spatial Assessment of Flood vulnerability in Lattakia Governorate Area Using GIS and Remote sensing</a></em>
+                                            <br>
+                                            2. <strong>Faizan Ahmad</strong>. <em><a href="./docs/papers/FaizanAhmad.pdf"  style="color: #6bd4c8">Off-screen Objects Targeting using Contextual Cues</a></em>
+                                            <br>
+                                            3. <strong>Janak Parajuli</strong>. <em><a href="./docs/papers/SumanBaral_JanakParajuli.pdf"  style="color: #6bd4c8">Technologies for humanitarian cause– Saving & Sustaining lives</a></em>
+                                            <br>
+                                            4. <strong>Shah Taj</strong>. <em><a href="./docs/papers/ShahTaj.pdf"  style="color: #6bd4c8">Evaluation of ColorBrewer & Color Oracle for color blind safe Cartography</a></em>
+                                            </span> -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12:30</td>
+                                        <td>Overview of Workshop Session</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12:45</td>
+                                        <td>Lunch Break</td>
+                                    </tr>
+                                    <tr>
+                                        <td>13:45</td>
+                                        <td> <a onclick="toggle(this)" style="color:#4CAF50">+ Keynote Presentation 4: Gerald Blasch</a>
+                                            <p style="display: none;">
+                                                <b style="color:#4CAF50">Title: <a class='customlink' href="./index.html#speaker_two" target="_blank" >Wheat Rust Early Warning System in Ethiopia – Using New Technologies to Combat Crop Disease</a>
+                                                </b>
+                                                <br><br> During his talk, Gerald will describe the existing early warning system and the planned development of additional, new components for enhancement based on artificial intelligence, machine learning, and remote sensing, such as UAV-based high throughput phenotyping for biotic stresses.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>14:30</td>
+                                        <td> <a onclick='toggle(this)' style="color:#4CAF50">+ Workshop Session (Webinars)</a>
+                                        <p style="display: none;">
+                                            <b style="color:#4CAF50">Workshop session A :  <a class='customlink' href="./index.html#speaker_six" target="_blank" ><i class="icon fa-link"></i> Disease Risk Modeling and Visualization using R-INLA</a>
+                                            </b>
+                                            <br><br> 
+                                            In this workshop we will learn how to estimate disease risk and quantify risk factors using aerial and geostatistical data. We will also create interactive maps of disease risk and risk factors, and introduce presentation options such as interactive dashboards. We will work through two disease mapping examples using data of malaria in The Gambia and cancer in Pennsylvania, USA.
+                                            <br><br>
+                                            <b style="color:#4CAF50">Workshop session B :  <a class='customlink' href="./index.html#speaker_five" target="_blank" ><i class="icon fa-link"></i> Accessing, mapping, and exporting Nitrogen Dioxide data on Google Earth Engine</a>
+                                            </b>
+                                            <br><br> 
+                                            In this workshop, we will cover how to access the air pollution data collected by the TROPOMI orbital sensor on Google Earth Engine, with an emphasis on nitrogen dioxide measurement, which has been used in many media examples as a proxy for mapping the intensity of activities during pandemic and lockdown periods.
+                                            <br><br>
+                                            <b style="color:#4CAF50">Workshop session C :  <a class='customlink' > Open source based image analysis of multispectral UAV data based on QGIS and OBIA workflows</a>
+                                            </b>
+                                            <br><br> 
+                                            In this workshop, we will demonstrate the analysis of UAV-based multispectral MICASENSE data (5 band MS camera) along the QGIS and OTB workline. Unsupervised (K-means) and OBIA-based (random forest) supervised classification processes of typical indices (NDVI, SAVI, Soil_RI) will be explained, calculated and evaluated. 
+                                            The exercise data and videos will be provided afterwards to support the self-study-potentials of the participients.
+                                            
+                                        </p>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                        <td>15:30</td>
+                                        <td>Closing Ceremony for the Conference</td>
+                                    </tr>
+                                    <tr>
+                                        <td>15:45</td>
+                                        <td>Networking session</td>
+                                    </tr>
+                                    <tr>
+                                        <td>16:45</td>
+                                        <td>Conference ends</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

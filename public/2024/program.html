@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Program</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="expires" content="0"><!-- Never caches the page -->
+    <link id="favicon" rel="shortcut icon" href="images/logo_pictures/geomundus_icon.png">
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/elastislide.css" />
+    <script src="https://kit.fontawesome.com/b37653d681.js"></script>
+    <script>
+        // Toggle buttons (+) that can be found in the schedule
+        function toggle(a) {
+            var x = a;
+            var b = a.innerHTML;
+            if (x.nextElementSibling.style.display === 'none') {
+                b = b.split('+');
+                b = "-" + b[1];
+                a.innerHTML = b;
+                x.nextElementSibling.style.display = 'block';
+            } else {
+                b = b.split('-');
+                b = "+" + b[1];
+                a.innerHTML = b;
+                x.nextElementSibling.style.display = 'none';
+            }
+        }
+    </script>
+    <!-- A script to insert the footer.html content into the foorter-end element -->
+    <script>
+        fetch("footer.html")
+        .then(response => response.text())
+        .then(data => {
+            const footerElement = document.getElementById("footer-end");
+            footerElement.innerHTML = data;
+        })
+        .catch(error => {
+            console.error("Error fetching footer content:", error);
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- MENU -->
+    <!-- The nav-placeholder has its content inserted by the main.js script.
+    The content is a <nav> described in the nav.html file -->
+    <div id="nav-placeholder">
+    </div>
+
+    <!-- SCHEDULE -->
+    <section id="program" class="main style2">
+        <div class="container">
+            <header class="major">
+                <h2 style="color: #ffffff;">Schedule</h2>
+            </header>
+            <p style="color: #ffffff;">Please note that all time slots mentioned below are based on Western European
+                Summer Time (UTC+1).
+                The provided schedule is subject to change and will be continually updated as more information regarding
+                speakers and workshops becomes available.
+            </p>
+            <br>
+            <div id="responsiveTabsDemo" class="css3-tabstrip">
+                <ul class="table_list">
+                    <li>
+                        <input type="radio" name="css3-tabstrip-0" checked id="css3-tabstrip-0-1" /><label
+                            for="css3-tabstrip-0-1">Thursday, 24th</label>
+                        <div class="table-wrapper" style="height: fit-content">
+                            <table class="alt">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">Time</th>
+                                        <th>Description</th>
+                                    </tr>
+                                <tbody>
+                                    <tr>
+                                        <td>17:00</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ GeoMundus kickoff</a>
+                                            <span style="display: none;">
+                                                <!-- <a class="program-dropdown-sub"> -->
+                                                    IFGI Faculty, Münster University  ( <b>Address</b>: Breul 43, 48143 Münster )
+                                                    <br>
+                                                    We'll meet for a nigtht of pool, table football and talks about geography
+                                                    in the bassement of Evangelische Studierenden Gemeinde to get to know each
+                                                    other and break the ice.
+                                                <!-- </a> -->
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="radio" name="css3-tabstrip-0" checked id="css3-tabstrip-0-2" /><label
+                            for="css3-tabstrip-0-2">Friday, 25th</label>
+                        <div class="table-wrapper" style="height: fit-content">
+                            <table class="alt">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">Time</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>8:45</td>
+                                        <td>Registration</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9:30</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Opening
+                                                Ceremony</a>
+                                            <span style="display: none; text-align:justify;">
+                                                <b>Opening Speech by the IFGI Faculty Dean: Dr. Edzer Pebesma</b><br>
+                                                The initial speech by the head of the Institute for Geoinformatics at the University of Münster
+                                                will set the tone for the two day congress and is intended to make attendees reflect on their role in science,
+                                                industry and academia member of the Geospatial environment.
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>9:45</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Gilberto Câmara Presentation</a>
+                                            <span style="display: none; text-align:justify;">
+                                                <!--<a class="program-dropdown-sub" href="./speakers.html#speaker-1" target="_blank">-->
+                                                Title: <b>Open Source Geospatial Software: The first 40 years and beyond</b> by <b>Dr. Gilberto Câmara</b> <a class="link_presentation" href="docs/presentations/Gilberto_Camara_Keynote.pdf" target="_blank">[PDF]</a>
+                                                <br>
+                                                <b>Abstract:</b> The launch of GRASS GIS in 1984 marked the beginning of open-source geospatial software.
+                                                After four decades, this talk highlights major progress in the field and provides a vision of upcoming trends.
+                                                FOSS4G developers need to find a middle ground between standardisation and innovation. Whether de facto or de jure,
+                                                standards establish a solid foundation for shared use and collaboration. Solid theory serves as the basis for
+                                                successful standards. OGC’s Simple Features, using DE-9IM, has influenced the success of PostGIS, sf in R, and
+                                                GeoPandas in Python. The backbone of GDAL includes standards like GeoTIFF and JPEG 2000. Thanks to these standards,
+                                                commercial and institutional users have widely adopted tools like PostGIS, GDAL, and R-sf.
+                                                <br>
+                                                <b>Biography:</b> Prof. Dr. Gilberto Câmara is a Brazilian researcher in Geoinformatics, GIScience, Spatial Analysis,
+                                                and Land Use Modelling, who works at Brazil's National Institute for Space Research (INPE). He is internationally recognized
+                                                for promoting free access for geospatial data and for setting up an efficient satellite monitoring of the Brazilian Amazon rainforest.
+                                                After retiring from INPE in June 2016 after 35 years of work, he continues to conduct R&D activities at INPE as a Senior Research Fellow.
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:30</td>
+                                        <td>Coffee Break: Networking</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:00</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Paper Presentation
+                                                Session 1</a>
+                                            <span style="display: none; text-align: justify-center;">
+                                                1. Alonso Gonzalez
+                                                <br>
+                                                Title: “<b>Notes from the field:</b> 4  cases of geoinformatics appications for ocean sciences”  <a class="link_presentation" href="docs/presentations/Alonso_Gonzalez_PP1.pdf" target="_blank">[PDF]</a>
+                                                <br>
+                                                2. Muhammad Sanan
+                                                <br>
+                                                Title: “Assessing Potential of LIDAR Data for 3D Modelling” <a class="link_presentation" href="docs/presentations/Muhammad Sanan_PP1.pdf" target="_blank">[PDF]</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:30</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Panel discussion: Career Development session </a>
+                                            <span style="display: none; text-align: justify-center;">
+                                                <b>Participants: Hala Ghareeb, Dr. Marco Painho, Alaa Bakry Abdelfattah</b>
+                                                <br>
+                                                This panel will open the discussion between current and past participants of the master in Geospatial 
+                                                Technologies to put in context the aspirations of the students in their upcoming professional careers. 
+                                                Additionally, one of the three coordinators of the program will join the discussion to relate his experience 
+                                                as the responsible of the design and objective of the program.
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12:15 </td>
+                                        <td> Lunch Break </td>
+                                    </tr>
+                                    <tr>
+                                        <td>14:15</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Rafaela Tiengo Presentation</a>
+                                            <span style="display: none;">
+                                                Title: <b>Monitoring Conservation Projects: Integrating Google Earth Engine, Google Colab and Python</b> by <b>Dr. Rafaela Tiengo</b> <a class="link_presentation" href="docs/presentations/Rafaela_Tiengo_Keynote.pdf" target="_blank">[PDF]</a>
+                                                <br>
+                                                <b>Abstract:</b> The use of advanced technologies, particularly Google Earth Engine, Google Colab, and Python, offers significant potential
+                                                for monitoring and analyzing land cover changes in conservation projects. Focusing on São Miguel Island in the Azores, it discusses
+                                                the application of these tools to identify the impacts and successes of conservation interventions. The talk will demonstrate how the
+                                                integration of remote sensing data enhances near-real-time monitoring capabilities, providing valuable insights into the land cover
+                                                impacts and intervention outcomes of projects supported by the LIFE Nature Programme.
+                                                <br>
+                                                <b>Biography:</b> Rafaela Tiengo is a Brazilian geographer specializing in remote sensing. She earned an MSc in Remote Sensing for Volcanology
+                                                from the University of the Azores, where she developed expertise in using geospatial technologies and SAR data for volcanic scenarios
+                                                in islands. She is currently pursuing a PhD in Engineering and Management of the Natural Environment at the Polytechnic University of Madrid.
+                                                Her research focuses on detecting land use and land cover changes in small oceanic islands, employing remote sensing techniques to assess
+                                                environmental impacts and inform conservation efforts.
+                                            </span>
+                                        </td>
+                                    </tr>
+                                   
+                                    <tr>
+                                        <td>15:00</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Paper Presentation
+                                                Session 2</a>
+                                            <span style="display: none; text-align: justify-center;">
+                                                1. Joseph Paintsil
+                                                <br>
+                                                Title: “Spatial Assessment of Air Quality Index (AQI) in Italy using Kriging interpolation methods” <a class="link_presentation" href="docs/presentations/Joseph_Paintsil_PP2.pdf" target="_blank">[PDF]</a>
+                                                <br>
+                                                2. Seyed Amir Muhammad Qureshi
+                                                <br>
+                                                Title: “AquMADE: A GIS-based web application to assess groundwater quality by introducing a risk-based irrigation water quality index (RB-IWQI)” <a class="link_presentation" href="docs/presentations/Seyed_Qureshi_PP2.pdf" target="_blank">[PDF]</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>15:30</td>
+                                        <td>Coffee Break</td>
+                                    </tr>
+                                    <tr>
+                                        <td>16:15</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Pablo Viejo Presentation
+                                                </a>
+                                            <span style="display: none; text-align: justify-center;">
+                                                Title: <b>The Future of AI-GIS: Challenges and Opportunities</b> by <b>Pablo Viejo (Bettermaps)</b>
+                                                <br>
+                                                <b>Abstract:</b> AI is rapidly transforming Geographic Information Systems (GIS), offering new ways to automate data processing, 
+                                                enhance spatial analysis, and create dynamic visualizations. This integration holds immense potential, enabling faster and 
+                                                more accurate decision-making across sectors like urban planning and disaster management. However, challenges such as data quality, 
+                                                ethical concerns around privacy, and the expertise gap in AI-related skills must be addressed. Additionally, the computational 
+                                                demands of AI models pose significant barriers. Despite these obstacles, the future of AI in GIS promises to revolutionize how we 
+                                                interact with geospatial data, unlocking new opportunities for innovation.
+                                                <br>
+                                                <b>Biography:</b> Pablo Viejo is an experienced digital solutions developer within the information technologies industry. His work extends to domains
+                                                such as  Sustainable Development, Sustainable Cities, with consistent track record on innovation and entrepreneurship. A skilled programer,
+                                                with strong specialisation on geo-spatial technologies, 3D, modelling and simulation of complex systems. He is part of the Young Leaders of 
+                                                the World Cities Summit.
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>17:15</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Sponsor Spot
+                                            </a>
+                                        <span style="display: none; text-align: justify-center;">
+                                            Designated spots are placed in the congress for companies that consider educational forums of the GIS industry as key moments
+                                             where talent can be engaged, insights are discovered, and the crystal moments of young perspectives on already established services
+                                              and products are taken in, securing their impact on an ever-changing technology environment					
+                                        </span>
+                                        </td>
+                                    </tr> -->
+                                    <tr>
+                                        <td>17:00</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Paper Presentation Session 3</a>
+                                            <span style="display: none; text-align: justify-center;">
+                                                1. Linda Polanco
+                                                <br>
+                                                Title: “Indigenous Land Titling in Colombia: A Path to Peacefor Native Communities, Highlighting the Role of Geographic Information in the Process” <a class="link_presentation" href="docs/presentations/LindaPolanco_PP3.pdf" target="_blank">[PDF]</a>
+                                                <br>
+                                                2. Eguagie-Sui Precious
+                                                <br>
+                                                Title: “Leveraging Spatial Analysis Techniques for Comprehensive Assessment of
+                                                Internally Displaced Persons (IDP) Camps in Born State” <a class="link_presentation" href="docs/presentations/Precious_Eguagie.pdf" target="_blank">[PDF]</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>17:30</td>
+                                        <td>Recap of First Day</td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>18:15</td>
+                                        <td>Closing of First Day</td>
+                                    </tr> -->
+                                    <tr>
+                                        <td>20:00</td>
+                                        <td>
+                                            <a onclick='toggle(this)' class="program-dropdown-main">+ GeoMundus Dinner</a>
+                                            <span style="display: none;">
+                                                The conference dinner will happen at <a href="https://maps.app.goo.gl/xtqQGKsuwhByUhLV7"><b>PierHouse</b> (Address : Hafenweg 22, 48155 Münster )</a>.
+                                                <br>
+                                                <b>Let's hang together and talk about our impressions on the day</b>
+                                                <br>
+                                                We sincerely hope that you will join us in this celebratory gathering and seize the opportunity to network and foster connections. Please be aware that there is a limit to the number of participants, so we encourage you to register well in advance if you wish to take part.
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="radio" name="css3-tabstrip-0" id="css3-tabstrip-0-3" />
+                        <label for="css3-tabstrip-0-3">Saturday, 26th</label>
+                        <div class="table-wrapper" style="height:fit-content">
+                            <table class="alt">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%">Time</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>9:30</td>
+                                        <td>Registration</td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>10:00</td>
+                                        <td><a class="program-dropdown-main">Resume the conference & Keynote
+                                                Introduction</a></td>
+                                    </tr> -->
+                                    <tr>
+                                        <td>9:45</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Andres Felipe Ramirez Presentation</a>
+                                            <span style="display: none; text-align:justify;">
+                                                Title: <b>Geospatial Technologies in the context of International Organizations, NGOs, and Development Cooperation</b> by <b>Andres Felipe Ramirez</b>
+                                                <br>
+                                                <b>Abstract:</b> International organizations, NGOs, and Development Cooperation frameworks are important allies for countries 
+                                                challenging political or social environments. Local governments depend on these organizations for financial support and 
+                                                policy validation, while the commodity industry relies on NGO certifications to validate their sustainability claims. 
+                                                This dual role scenario presents a unique challenge: a high demand along with the need for a fast response.
+                                                <br>
+                                                Geospatial Technologies play a key role in the technological landscape of organizations adopting a data-driven decision-making approach.
+                                                Their impact spans a wide range of activities, including project planning, monitoring and evaluation, impact assessment, and compliance checks,
+                                                proving a cost-effective tool.  
+                                                <br>
+                                                This session will provide an overview of how geospatial technologies enhance decision-making, policy development, and project implementation
+                                                across diverse global contexts. Participants will gain insights into practical applications of geospatial data and tools in addressing
+                                                humanitarian crises, sustainable development, and managing resources effectively. Additionally, current trends, challenges, and future
+                                                opportunities in this dynamic field, particularly within this specific context, will be discussed.
+                                                <br>
+                                                <b>Biography:</b> Geospatial Information Manager with over 10 years of experience international non-profits,
+                                                currently bringing expertise to the German Agency for International Cooperation (GIZ).
+                                                He has dedicated much of his career to integrate geospatial technologies into organizational operations. 
+                                                Deeply passionate about Remote Sensing and Automated GIS, and leveraging them technologies to turn raw data into rich, 
+                                                spatial insights that go beyond traditional Excel sheets. Proficient in advanced geospatial processing with tools like Esri, 
+                                                QGIS, Earth Engine, and R, he excels as a strategist in raising awareness and designing and deploying sustainable geospatial systems.
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:30</td>
+                                        <td>Coffee Break</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:00</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Paper Presentation
+                                                Session 4</a>
+                                            <span style="display: none; text-align: justify-center;">
+                                                <b>Grant winner for best paper submission: Smit Rajshekhar Patel </b>
+                                                <br>
+                                                Title: “Delineating Arable Land and Groundwater Potential in the Palestinian-Israeli Landscape: An Insight into Resource Contestation and Territoriality” <a class="link_presentation" href="docs/presentations/Smit_Patel.pdf" target="_blank">[PDF]</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:30</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ GI Profile</a>
+                                            <span style="display: none; text-align: justify-center;">
+                                                During this interview <b>Dr. Werner Kuhn</b> will be joining us to discuss his three decade  trajectory and the evolution of GI technologies.
+                                                The session's objective is to reflect on the changes that drive innovation on geotechnologies and the importance to conceive geography as a 
+                                                tool to further the understanding on other fields and sciences.
+                                                <br>
+                                                <b>Biography</b>: Werner Kuhn is a professor of Geographic Information Science at University of California, Santa Barbara.
+                                                He served as the Director of the UCSB Center for Geospatial Studies, and is one of the founding members of the Vespucci
+                                                Initiative for Advancing Geographic Information Science, organizing annual summer school specialists meetings.
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12:15</td>
+                                        <td>Lunch Break</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>14:15</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Parallel Workshops</a>
+                                            <span style="display: none;">
+                                                Deploying a geographic information systems application by <b>Ammar Yousaf and Bernardo Trovão</b>
+                                                <br>
+                                                <b>senseBox:bike</b> Citizen science mechanisms applied to mobility by <b>Dr. Thomas Bartoschek, Artur Kim Shum and Felix Erdmann </b>
+                                                <br>
+                                                Vegetation Indexes Extraction by using Sentinel Hub API by <b>Nicolas Luna</b>
+                                                <br>
+                                                Air quality Prediction using Sentinel 5P and machine learning techniques by <b>Ayomide Oraegbu</b>
+                                                <br>
+                                                Clean Code: how to write better functions by <b>Rebeca Nunes</b>
+                                                <br>
+                                                Developing an Air Quality Monitoring Dashboard with React, TypeScript, Tailwind CSS, and MapLibre GL JS by <b>Emmanuel Jolaiya</b>
+                                        </td>
+                                    </tr>
+
+                                    <!-- <tr>
+                                        <td>14:30</td>
+                                        <td>
+                                            <a onclick="toggle(this)" class="program-dropdown-main">+ Keynote Presentation 4</a>
+                                            <span style="display: none;">
+                                                Dr. Qiusheng Wu
+                                                <br>
+                                                Title: “Interactive Geospatial Analysis with Cloud Computing and Open Source Software”
+                                                <br>
+                                                Abstract: Satellite data are critical for a wide range of environmental applications. In the past, access to satellite data was limited to researchers and professionals with expertise in remote sensing and image processing. However, with the increasing availability of open-access satellite data and cloud-computing platforms such as Google Earth Engine, Microsoft Planetary Computer, and Amazon Web Services, anyone can now gain insight into environmental changes on a planetary scale. This presentation will introduce open-source packages, data catalogs, and interactive web apps designed to empower users in harnessing the full potential of cloud computing for geospatial analysis. These user-friendly and accessible tools enable researchers, students, and environmental professionals to explore and analyze satellite data for diverse environmental applications. 
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>15:15</td>
+                                        <td>
+                                            Coffee Break and Networking Session
+                                            <br>
+                                            During this session, the audience will have the opportunity to engage in informal 
+                                            discussions with the keynote speakers, sponsors, workshop leaders and Geotech alumni.
+                                            It will provide a valuable platform for exchanging ideas and networking with these 
+                                            esteemed individuals.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>15:45</td>
+                                        <td>
+                                            <a onclick='toggle(this)' class="program-dropdown-main">+Workshop Session</a>
+                                            <span style="display: none;">
+                                                Workshop 1 conducted by Onyeukwu Nnadozie Uzoma and Nyi Nyi Nyan Lin
+                                                <br>
+                                                Topic: “Application of Unmanned Aerial Vehicle System in Geoinformatics for Sustainable Development”
+                                                <br>
+                                                Workshop 2conducted by Itza Hernandez-Sequeira
+                                                <br>
+                                                Topic: “Semi-supervised Learning for Aerial Scene Classification with Deep Learning”
+                                                <br>
+                                                Workshop 3 conducted by Babatunde David Aremu
+                                                <br>
+                                                Topic: “Exploring Sustainable Solutions with Google Earth Engine: Assessing Recent Flooding Events in Libya”
+                                            </span>
+                                        </td>
+                                    </tr> -->
+                                    <tr>
+                                        <td>16:45</td>
+                                        <td>Closing Ceremony of the Conference</td>
+                                    </tr>
+                                    <tr>
+                                        <td>17:00</td>
+                                        <td>Conference End</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer: SOCIAL NETWORKS -->
+    <footer id = "footer-end" style="height:5rem"></footer>
+
+</body>
+
+</html>

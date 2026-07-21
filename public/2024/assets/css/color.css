@@ -1,0 +1,7 @@
+:root {
+    --cp-black: #000000;
+    --cp-white: #ADC6C6; /*Ash gray*/
+    --cp-dark: #21363f;  /*Primary Color*/
+    --cp-mid: #3b4c61; /*Secondary*/
+    --cp-light: #719176; /*Tetiary*/
+}

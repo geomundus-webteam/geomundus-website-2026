@@ -1,0 +1,476 @@
+<!DOCTYPE HTML>
+<!--
+    Photon by HTML5 UP
+    html5up.net | @n33co
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+    <base href="/2021/">
+    <title>GeoMundus 2021</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="expires" content="0"><!-- Never caches the page -->
+    <link id="favicon" rel="shortcut icon" href="images\LogoIcon\geomundus2021_logo_czL_icon.ico">
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K2V0J6PX1S"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-K2V0J6PX1S');
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1K1qI88SQ1rk9N6zQ7yHk8vDnm_ldINc"></script>
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/elastislide.css" />
+    <script src="https://kit.fontawesome.com/b37653d681.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+    <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="js/jquery.elastislide.js"></script>
+    <script type="text/javascript" src="js/gallery.js"></script>
+</head>
+
+<body onload="initMap()" class="home-page">
+
+    <!-- MENU -->
+    <nav>
+        <ul class="menu">
+            <a href="index.html#header"><img class='menu_logo' src="images/main/geomundus2021_logo.png" alt=""></a>
+            <li class="item"><a href="index.html">Introduction</li>
+            <li class="item has-dropdown"><a>Program</a>
+                <ul class="main-menu-dropdown">
+                    <li><a href="program.html">Schedule</a></li>
+                    <li><a href="speakers.html#keynotes">Keynote Speakers</a></li>
+                    <li><a href="speakers.html#workshops">Workshop Leaders</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="registration.html">Registration</a></li>
+            <li class="item has-dropdown"><a>Submissions</a>
+                <ul class="main-menu-dropdown">
+                    <li><a href="submission.html#papers">Papers</a></li>
+                    <li><a href="submission.html#app">Applications</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="mapathon.html">Mapathon</a></li>
+            <li class="item"><a href="index.html#sponsors" >Sponsors</a></li>
+            <li class="item"><a href="team.html">Team</a></li>
+            <li class="item"><a href="index.html#contact">Contact</a></li>
+            <li class="toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
+        </ul>
+    </nav>
+ 
+    <!-- HEADER: GeoMundus Conference Presentation -->
+    <section id="header" text-align="center">
+        <div class="inner">
+            <div text-align="center">
+                <div>
+                    <img src="images/main/geomundus2021_logo_white.png" class ="presentation_logo"/>
+                </div>   
+                <div>
+                    <h1>GeoMundus 2021<br/></h1>    
+                    <h2>Geospatial Technologies: Fancy Toys or Tangible Outcomes?</h2>
+                    <h2>Hybrid Edition<br>
+                        <strong>26<sup>th</sup> and 27<sup>th</sup> November</strong><br>
+                        <strong>Lisbon, Portugal</strong><br>
+                    </h2>
+                    <!--
+                    <h3>We are currently planning to host this year’s conference in hybrid format,<br>
+                        an event with both in-person and remote delegates, in response to the current public health situation.<br></h3>
+                    <p>The conference is online now, <a style="color: #44e75f;" href="https://videoconf-colibri.zoom.us/j/84893989590">join it in Zoom!</a></p>
+                    -->
+                    <h3>Thank you very much to all our in-person and remote participants. <br>See you next year in Spain!<br></h3>
+                    <p>The registration for the hybrid conference is now <strong> <a style="color: #ff3c19;" href="registration.html" class ="intext_link">closed</a></strong>.
+                </div>
+                <ul class="actions">
+                    <li><a href="#info" class="button">Discover</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- INFO: About the conference & This year's twist -->
+    <section id="info" class="main style1">
+        <div class="container">
+            <header class="major">
+                <h2>About the conference</h2>
+            </header>
+            <p style="text-align:justify;">The GeoMundus Conference is a free international conference organized by students of the joint MSc program in Geospatial Technologies. 
+            Since 2009, the GeoMundus has been hosted annually alternating between the program’s organizing universities, NOVA IMS (Lisbon, Portugal),
+            WWU (Münster, Germany) and UJI (Castellón de la Plana, Spain).</p>
+            <p style="text-align:justify;">The conference brings together students, researchers, and professionals from the broader geospatial community for a unique collaborative experience.
+            The aim is to share state of the art scientific research, knowledge, and skills in the fields of Geospatial Technologies, Geoinformatics,
+            and Geosciences.</p>
+            <div class="select-wrapper">
+            <select onchange="location.href=this.options[this.selectedIndex].value" size="1">
+                <option value="placeholder" selected>
+                    <span>Select GeoMundus Conference:</span>
+                </option>
+                <option value="https://geomundus.org/2021/">
+                    <span>Lisbon, Portugal (November 26 - 27, 2021)</span>
+                </option>
+                <option value="https://geomundus.org/2020/">
+                    <span>Münster, Germany (November 27 - 28, 2020)</span>
+                </option>
+                <option value="https://geomundus.org/2019/">
+                    <span >Castellón, Spain (November 29 - 30, 2019)</span>
+                </option>
+                <option value="https://geomundus.org/2018/">
+                    <span>Lisbon, Portugal (December 7 - 8, 2018)</span>
+                </option>
+                <option value="https://geomundus.org/2017/">
+                    <span>Münster, Germany (November 10 - 11, 2017)</span>
+                </option>
+                <option value="https://geomundus.org/2016/" >
+                    <span>Castellón, Spain (November 4 - 5, 2016)</span>
+                </option>
+                <option value="https://geomundus.org/2015/" >
+                    <span>Lisbon, Portugal (November 20 - 21, 2015)</span>
+                </option>
+                <option value="https://geomundus.org/2014/">
+                    <span>Münster, Germany (November 7 - 8, 2014)</span>
+                </option>
+                <option value="https://geomundus.org/2013/">
+                    <span>Castellón, Spain (November 15 - 16, 2013)</span>
+                </option>
+                <option value="https://geomundus.org/2012/index-2.html">
+                    <span>Lisbon, Portugal (November 9 - 10, 2012)</span>
+                </option>
+                <option value="https://geomundus.org/2011/index2011.php">
+                    <span>Münster, Germany (October 28 - 29, 2011)</span>
+                </option>
+                <option value="https://geomundus.wordpress.com/">
+                    <span>Castellón, Spain (October 22 - 23, 2010)</span>
+                </option>
+                <option value="https://geomundus.wordpress.com/previous-editions/geomundus-2009/">
+                    <span>Lisbon, Portugal (October 29 - 30, 2009)</span>
+                </option>
+            </select>
+            <header class="major">
+                <h2>This year’s twist</h2>
+            </header>
+            
+            <!-- COUNTDOWN: Edit date in javascript file main.js for next year -->
+            <!-- 
+            <div id="countdown">
+                <p style="text-align:justify;">
+                <ul>
+                <li><span id="days"></span>days</li>
+                <li><span id="hours"></span>Hours</li>
+                <li><span id="minutes"></span>Minutes</li>
+                <li><span id="seconds"></span>Seconds</li>
+                </ul>
+                </p>
+            </div>
+            -->
+
+            <p style="text-align:justify;">Previous editions have not had a particular thematic focus. However, this year
+            we want to spice up discussions with a guiding theme. As students and members of the geospatial community, we want to engage participants in critical reflection 
+            about the goals and motivations of geospatial innovation.</p>
+            <p style="text-align:justify;">Is geospatial innovation driven by a desire for technological advancement (for the sake of technological advancement),
+            or is it driven by a pressing societal need for geospatial solutions?
+            Provocatively we ask the open-ended question: “Geospatial Technologies: Fancy Toys or Tangible Outcomes?”.</p>
+            <p style="text-align:justify;">Recent decades have seen an explosion of creativity in geospatial technologies, applications and methodologies.
+            With these rapid developments we believe that it is important to stop and reconsider the tangible utility of these new innovations, and find out how we can ensure that
+            our professional efforts fit some of the most pressing societal needs. Thus, this year’s conference will focus on and provoke participants to engage in constructive discussion
+            and to ask themselves what the value of their work is in the world.</p>
+            <p style="text-align: center"><img width="100%" height="100%" src="images\main\geomundus2021_group_photo.jpg" alt=""/></p>
+        </div>
+    </section>
+
+    <!-- REGISTRATION -->
+    <section id="registration" class="main style1">
+        <div class="container">
+            <header class="major">
+                <h2>Registration</h2>
+            </header>
+            <p style="text-align: justify;">Anyone who is curious about geospatial technologies and their applications should participate in this conference. We welcome students, researchers, industry leaders and members from the general public to join us for this year’s edition. It is not only a great opportunity to learn about this exciting field, but also to network with the brightest minds.</p>
+            <!--
+            <p style="text-align: justify;">The registration for the hybrid GeoMundus Conference 2021 is now open, you can register using the form below:</p>
+            <p style="text-align: center"><a href="https://forms.gle/uTmbH3Pg5ZCTdmFa8" class="button">Register now</a></p>
+            -->
+            <p style="text-align: justify;">The registration for the hybrid GeoMundus Conference 2021 is now closed.</p>
+        </div>
+    </section>
+
+    <!-- SPEAKERS -->
+    <section id="speakers-line-up" class="main style1">
+        <div class="container">
+            <header class="major">
+                <h2>Keynote Speakers</h2>
+            </header>
+            <p style="text-align: justify;">
+                Prof. Dr. Martin Raubal ("Spatial decision-making for sustainability"), Dr. Linnet Taylor ("The God’s eye view? Geospatial data, power and politics"), 
+                Prof. Gilberto Câmara ("Satellite Image Time Series Analysis for Big Earth Observation Data") and Brendan O’Neill ("Geographic Information Systems in the Humanitarian and Global Development Communities") have confirmed their 
+                participation as Keynote Speakers. </p>
+            <p style="text-align: justify;">
+                Read the <a href="program.html" target="_blank"><strong>program schedule</strong></a> or follow us in our <strong><a href="index.html#footer" target="_blank">social media</a></strong> to stay updated
+                and know more about the keynote speakers of GeoMundus 2021.
+            </p>
+            <div class="speakers-all">
+                <div class="speaker" id="speaker-1" style="display: block">
+                    <div class="speaker-more"><a onclick="javascript:show(1)">+</a></div>
+                    <div class="speaker-img"><img src="images/speakers/present/martin-raubal.jpg"><br></div>
+                    <div class="speaker-name"><a href="https://www.raubal.ethz.ch/" target="_blank">Prof. Dr. Martin Raubal</a><br></div>
+                    <div class="speaker-job">Professor for Geoinformation Engineering</div>
+                    <div class="speaker-location">Institute of Cartography and Geoinformation, ETH Zurich<br></div>
+                </div>
+                <div class="keynote" id="keynote-1" style="display: none">
+                    <div class="speaker-less"><a onclick="javascript:hide(1)">-</a></div>
+                    <div class="keynote-title">KEYNOTE:<br>Spatial decision-making for sustainability
+                    </div>
+                    <div class="keynote-description">
+                         Our planet is in dire straits. Several of the United Nations' Sustainable Development Goals address problems resulting from climate change and rising greenhouse gas emissions. The constant growth of urban mobility and transport has led to a dramatic increase in these emissions. In order to ensure livable environments for future generations, it will be necessary to reduce our CO2 footprint. Spatial decision-making fueled by spatial data science contributes to this effort in major ways, supported by recent progress regarding the availability of spatial big data, computational methods and geospatial technologies. This presentation will demonstrate why spatial decision-making is essential for sustainability and how spatial data science provides methods to perform large-scale spatio-temporal analyses of mobility patterns as well as geospatial technologies for changing people's mobility behavior. Examples will cover movement data analysis within the context of multi-modal and energy-efficient mobility, smart charging of electric vehicles, and mobile decision-making support.
+                    </div>
+                    <div class="keynote-details"><a class="button" href="speakers.html#speaker-1" target="_blank">Read details</a></div>
+                </div>
+                <div class="speaker" id="speaker-2" style="display: block">
+                    <div class="speaker-more"><a onclick="javascript:show(2)">+</a></div>
+                    <div class="speaker-img"><img src="images/speakers/present/linnet-taylor.jpg"><br></div>
+                    <div class="speaker-name">Dr. Linnet Taylor<br></div>
+                    <div class="speaker-job">Associate Professor<br></div>
+                    <div class="speaker-location">Tilburg Law School <br></div>
+                </div>
+                <div class="keynote" id="keynote-2" style="display: none">
+                    <div class="speaker-less"><a onclick="javascript:hide(2)">-</a></div>
+                    <div class="keynote-title">KEYNOTE:<br>The God’s eye view? Geospatial data, power and politics</div>
+                    <div class="keynote-description">
+                        Since the 2010s there has been a shift in the nature and quantity of digital data on social processes flowing into both research and policy. Much of this data stems from sensing and monitoring through GIS and related technologies, whether using people themselves as sensors (as with mobile phone location data) or using classic forms of sensing in new ways (such as satellite data for migration monitoring, or social media data for development policy). New forms of data such as those stemming from fintech, from ID systems around the world, and other sources promise to broaden the uses and potential abuses of people’s digital traces. The new data provides what Pentland (2012) has termed ‘the god’s eye view’ – but to whose benefit, and in whose interests? There are two views on this in the world of research. First, do the new sources provide better-quality data, do they add something to the analysis of social phenomena, can they enable policy and research to do a better job of serving society? The second view asks how these data sources become available, whose interests they serve, and what this means for their legitimacy, and the legitimacy of research and policy based on them. This presentation will explore the tensions between these two views, and ask how these new sources of geospatial data interact with questions of rights, ethics and politics.
+                    </div>
+                    <div class="keynote-details"><a class="button" href="speakers.html#speaker-2" target="_blank">Read details</a></div>
+                </div>
+                <div class="speaker" id="speaker-3" style="display: block">
+                    <div class="speaker-more"><a onclick="javascript:show(3)">+</a></div>
+                    <div class="speaker-img"><img src="images/speakers/present/gilberto-camara.jpg"></div>
+                    <div class="speaker-name"><a href="https://gilbertocamara.org/" target="_blank">Prof. Gilberto Câmara</a><br></div>
+                    <div class="speaker-job">Researcher on Geoinformatics and Land Use Change</div>
+                    <div class="speaker-location">Brazil National Institute for Space Research<br></div>
+                </div>
+                <div class="keynote" id="keynote-3" style="display: none">
+                    <div class="speaker-less"><a onclick="javascript:hide(3)">-</a></div>
+                    <div class="keynote-title">KEYNOTE:<br>Satellite Image Time Series Analysis for Big Earth Observation Data</div>
+                    <div class="keynote-description">
+                        This presentation describes sits, an open-source R package for satellite image time series analysis using machine learning. It supports the complete cycle of data analysis for land classification. Its API provides a simple but powerful set of functions. The software works in different cloud computing environments. Satellite image time series are input to machine learning classifiers, and the results are post-processed using spatial smoothing. Since machine learning methods need accurate training data, \sits includes methods for quality assessment of training samples. The software also provides methods for validation and accuracy measurement. The package thus comprises a production environment for big EO data analysis.
+                    </div>
+                    <div class="keynote-details"><a class="button" href="speakers.html#speaker-3" target="_blank">Read details</a></div>
+                </div>
+                <div class="speaker" id="speaker-4" style="display: block">
+                    <div class="speaker-more"><a onclick="javascript:show(4)">+</a></div>
+                    <div class="speaker-img"><img src="images/speakers/present/brendan-o-neill.jpg"><br></div>
+                    <div class="speaker-name"><a href="https://advanced.jhu.edu/directory/brendan-oneill/" target="_blank">Brendan O’Neill</a><br></div>
+                    <div class="speaker-job">Solutions Engineer<br></div>
+                    <div class="speaker-location">Esri's Nonprofit and Global Organizations & Johns Hopkins University</div>
+                </div>
+                <div class="keynote" id="keynote-4" style="display: none">
+                    <div class="speaker-less"><a onclick="javascript:hide(4)">-</a></div>
+                    <div class="keynote-title">KEYNOTE:<br>Geographic Information Systems in the Humanitarian and Global Development Communities</div>
+                    <div class="keynote-description">
+                                                Geographic information technology has evolved rapidly in recent years but challenges in designing systems and solutions that meet the increasingly complex needs of humanitarian and development organizations persist. In this keynote he will discuss trends and challenges that face the United Nations System and international NGOs in effectively making use of the latest developments in geospatial technology. Brendan will also present solutions that despite these challenges have succeeded in positively impacting outcomes in areas such as food security, mine action, disaster response, and climate change resilience.
+                    </div>
+                    <div class="keynote-details"><a class="button" href="speakers.html#speaker-4" target="_blank">Read details</a></div>
+                </div>
+            </div>
+            <header class="major">
+                <h2>Workshop Leaders</h2>
+            </header>
+            <p style="text-align:justify;">
+                Two workshops will take place during GeoMundus 2021 thanks to the workshop leaders Dr. Thomas Bartoschek and Mario Pesch ("Environmental Citizen Science with senseBox and openSenseMap"), and Pedro Cabral, Felipe Campos and João David ("Open data and models for mapping ecosystem services").
+            </p>
+            <p style="text-align:justify;">
+                Read the <a href="program.html" target="_blank"><strong>program schedule</strong></a> or follow us in our <strong><a href="index.html#footer" target="_blank">social media</a></strong> to stay updated
+                and know more about the workshop leaders of GeoMundus 2021.</p>
+            </p>
+            <div class="speakers-all">
+                <div class="speaker" id="speaker-5" style="display: block">
+                    <div class="speaker-more"><a onclick="javascript:show(5)">+</a></div>
+                    <div class="speaker-img"><img src="images/speakers/present/thomas-bartoschek.jpg"></div>
+                    <div class="speaker-name"><a href="https://sensebox.de/de/about-us.html" target="_blank">Dr. Thomas Bartoschek</a><br></div>
+                    <div class="speaker-job">Postdoctoral researcher & CEO</div>
+                    <div class="speaker-location">University of Münster & re:edu<br></div>
+                </div>
+                <div class="keynote" id="keynote-5" style="display: none">
+                    <div class="speaker-less"><a onclick="javascript:hide(5)">-</a></div>
+                    <div class="keynote-title">WORKSHOP: <br>Environmental Citizen Science with senseBox and openSenseMap</div>
+                    <div class="keynote-description">
+                        In this workshop participants will learn about environmental citizen science using the modular sensor platform senseBox and the open citizen science data infrastructure openSenseMap. The senseBox is a DIY Citizen Science toolkit for local and mobile measurement of environmental data such as temperature, humidity, air pressure, illuminance, UV light or air quality. It can be connected to the internet via WiFi, Ethernet or LoRa to enable Internet of Things capabilities in a sensor network. 
+                        Local workshop participants will build and code measurement devices on several environmental phenomena and collect data around the campus. Remote participants will learn to access and analyze data from the openSenseMap through its APIs and other external tools. At the end environmental geodata from the local experiment will be analyzed by the whole group.
+                        We will round up with a discussion on the potential of the senseBox and openSenseMap in research projects and for educational purposes in secondary and higher education, while focusing on the data and computational, scientific and spatial literacy. 
+                    </div>
+                    <div class="keynote-details"><a class="button" href="speakers.html#speaker-5" target="_blank">Read details</a></div>
+                </div>
+                <div class="speaker" id="speaker-6" style="display: block">
+                    <div class="speaker-more"><a onclick="javascript:show(6)">+</a></div>
+                    <div class="speaker-img"><img src="images/speakers/present/mario-pesch.jpg"></div>
+                    <div class="speaker-name">Mario Pesch<br></div>
+                    <div class="speaker-job">Research assistant and PhD candidate</div>
+                    <div class="speaker-location">University of Münster<br></div>
+                </div>
+                <div class="keynote" id="keynote-6" style="display: none">
+                    <div class="speaker-less"><a onclick="javascript:hide(6)">-</a></div>
+                    <div class="keynote-title">WORKSHOP: <br>Environmental Citizen Science with senseBox and openSenseMap</div>
+                    <div class="keynote-description">
+                        In this workshop participants will learn about environmental citizen science using the modular sensor platform senseBox and the open citizen science data infrastructure openSenseMap. The senseBox is a DIY Citizen Science toolkit for local and mobile measurement of environmental data such as temperature, humidity, air pressure, illuminance, UV light or air quality. It can be connected to the internet via WiFi, Ethernet or LoRa to enable Internet of Things capabilities in a sensor network. 
+                        Local workshop participants will build and code measurement devices on several environmental phenomena and collect data around the campus. Remote participants will learn to access and analyze data from the openSenseMap through its APIs and other external tools. At the end environmental geodata from the local experiment will be analyzed by the whole group.
+                        We will round up with a discussion on the potential of the senseBox and openSenseMap in research projects and for educational purposes in secondary and higher education, while focusing on the data and computational, scientific and spatial literacy. 
+                    </div>
+                    <div class="keynote-details"><a class="button" href="speakers.html#speaker-6" target="_blank">Read details</a></div>
+                </div>
+                <div class="speaker" id="speaker-7" style="display: block">
+                    <div class="speaker-more"><a onclick="javascript:show(7)">+</a></div>
+                    <div class="speaker-img"><img src="images/speakers/present/pedro-cabral.png"></div>
+                    <div class="speaker-name">Dr. Pedro Cabral<br></div>
+                    <div class="speaker-job">Associate Professor</div>
+                    <div class="speaker-location">NOVA University of Lisbon<br></div>
+                </div>
+                <div class="keynote" id="keynote-7" style="display: none">
+                    <div class="speaker-less"><a onclick="javascript:hide(7)">-</a></div>
+                    <div class="keynote-title">WORKSHOP: <br>Open data and models for mapping ecosystem services</div>
+                    <div class="keynote-description">
+                        Ecosystem services (ES) are the benefits provided to humans by the natural environment, such as clean air, natural pollination, drought regulation, food from agriculture, climate regulation, etc. Providing Information about ES for decision-making is essential to preserve their supply and, consequently, their benefits to society. Making these services visible through the mapping of biophysical, social and economic indicators enables understanding of potential trade-offs and the design of conservation strategies. The provision of ES is influenced by land cover changes (LCC) and efficient land use planning is required for maintaining ES flow. Land use planning can be supported by ES-based modelling tools to estimate ES supply based on land cover. In this workshop we explore available open data and models which can be used for ES modelling and mapping. A hands-on exercise using an InVEST model will be carried out.
+                    </div>
+                    <!--<div class="keynote-details"><a class="button" href="speakers.html#speaker-7" target="_blank">Read details</a></div>
+                    -->
+                    </div>
+                <div class="speaker" id="speaker-8" style="display: block">
+                    <div class="speaker-more"><a onclick="javascript:show(8)">+</a></div>
+                    <div class="speaker-img"><img src="images/speakers/present/felipe-campos.jpg"></div>
+                    <div class="speaker-name">Dr. Felipe Campos<br></div>
+                    <div class="speaker-job">Postdoctoral Researcher</div>
+                    <div class="speaker-location">NOVA University of Lisbon<br></div>
+                </div>
+                <div class="keynote" id="keynote-8" style="display: none">
+                    <div class="speaker-less"><a onclick="javascript:hide(8)">-</a></div>
+                    <div class="keynote-title">WORKSHOP: <br>Open data and models for mapping ecosystem services</div>
+                    <div class="keynote-description">
+                        Ecosystem services (ES) are the benefits provided to humans by the natural environment, such as clean air, natural pollination, drought regulation, food from agriculture, climate regulation, etc. Providing Information about ES for decision-making is essential to preserve their supply and, consequently, their benefits to society. Making these services visible through the mapping of biophysical, social and economic indicators enables understanding of potential trade-offs and the design of conservation strategies. The provision of ES is influenced by land cover changes (LCC) and efficient land use planning is required for maintaining ES flow. Land use planning can be supported by ES-based modelling tools to estimate ES supply based on land cover. In this workshop we explore available open data and models which can be used for ES modelling and mapping. A hands-on exercise using an InVEST model will be carried out.
+                    </div>
+                    <!--<div class="keynote-details"><a class="button" href="speakers.html#speaker-8" target="_blank">Read details</a></div>
+                    -->
+                </div>
+                <div class="speaker" id="speaker-9" style="display: block">
+                    <div class="speaker-more"><a onclick="javascript:show(9)">+</a></div>
+                    <div class="speaker-img"><img src="images/speakers/present/joao-david.jpg"></div>
+                    <div class="speaker-name">João David<br></div>
+                    <div class="speaker-job">Guest lecturer</div>
+                    <div class="speaker-location">NOVA University of Lisbon<br></div>
+                </div>
+                <div class="keynote" id="keynote-9" style="display: none">
+                    <div class="speaker-less"><a onclick="javascript:hide(9)">-</a></div>
+                    <div class="keynote-title">WORKSHOP: <br>Open data and models for mapping ecosystem services</div>
+                    <div class="keynote-description">
+                        Ecosystem services (ES) are the benefits provided to humans by the natural environment, such as clean air, natural pollination, drought regulation, food from agriculture, climate regulation, etc. Providing Information about ES for decision-making is essential to preserve their supply and, consequently, their benefits to society. Making these services visible through the mapping of biophysical, social and economic indicators enables understanding of potential trade-offs and the design of conservation strategies. The provision of ES is influenced by land cover changes (LCC) and efficient land use planning is required for maintaining ES flow. Land use planning can be supported by ES-based modelling tools to estimate ES supply based on land cover. In this workshop we explore available open data and models which can be used for ES modelling and mapping. A hands-on exercise using an InVEST model will be carried out.
+                    </div>
+                    <!--
+                    <div class="keynote-details"><a class="button" href="speakers.html#speaker-9" target="_blank">Read details</a></div>
+                    -->
+                </div>
+            </div>
+        </div>
+        </section>
+
+    <!-- SPONSORS -->
+    <section id="sponsors" class="main style2">
+        <div class="container">
+            <div class="nav-spacer mobile"></div>
+            <header class="major">
+                <h2>Sponsors & Partners</h2>
+            </header>
+            <p style="text-align:justify;">GeoMundus is seeking partners from both the public and private sector including but not limited to the spatial, technological, scientific, governmental, academic fields. We will be thrilled to have your support and participation in this international event.</p>
+            <p style="text-align:justify;">Please feel free to contact us at <strong><u>organization[at]geomundus.org</u></strong> for more information on how to be a part of this unique conference! We will be glad to discuss your ideas to sponsor the GeoMundus Conference 2021 and future years.</p>
+            <header>
+                <h2>Sponsors</h2>
+            </header>
+            <div class="sponsors-all">
+                <div class="sponsor-circle-div gold">
+                    <a href="https://www.con-terra.com/" target="_blank">
+                        <img class="sponsor-circle" style="padding: 20px" src="images/sponsors/Logo_con-terra.png">
+                    </a>
+                </div>
+                <div class="sponsor-circle-div silver">
+                    <a href="https://52north.org/" target="_blank">
+                        <img class="sponsor-circle" style="padding: 20px"  src="images/sponsors/Logo_52North.png">
+                    </a>
+                </div>
+                <div class="sponsor-circle-div bronze">
+                    <a href="http://geoinformatics.com/" target="_blank">
+                        <img class="sponsor-circle" style="padding: 10px; padding-top: 60px; padding-bottom: 30px"  src="images/sponsors/Logo_GEO-Informatics.jpg">
+                    </a>
+                </div>
+            </div>
+            <br>
+            <header>
+                <h2>Partners</h2>
+            </header>
+            <div class="sponsors-all">
+                <div class="sponsor-circle-div partner">
+                    <a href="https://www.novaims.unl.pt/geotech" target="_blank">
+                        <img class="sponsor-circle" style="padding: 30px" src="images/partners/ims.png">
+                    </a>
+                </div>
+                <div class="sponsor-circle-div partner">
+                    <a href="http://www.init.uji.es/" target="_blank">
+                        <img class="sponsor-circle"  src="images/partners/init.png">
+                    </a>
+                </div>
+                <div class="sponsor-circle-div partner">
+                    <a href="https://www.uni-muenster.de/Geoinformatics/en/" target="_blank">
+                        <img class="sponsor-circle" style="padding: 5px" src="images/partners/ifgi.png">
+                    </a>
+                </div>
+            </div>
+    </section>
+
+
+    <!-- CONTACT -->
+    <section id="contact" class="main style1">
+        <div class="container">
+            <div class="nav-spacer mobile"></div>
+            <header class="major">
+                <h2>Contact</h2>
+            </header>
+            <p style="text-align:justify;">If you have any questions, please contact us via email. Alternatively, please write to us at our mailing address listed below.</p>
+            <div class="contact-all">
+                <div class="contact-item">
+                    <h4><strong>Email</strong></h4>
+                    <h5>organization[at]geomundus.org</h5>
+                </div>
+                <div class="contact-item">
+                    <h4><strong>Mailing address</strong></h4>
+                    <h5>NOVA IMS<br>Information Management School<br>Campus de Campolide, 1070-312<br>Lisboa, Portugal</h5>
+                </div>
+                <div class="contact-item">
+                    <h4><strong>Twitter feed</strong></h4>
+                    </h5><a class="twitter-timeline" data-width="300" data-height="300" href="https://twitter.com/GeoMundus?ref_src=twsrc%5Etfw">Tweets by GeoMundus</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer: SOCIAL NETWORKS -->
+    <section id="footer">
+        <section id="networks">
+            <ul class="icons">
+                <li><a href="https://twitter.com/geomundus" class="icon alt fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+                <li><a href="https://www.facebook.com/geomundus/?fref=ts" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                <li><a href="https://www.instagram.com/geomundus_conference/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+                <li><a href="https://github.com/erasmus-mundus-geotech-master/" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+            </ul>
+        </section>
+        <ul class="copyright">
+            <li><a href="https://github.com/erasmus-mundus-geotech-master/Geomundus2021" target="_blank"> &copy; GeoMundus 2021</a></li>
+            <li>Designed by GeoMundus Web Team</li>
+        </ul>
+    </section>
+
+</body>
+</html>
