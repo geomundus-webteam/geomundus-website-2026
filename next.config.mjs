@@ -36,6 +36,10 @@ const nextConfig = {
         source: "/2021",
         destination: "/2021/index.html",
       },
+      {
+        source: "/2024",
+        destination: "/2024/index.html",
+      },
       // PostHog rewrites
       {
         source: "/ingest/static/:path*",

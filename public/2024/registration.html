@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Registration</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="expires" content="0"><!-- Never caches the page -->
+    <link id="favicon" rel="shortcut icon" href="images/logo_pictures/geomundus_icon.png">
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/elastislide.css" />
+    <script src="https://kit.fontawesome.com/b37653d681.js"></script>
+    <!-- A script to insert the footer.html content into the foorter-end element -->
+    <script>
+        fetch("footer.html")
+        .then(response => response.text())
+        .then(data => {
+            const footerElement = document.getElementById("footer-end");
+            footerElement.innerHTML = data;
+        })
+        .catch(error => {
+            console.error("Error fetching footer content:", error);
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- MENU -->
+    <!-- The nav-placeholder has its content inserted by the main.js script.
+    The content is a <nav> described in the nav.html file -->
+    <div id="nav-placeholder">
+    </div>
+
+    <!-- REGISTRATION -->
+    <section id="registration-main" class="main style1">
+        <div class="container" style="text-align: justify;">
+            <header class="major">
+                <h2>Participant Registration</h2>
+            </header>
+            <p style="text-align: justify;">
+                Welcome to the 16th edition of the GeoMundus Conference, held in Münster, Germany!
+            </p>
+            <br>
+            <p style="text-align: justify;">                
+                The attendance in Münster is limited to the venue's capacity, so please make sure to register as soon as possible.
+            </p>
+            <br>
+            <p style="text-align: justify;">
+                For any questions or further information please send us an email at <a href="mailto:program@geomundus.org">program@geomundus.org</a>                
+            </p>
+            <br>
+            <br>
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe8yhMaWnlerPvpB9BQ0VyPwddzVTA53bQ8PUP9z55s2bkafQ/viewform" frameborder="0" style="height: 800px; width: 80%;"></iframe>
+
+            <!-- <p style="text-align: center; margin:20px;"><a class="button" style="background-color:#15d244; color: white!important" href="https://docs.google.com/forms/d/e/1FAIpQLSe8yhMaWnlerPvpB9BQ0VyPwddzVTA53bQ8PUP9z55s2bkafQ/viewform" target="_blank">Register Here!</a></p> -->
+            <br> 
+           <!-- <p><strong style="color:red;">Please note, <b>Registration</b> for in-person and online attendance is now closed.</p>
+            
+                   <p style="text-align: center"><a class="button special" id='bt1' value='Show Layer' style="background-color:#7a7c00;color: white!important;">Registration is closed</a></p>
+            </div> -->
+    </section>
+    
+    <!-- Footer: SOCIAL NETWORKS -->
+    <footer id = "footer-end" style="height:5rem"></footer>
+
+</body>
+</html>

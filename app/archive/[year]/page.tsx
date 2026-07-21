@@ -138,7 +138,7 @@ export default async function ConferenceArchivePage({ params }: Props) {
               </div>
             )}
 
-            {[2018, 2019, 2020, 2021].includes(parsedYear) && (
+            {[2018, 2019, 2020, 2021, 2024].includes(parsedYear) && (
               <div className="mt-6"><a
                 
                   href={`/${parsedYear}`}
