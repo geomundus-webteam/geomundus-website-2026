@@ -180,6 +180,29 @@ export const conferencesQuery = tagQuery(
   "conference",
 );
 
+// Speakers and workshop leaders 
+export const speakersQuery = {
+  query: `*[_type == "speaker"] | order(order asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    role,
+    organization,
+    "title": jobTitle,
+    topic,
+    "bio": shortBio,
+    fullBio,
+    websiteUrl,
+    "linkedin": linkedinUrl,
+    "twitter": twitterUrl,
+    googleScholarUrl,
+    featured,
+    confirmed,
+    order,
+    "imageUrl": image.asset->url
+  }`
+}
+
 export const conferenceByYearQuery = (year: number) =>
   tagQuery(
     groq`*[_type == "conference" && year == $year][0] {

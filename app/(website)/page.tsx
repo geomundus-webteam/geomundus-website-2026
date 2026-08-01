@@ -25,6 +25,7 @@ import { urlForImage } from "@/sanity/lib/image";
 import VenueSlideshow from "@/components/slideshow-images";
 import Slideshow from "@/components/slideshow-images";
 import SponsorsMarquee from "@/components/sponsor-marquee";
+import { speakersQuery } from "@/lib/sanity.queries"
 
 interface KeynoteSpeaker {
   name?: string;
@@ -77,6 +78,10 @@ export default async function Home() {
   const siteSettings = siteSettingsRaw ?? mockSiteSettings;
   const currentConference = currentConferenceRaw ?? mockConference;
   const currentYear = currentYearRaw ?? { year: 2026 };
+  const speakers = await cachedClient<any[]>(speakersQuery.query)
+  const keynoteSpeakers = speakers?.filter(s => s.role === "keynote" && s.confirmed) ?? []
+  const workshopLeaders = speakers?.filter(s => s.role === "workshop" && s.confirmed) ?? []
+  const panelSpeakers = speakers?.filter(s => s.role === "panel" && s.confirmed) ?? []
 
   const AboutSlideshowImages = currentConference?.gallery && currentConference.gallery.length > 0
     ? currentConference.gallery.map((img: any) => ({
@@ -321,76 +326,73 @@ export default async function Home() {
       </section>
 
       {/* ── SPEAKERS ── */}
-      {currentConference?.keynoteSpeakers && currentConference.keynoteSpeakers.length > 0 ? (
-        <section id="speakers" className="py-24 px-6 bg-white border-t border-[#07686f]">
-          <div className="max-w-6xl mx-auto">
-            <AnimateOnScroll staggerChildren className="text-center mb-14">
-              <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Speakers</p>
-              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
-                <RevealText text="Speakers Coming Soon" />
-              </h2>
-              <p className="text-[14px] text-[#6e6e73] leading-[1.8] mb-4">
-                We&apos;re currently finalizing our lineup of distinguished speakers for this year&apos;s conference. Check back soon for updates.
-              </p>
-              <p className="text-[13px] text-[#6e6e73]">
-                Interested in speaking as a keynote?{" "}
-                <Link
-                  href="/#contact"
-                  className="text-[#058a78] font-medium hover:underline"
-                >
-                  Contact us
-                </Link>
-              </p>
-              {/* <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry.</p> */}
-            </AnimateOnScroll>
-            <AnimateOnScroll staggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-              {currentConference.keynoteSpeakers.map((speaker, i) => (
-                <GlowCard key={i} className="bg-[#f5f9f4] rounded-2xl border border-[#e0eada] p-6 text-center overflow-hidden">
-                  <div className="w-16 h-16 rounded-full bg-[#e8f4e4] border border-[#c8ddb8] mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-[#058a78] font-medium text-lg">{speaker.name?.[0] ?? "?"}</span>
-                  </div>
-                  <p className="text-[15px] font-medium text-[#1d1d1f] mb-1">{speaker.name}</p>
-                  <p className="text-[13px] text-[#058a78]">{speaker.organization}</p>
-                </GlowCard>
-              ))}
-            </AnimateOnScroll>
-          </div>
-        </section>
-      ) : (
-        <section id="speakers" className="py-24 px-6 bg-[#ffffff] border-t border-[#07686f]">
-          <div className="max-w-6xl mx-auto">
-            <AnimateOnScroll staggerChildren className="text-center mb-14">
-              <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Speakers</p>
-              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
-                <RevealText text="Speakers Coming Soon" />
-              </h2>
-              <p className="text-[14px] text-[#6e6e73] leading-[1.8] mb-4">
-                We&apos;re currently finalizing our lineup of distinguished speakers for this year&apos;s conference. Check back soon for updates.
-              </p>
-              <p className="text-[13px] text-[#6e6e73]">
-                Interested in speaking as a keynote?{" "}
-                <Link
-                  href="/#contact"
-                  className="text-[#058a78] font-medium hover:underline"
-                >
-                  Contact us
-                </Link>
-              </p>
-              {/* <p className="text-[17px] text-[#6e6e73] max-w-[440px] mx-auto">World-class voices from academia, research, and industry. Full lineup coming soon.</p> */}
-            </AnimateOnScroll>
-            {/* <AnimateOnScroll staggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {[{ icon: "🌍", slot: "Keynote speaker #1" }, { icon: "🛰️", slot: "Keynote speaker #2" }, { icon: "🗺️", slot: "Keynote speaker #3" }].map(({ icon, slot }) => (
-                <GlowCard key={slot} className="bg-white rounded-2xl border border-[#e8e8e8] p-8 text-center overflow-hidden">
-                  <div className="w-14 h-14 rounded-full bg-[#e8f4e4] mx-auto mb-4 flex items-center justify-center text-2xl">{icon}</div>
-                  <p className="text-[15px] font-medium text-[#1d1d1f] mb-1">To be announced</p>
-                  <p className="text-[13px] text-[#058a78]">{slot}</p>
-                </GlowCard>
-              ))}
-            </AnimateOnScroll> */}
-            {/* <SpeakersGrid /> */}
-          </div>
-        </section>
-      )}
+      <section id="speakers" className="py-24 px-6 bg-[#ffffff] border-t border-[#07686f]">
+        <div className="max-w-6xl mx-auto">
+          <AnimateOnScroll staggerChildren className="text-center mb-14">
+            <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Speakers</p>
+            <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight mb-4">
+              <RevealText text={speakers && speakers.length > 0 ? "Meet our speakers" : "Speakers Coming Soon"} />
+            </h2>
+            {(!speakers || speakers.length === 0) && (
+              <>
+                <p className="text-[14px] text-[#6e6e73] leading-[1.8] mb-4">
+                  We&apos;re currently finalizing our lineup. Check back soon for updates.
+                </p>
+                <p className="text-[13px] text-[#6e6e73]">
+                  Interested in speaking?{" "}
+                  <Link href="/#contact" className="text-[#058a78] font-medium hover:underline">Contact us</Link>
+                </p>
+              </>
+            )}
+          </AnimateOnScroll>
+
+          {[
+            { label: "Keynote Speakers", list: keynoteSpeakers },
+            { label: "Workshop Leaders", list: workshopLeaders },
+            { label: "Panel Speakers", list: panelSpeakers },
+          ].map(({ label, list }) => list.length > 0 && (
+            <div key={label} className="mb-16">
+              <p className="text-[12px] font-medium text-[#058a78] uppercase tracking-widest mb-6">{label}</p>
+              <AnimateOnScroll staggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                {list.map((speaker, i) => (
+                  <GlowCard key={speaker._id ?? i} className="bg-[#f5f9f4] rounded-2xl border border-[#e0eada] p-6 text-center overflow-hidden">
+                    <div className="w-20 h-20 rounded-full bg-[#e8f4e4] border border-[#c8ddb8] mx-auto mb-4 overflow-hidden flex items-center justify-center">
+                      {speaker.imageUrl ? (
+                        <img src={speaker.imageUrl} alt={speaker.name ?? ""} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-[#058a78] font-medium text-2xl">{speaker.name?.[0] ?? "?"}</span>
+                      )}
+                    </div>
+                    <p className="text-[15px] font-medium text-[#1d1d1f] mb-1">{speaker.name}</p>
+                    {speaker.title && <p className="text-[12px] text-[#6e6e73] mb-1">{speaker.title}</p>}
+                    {speaker.organization && <p className="text-[13px] text-[#058a78] mb-2">{speaker.organization}</p>}
+                    {speaker.bio && <p className="text-[12px] text-[#6e6e73] mb-2 line-clamp-2">{speaker.bio}</p>}
+                    <div className="flex justify-center gap-3 mt-2">
+                      {speaker.websiteUrl && (
+                        <Link href={speaker.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-[12px] text-[#6e6e73] hover:text-[#058a78]">Website</Link>
+                      )}
+                      {speaker.linkedin && (
+                        <Link href={speaker.linkedin} target="_blank" rel="noopener noreferrer" className="text-[12px] text-[#6e6e73] hover:text-[#058a78]">LinkedIn</Link>
+                      )}
+                    </div>
+                  </GlowCard>
+                ))}
+              </AnimateOnScroll>
+            </div>
+          ))}
+
+          {speakers && speakers.length > 0 && (
+            <div className="text-center mt-4">
+              <Link
+                href="/speakers"
+                className="inline-block border border-[#058a78] text-[#058a78] text-[15px] px-8 py-3.5 rounded-full hover:bg-[#058a78] hover:text-white transition-colors"
+              >
+                View speaker details
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* ── SCHEDULE ── */}
       {schedule && schedule.days && schedule.days.length > 0 && (
@@ -485,9 +487,18 @@ export default async function Home() {
             <p className="text-[28px] font-medium text-[#ea8a29] uppercase tracking-widest mb-5">Venue</p>
             <h2 className="text-[36px] font-medium text-[#f2f9f0] tracking-tight mb-3">Universitat Jaume I</h2>
             <p className="text-[14px] text-[#ffffffc9] mb-5">Castellón de la Plana, Spain</p>
-            <p className="text-[15px] text-[#ffffffc9] leading-[1.8]">
+            <p className="text-[15px] text-[#ffffffc9] leading-[1.8] mb-5">
               One of three host universities of the Erasmus Mundus Master in Geospatial Technologies, alongside NOVA IMS in Lisbon and WWU Münster in Germany.
             </p>
+            <Link
+              href="https://gis.uji.es/ujiapps/bessodigital/localitzacioespais/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-[14px] font-medium text-[#f2f9f0] border border-[#ffffff40] rounded-full px-5 py-2.5 hover:bg-[#ffffff14] transition-colors"
+            >
+              Explore the campus digital twin
+              <span aria-hidden="true">→</span>
+            </Link>
           </div>
           
           <Slideshow slides={VenueSlideshowImages} />
