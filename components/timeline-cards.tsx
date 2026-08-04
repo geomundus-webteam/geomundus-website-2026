@@ -3,7 +3,7 @@ import ScrollRevealGrid from "@/components/scroll-grid"
 
 const items = [
   { n: "01", t: "Call for abstracts", d: "Submit your abstract for oral or poster presentation", date: "Open now" },
-  { n: "02", t: "Submission deadline", d: "Final day to submit abstracts for consideration", date: "August 1, 2026" },
+  { n: "02", t: "Submission deadline", d: "Final day to submit abstracts for consideration", date: "August 15, 2026" },
   { n: "03", t: "Registration opens", d: "Secure your spot at GeoMundus 2026", date: "Open now" },
   { n: "04", t: "Conference days", d: "Talks, workshops, and networking", date: "October 16-17, 2026" },
 ]
