@@ -46,9 +46,9 @@ export async function POST(request: NextRequest) {
 
     // Word count check on description
     const wordCount = description.split(/\s+/).filter(Boolean).length;
-    if (wordCount < 100 || wordCount > 200) {
+    if (wordCount === 0 || wordCount > 200) {
       return NextResponse.json(
-        { error: `Description must be 100-200 words (currently ${wordCount}).` },
+        { error: `Description must be 200 words or fewer (currently ${wordCount}).` },
         { status: 400 }
       );
     }

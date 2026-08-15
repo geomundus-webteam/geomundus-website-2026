@@ -21,7 +21,7 @@ export default function MapathonSubmissionForm() {
   const [submissionId, setSubmissionId] = useState("");
 
   const wordCount = description.trim().split(/\s+/).filter(Boolean).length;
-  const wordCountValid = wordCount >= 100 && wordCount <= 200;
+  const wordCountValid = wordCount > 0 && wordCount <= 200;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -36,7 +36,7 @@ export default function MapathonSubmissionForm() {
       }
 
       if (!wordCountValid) {
-        throw new Error(`Description must be 100-200 words (currently ${wordCount}).`);
+        throw new Error(`Description must be 200 words or fewer (currently ${wordCount}).`);
       }
 
       const formData = new FormData();
@@ -156,7 +156,7 @@ export default function MapathonSubmissionForm() {
 
       <div>
         <label className="block text-sm font-medium mb-1">
-          Description * ({wordCount}/100-200 words)
+          Description * ({wordCount}/200 words max)
         </label>
         <textarea
           required

@@ -83,7 +83,7 @@ export default function MapathonPage() {
               PDF, PNG, or interactive web map (publicly accessible link)
             </li>
             <li>
-              A brief description (100–200 words) outlining the map's concept,
+              A brief description (max 200 words) outlining the map's concept,
               purpose, design choices, data sources, intended audience, and
               expected impact
             </li>
