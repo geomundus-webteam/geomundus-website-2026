@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function MapathonSubmitPage() {
   return (
     <main className="min-h-screen bg-white">
-      <section className="bg-emerald-800 text-white py-12 px-4">
+      <section className="bg-emerald-800 text-white pt-32 pb-12 px-4">
         <div className="max-w-4xl mx-auto">
           <Link
             href="/mapathon"

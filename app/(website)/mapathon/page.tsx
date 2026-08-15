@@ -11,7 +11,7 @@ export default function MapathonPage() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="bg-emerald-800 text-white py-16 px-4">
+      <section className="bg-emerald-800 text-white pt-32 pb-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Map+ Challenge 2026
