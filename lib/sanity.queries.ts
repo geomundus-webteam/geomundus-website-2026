@@ -52,6 +52,27 @@ export const abstractSubmissionsExportQuery = {
   `,
 };
 
+export const mapathonSubmissionsExportQuery = {
+  query: groq`
+    *[_type == "mapathonSubmission"] | order(submittedAt desc) {
+      _id,
+      firstName,
+      lastName,
+      email,
+      affiliation,
+      mapTitle,
+      authors,
+      description,
+      "mapFileUrl": mapFile.asset->url,
+      mapLink,
+      consentGuidelines,
+      consentAI,
+      status,
+      submittedAt
+    }
+  `,
+};
+
 export const registrationsExportQuery = {
   query: groq`
     *[
