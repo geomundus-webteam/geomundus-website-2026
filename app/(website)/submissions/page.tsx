@@ -118,60 +118,72 @@ export default async function SubmissionsPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl font-bold text-center mb-8">Submission</h2>
-            {/* <p className="text-center mb-6">
-              Detailed submission templates and guidelines will be published soon.
-            </p>
 
-            <p className="text-center text-gray-600 mb-10">
-              Please stay tuned for updates regarding the abstract submission format,
-              requirements, and important deadlines.
-            </p> */}
-            <p className="text-center mb-10">
-              Download the abstract submission template below. The template
-              includes the formatting requirements for your abstract.
-            </p>
-
-            <div className="grid grid-cols-1 gap-6 mb-10">
-              <Card className="hover:shadow-md transition-shadow">
-                <CardHeader className="bg-emerald-50 flex flex-row items-center justify-between">
-                  <CardTitle className="text-lg">
-                    Abstract Submission Template
-                  </CardTitle>
-                  <FileTextIcon className="h-5 w-5 text-emerald-700" />
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <Button asChild variant="outline" className="w-full">
-                    <Link
-                      href={submissionInfo?.abstractTemplateUrl || "https://docs.google.com/document/d/1Sq08QCX8Ubpdgm6SJFO3k_WfmH9AT3oD"}
-                      className="flex items-center justify-center gap-2"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Download <ExternalLinkIcon className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="space-y-4">
-              <SubmissionButton
-                submissionOpen={isSubmissionOpen}
-                link="/submissions/abstract"
-                // {submissionInfo?.submissionFormUrl}
-              />
-            </div>
-            <div className="mt-10 text-center p-6 bg-gray-100 rounded-lg">
-              <p>
-                {
-                  "If you have further queries about the abstract submission, please contact the conference organizing committee at"
-                }{" "}
+            {isDeadlinePast ? (
+              <div className="text-center py-12 bg-white rounded-2xl border border-gray-200 mb-10">
+                <CalendarIcon className="h-10 w-10 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-xl font-medium text-gray-700 mb-3">
+                  Submission deadline has passed
+                </h3>
+                <p className="text-gray-500 text-[15px] max-w-md mx-auto mb-6">
+                  The abstract submission period for GeoMundus 2026 is now closed. If you believe this is an error or have a special circumstance, please contact us directly.
+                </p>
                 {submissionInfo?.contactEmail && (
                   <Link
-                    href={`mailto:${submissionInfo?.contactEmail}`}
+                    href={`mailto:${submissionInfo.contactEmail}`}
+                    className="inline-block bg-[#058a78] text-white text-[15px] px-8 py-3 rounded-full hover:bg-[#036154] transition-colors"
+                  >
+                    Contact us
+                  </Link>
+                )}
+              </div>
+            ) : (
+              <>
+                <p className="text-center mb-10">
+                  Download the abstract submission template below. The template includes the formatting requirements for your abstract.
+                </p>
+
+                <div className="grid grid-cols-1 gap-6 mb-10">
+                  <Card className="hover:shadow-md transition-shadow">
+                    <CardHeader className="bg-emerald-50 flex flex-row items-center justify-between">
+                      <CardTitle className="text-lg">
+                        Abstract Submission Template
+                      </CardTitle>
+                      <FileTextIcon className="h-5 w-5 text-emerald-700" />
+                    </CardHeader>
+                    <CardContent className="pt-6">
+                      <Button asChild variant="outline" className="w-full">
+                        <Link
+                          href={submissionInfo?.abstractTemplateUrl || "https://docs.google.com/document/d/1Sq08QCX8Ubpdgm6SJFO3k_WfmH9AT3oD"}
+                          className="flex items-center justify-center gap-2"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Download <ExternalLinkIcon className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <div className="space-y-4">
+                  <SubmissionButton
+                    submissionOpen={isSubmissionOpen}
+                    link="/submissions/abstract"
+                  />
+                </div>
+              </>
+            )}
+
+            <div className="mt-10 text-center p-6 bg-gray-100 rounded-lg">
+              <p>
+                {"If you have further queries about the abstract submission, please contact the conference organizing committee at"}{" "}
+                {submissionInfo?.contactEmail && (
+                  <Link
+                    href={`mailto:${submissionInfo.contactEmail}`}
                     className="text-emerald-700 font-medium hover:underline"
                   >
-                    {submissionInfo?.contactEmail}.
+                    {submissionInfo.contactEmail}.
                   </Link>
                 )}
               </p>
