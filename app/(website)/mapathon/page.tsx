@@ -64,7 +64,6 @@ export default function MapathonPage() {
         <section>
           <h2 className="text-3xl font-bold mb-4 text-gray-900">Eligibility</h2>
           <ul className="list-disc pl-6 space-y-1 text-gray-700">
-            <li>Open to all registered attendees of the GeoMundus Conference</li>
             <li>Individual and team submissions accepted</li>
             <li>Each participant or team may submit one entry</li>
             <li>Submitted work must be original and created specifically for the Map+ Challenge 2026</li>
