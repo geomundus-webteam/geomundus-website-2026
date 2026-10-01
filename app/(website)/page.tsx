@@ -26,6 +26,7 @@ import VenueSlideshow from "@/components/slideshow-images";
 import Slideshow from "@/components/slideshow-images";
 import SponsorsMarquee from "@/components/sponsor-marquee";
 import { speakersQuery } from "@/lib/sanity.queries"
+import { LuExternalLink, LuLinkedin } from "react-icons/lu";
 
 interface KeynoteSpeaker {
   name?: string;
@@ -348,7 +349,6 @@ export default async function Home() {
 
           {[
             { label: "Keynote Speakers", list: keynoteSpeakers },
-            { label: "Workshop Leaders", list: workshopLeaders },
             { label: "Panel Speakers", list: panelSpeakers },
           ].map(({ label, list }) => list.length > 0 && (
             <div key={label} className="mb-16">
@@ -381,6 +381,65 @@ export default async function Home() {
             </div>
           ))}
 
+          {/* Workshop Leaders grouped by topic */}
+          {workshopLeaders.length > 0 && (() => {
+            const grouped = workshopLeaders.reduce((acc: any, speaker: any) => {
+              const topic = speaker.topic || "Workshop"
+              if (!acc[topic]) acc[topic] = []
+              acc[topic].push(speaker)
+              return acc
+            }, {})
+
+            return (
+              <div className="mb-16">
+                <p className="text-[12px] font-medium text-[#058a78] uppercase tracking-widest mb-6">Workshop Leaders</p>
+                <div className="space-y-6">
+                  {Object.entries(grouped).map(([topic, leaders]: any) => (
+                    <div key={topic} className="rounded-2xl border border-[#e0eada] overflow-hidden">
+                      <div className="bg-[#f5f9f4] px-6 py-4 border-b border-[#e0eada]">
+                        <p className="text-[11px] font-medium text-[#058a78] uppercase tracking-widest mb-1">Workshop</p>
+                        <p className="text-[16px] font-medium text-[#1d1d1f]">{topic}</p>
+                      </div>
+                      <div className="divide-y divide-[#e0eada]">
+                        {leaders.map((speaker: any) => (
+                          <div key={speaker._id} className="flex gap-5 p-6 bg-white">
+                            <div className="w-16 h-16 rounded-full bg-[#e8f4e4] border border-[#c8ddb8] flex-shrink-0 overflow-hidden flex items-center justify-center">
+                              {speaker.imageUrl ? (
+                                <img src={speaker.imageUrl} alt={speaker.name ?? ""} className="w-full h-full object-cover" />
+                              ) : (
+                                <span className="text-[#058a78] font-medium text-xl">{speaker.name?.[0] ?? "?"}</span>
+                              )}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between gap-3 mb-1">
+                                <h2 className="text-[16px] font-medium text-[#1d1d1f]">{speaker.name}</h2>
+                                <div className="flex gap-2 flex-shrink-0">
+                                  {speaker.websiteUrl && (
+                                    <Link href={speaker.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-[#6e6e73] hover:text-[#058a78]">
+                                      <LuExternalLink className="h-4 w-4" />
+                                    </Link>
+                                  )}
+                                  {speaker.linkedin && (
+                                    <Link href={speaker.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#6e6e73] hover:text-[#058a78]">
+                                      <LuLinkedin className="h-4 w-4" />
+                                    </Link>
+                                  )}
+                                </div>
+                              </div>
+                              {speaker.title && <p className="text-[13px] text-[#6e6e73] mb-0.5">{speaker.title}</p>}
+                              {speaker.organization && <p className="text-[13px] text-[#058a78] mb-3">{speaker.organization}</p>}
+                              {speaker.bio && <p className="text-[13px] text-[#6e6e73] leading-[1.7]">{speaker.bio}</p>}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          })()}
+
           {speakers && speakers.length > 0 && (
             <div className="text-center mt-4">
               <Link
@@ -400,7 +459,7 @@ export default async function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-14">
               <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Programme</p>
-              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight">Conference Schedule (Tentative)</h2>
+              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight">Conference Schedule</h2>
             </div>
             <ScheduleSection schedule={schedule} />
           </div>
