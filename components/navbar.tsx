@@ -64,7 +64,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
               <Link
                 key={label}
                 href={href}
-                className="text-[17px] text-[#262628] hover:text-[#1d1d1f] transition-colors px-3 py-2 rounded-lg hover:bg-gray-50"
+                className="whitespace-nowrap text-[17px] text-[#262628] hover:text-[#1d1d1f] transition-colors px-3 py-2 rounded-lg hover:bg-gray-50"
               >
                 {label}
               </Link>
