@@ -51,7 +51,6 @@ export default function Navbar({ siteSettings }: NavbarProps) {
 
           <nav className="hidden md:flex items-center gap-1">
             {[
-              { href: "/#info", label: "Home" },
               { href: "/#schedule", label: "Programme" },
               { href: "/speakers", label: "Speakers" },
               { href: "/submissions", label: "Submissions" },
@@ -88,7 +87,6 @@ export default function Navbar({ siteSettings }: NavbarProps) {
           <div className="md:hidden border-t border-gray-100 mt-3 pt-3">
             <div className="flex flex-col gap-1">
               {[
-                { href: "/#info", label: "About" },
                 { href: "/#schedule", label: "Programme" },
                 { href: "/speakers", label: "Speakers" },
                 { href: "/submissions", label: "Submissions" },
