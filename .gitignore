@@ -27,3 +27,4 @@ scripts/send-reminder.ts
 scripts/send-reminder-canary.ts
 scripts/update-program.ts
 /tmp/geomundus/
+scripts/set-team-order.ts

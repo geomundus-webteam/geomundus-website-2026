@@ -31,9 +31,12 @@ function groupMembersByTeam(members: (TeamMember & { photoUrl?: string })[]) {
   );
 
   Object.keys(grouped).forEach((teamName) => {
-    grouped[teamName].sort((a, b) =>
-      (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: "base" })
-    );
+    grouped[teamName].sort((a, b) => {
+      const ao = a.order ?? 999;
+      const bo = b.order ?? 999;
+      if (ao !== bo) return ao - bo;
+      return (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: "base" });
+    });
   });
 
   return grouped;
