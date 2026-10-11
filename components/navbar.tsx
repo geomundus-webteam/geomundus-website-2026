@@ -51,9 +51,10 @@ export default function Navbar({ siteSettings }: NavbarProps) {
 
           <nav className="hidden md:flex items-center gap-1">
             {[
-              { href: "/#info", label: "Home" },
+              { href: "/#schedule", label: "Programme" },
               { href: "/speakers", label: "Speakers" },
               { href: "/submissions", label: "Submissions" },
+              { href: "/mapathon", label: "Map+ Challenge" },
               { href: "/#contact", label: "Contact" },
               { href: "/sponsors", label: "Sponsor" },
               { href: "/local", label: "Venue" },
@@ -63,7 +64,7 @@ export default function Navbar({ siteSettings }: NavbarProps) {
               <Link
                 key={label}
                 href={href}
-                className="text-[17px] text-[#262628] hover:text-[#1d1d1f] transition-colors px-3 py-2 rounded-lg hover:bg-gray-50"
+                className="whitespace-nowrap text-[17px] text-[#262628] hover:text-[#1d1d1f] transition-colors px-3 py-2 rounded-lg hover:bg-gray-50"
               >
                 {label}
               </Link>
@@ -86,9 +87,10 @@ export default function Navbar({ siteSettings }: NavbarProps) {
           <div className="md:hidden border-t border-gray-100 mt-3 pt-3">
             <div className="flex flex-col gap-1">
               {[
-                { href: "/#info", label: "About" },
+                { href: "/#schedule", label: "Programme" },
                 { href: "/speakers", label: "Speakers" },
                 { href: "/submissions", label: "Submissions" },
+              { href: "/mapathon", label: "Map+ Challenge" },
                 { href: "/#contact", label: "Contact" },
                 { href: "/sponsors", label: "Sponsor" },
                 { href: "/local", label: "Venue" },

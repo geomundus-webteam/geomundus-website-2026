@@ -326,6 +326,19 @@ export default async function Home() {
         </AnimateOnScroll>
       </section>
 
+      {/* ── SCHEDULE ── */}
+      {schedule && schedule.days && schedule.days.length > 0 && (
+        <section id="schedule" className="py-24 px-6 bg-[#f2f7f7] border-t border-[#07686f]">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-14">
+              <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Programme</p>
+              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight">Conference Schedule</h2>
+            </div>
+            <ScheduleSection schedule={schedule} />
+          </div>
+        </section>
+      )}
+
       {/* ── SPEAKERS ── */}
       <section id="speakers" className="py-24 px-6 bg-[#ffffff] border-t border-[#07686f]">
         <div className="max-w-6xl mx-auto">
@@ -452,19 +465,6 @@ export default async function Home() {
           )}
         </div>
       </section>
-
-      {/* ── SCHEDULE ── */}
-      {schedule && schedule.days && schedule.days.length > 0 && (
-        <section id="schedule" className="py-24 px-6 bg-[#f2f7f7] border-t border-[#07686f]">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-14">
-              <p className="text-[28px] font-bold text-[#058a78] uppercase tracking-widest mb-4">Programme</p>
-              <h2 className="text-[40px] font-medium text-[#1d1d1f] tracking-tight">Conference Schedule</h2>
-            </div>
-            <ScheduleSection schedule={schedule} />
-          </div>
-        </section>
-      )}
 
       {/* ── TIMELINE ── */}
       <AnimateOnScroll>

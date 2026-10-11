@@ -9,6 +9,7 @@ import submission from "../schemas/submission";
 import teamMember from "../schemas/teamMember";
 import speaker from "../schemas/speaker";
 import abstract from "../schemas/abstractSubmission";
+import mapathonSubmission from "../schemas/mapathon-submission";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -21,5 +22,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     teamMember,
     speaker,
     abstract,
+    mapathonSubmission,
   ],
 };

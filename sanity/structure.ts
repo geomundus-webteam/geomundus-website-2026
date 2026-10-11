@@ -129,4 +129,14 @@ export const structure = (S: StructureBuilder) =>
         .title("Submission Info")
         .icon(FiFileText)
         .child(S.document().schemaType("submission").documentId("submission")),
+
+      S.listItem()
+        .title("Abstract Submissions")
+        .icon(FiFileText)
+        .child(S.documentTypeList("abstractSubmission")),
+
+      S.listItem()
+        .title("Map+ Challenge Submissions")
+        .icon(FiFileText)
+        .child(S.documentTypeList("mapathonSubmission")),
     ]);
