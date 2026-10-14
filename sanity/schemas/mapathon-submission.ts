@@ -89,6 +89,18 @@ export default defineType({
       },
       initialValue: "submitted",
     }),
+    defineField({
+      name: "finalist",
+      title: "Finalist (shown on the voting page)",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
+      name: "finalistOrder",
+      title: "Order on voting page",
+      type: "number",
+      description: "1 to 6. Lower numbers appear first.",
+    }),
   ],
   preview: {
     select: {
