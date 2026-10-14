@@ -1,3 +1,4 @@
+import VoteButton from "@/components/map-challenge-vote-button";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -131,7 +132,13 @@ export default function MapathonPage() {
           >
             Submit Your Entry
           </Link>
+{/*           
+          <div className="text-center my-8">
+            <VoteButton showWhenClosed />
+          </div> */}
         </section>
+
+
 
         {/* Questions */}
         <section className="border-t pt-8">
