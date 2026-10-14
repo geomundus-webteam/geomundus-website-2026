@@ -28,7 +28,14 @@ export default function VoteForm({ finalists, votingOpen }: { finalists: Finalis
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ choice }),
       });
-      const data = await res.json();
+      let data: { error?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        // Server answered, but not with JSON (e.g. a 404 or a crash page)
+        setError(`Server error (HTTP ${res.status}). Check the terminal for details.`);
+        return;
+      }
       if (res.ok || data.error === "already_voted") {
         setVoted(true);
         try { localStorage.setItem(STORAGE_KEY, "1"); } catch {}
