@@ -82,11 +82,11 @@ export default function ScheduleSection({ schedule }: ScheduleSectionProps) {
                   <div className="flex flex-col md:flex-row">
                     <div className="bg-gray-50 p-4 w-full md:w-1/4 flex flex-col justify-center items-center md:items-start">
                       <div className="text-lg font-bold">{event.time}</div>
-                      {/* {event.location && (
+                      {event.location && (
                         <div className="text-sm text-gray-500">
                           {event.location}
                         </div>
-                      )} */}
+                      )}
                       {event.type && (
                         <Badge
                           className={`mt-2 ${getEventTypeColor(event.type)}`}
