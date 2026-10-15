@@ -14,6 +14,7 @@ export type Finalist = {
   _id: string;
   mapTitle: string;
   authors: string;
+  description?: string;
   mapLink?: string;
   fileUrl?: string;
   fileMime?: string;
@@ -48,12 +49,12 @@ const MOCK_DATA: { config: VotingConfig; finalists: Finalist[] } = {
     sheetUrl: "https://docs.google.com/spreadsheets/d/MOCK_SHEET_ID/edit",
   },
   finalists: [
-    { _id: "mock-1", mapTitle: "Flood Risk in the Rhine Valley", authors: "Anna Schmidt", fileUrl: tile(1, "#2B50AA"), fileMime: "image/svg+xml" },
-    { _id: "mock-2", mapTitle: "Wildfire Spread Scenarios, Portugal", authors: "Joao Silva, Marta Costa", thumbnailUrl: tile(2, "#FF6B35"), fileUrl: "/mapathon/map-challenge-2026-guidelines.pdf", fileMime: "application/pdf" },
-    { _id: "mock-3", mapTitle: "Earthquake Shelters in Istanbul", authors: "Elif Yilmaz", mapLink: "https://www.openstreetmap.org" },
-    { _id: "mock-4", mapTitle: "Landslide Susceptibility, Nepal", authors: "Ramesh Gurung", fileUrl: tile(4, "#C1121F"), fileMime: "image/svg+xml" },
-    { _id: "mock-5", mapTitle: "Drought Monitoring in the Sahel", authors: "Amina Diallo", fileUrl: "/mapathon/map-challenge-2026-guidelines.pdf", fileMime: "application/pdf" },
-    { _id: "mock-6", mapTitle: "Storm Surge Evacuation Routes", authors: "Carlos Mendez", mapLink: "https://www.openstreetmap.org" },
+    { _id: "mock-1", description: "This map shows flood extents along the Rhine under three return periods, combining gauge records with a 10 m elevation model. It is intended for municipal planners deciding where to build temporary barriers, and it highlights schools and care homes inside the 100-year zone so that evacuation planning can start there.", mapTitle: "Flood Risk in the Rhine Valley", authors: "Anna Schmidt", fileUrl: tile(1, "#2B50AA"), fileMime: "image/svg+xml" },
+    { _id: "mock-2", description: "Fire spread scenarios for central Portugal built from open Earth observation data, fuel maps, and wind records. The map compares three wind directions and shows the villages reached within six hours. It supports preparedness exercises for local fire brigades and explains each design choice in a short legend.", mapTitle: "Wildfire Spread Scenarios, Portugal", authors: "Joao Silva, Marta Costa", thumbnailUrl: tile(2, "#FF6B35"), fileUrl: "/mapathon/map-challenge-2026-guidelines.pdf", fileMime: "application/pdf" },
+    { _id: "mock-3", description: "A shelter and assembly-point map for Istanbul districts after an earthquake, based on OpenStreetMap data. Each point lists capacity and walking distance. The interactive version lets residents search by street, and it was reviewed with a local volunteer group to check that the shelters are still open and reachable on foot.", mapTitle: "Earthquake Shelters in Istanbul", authors: "Elif Yilmaz", mapLink: "https://www.openstreetmap.org" },
+    { _id: "mock-4", description: "Landslide susceptibility for a district in Nepal, produced with a weighted overlay of slope, rainfall, geology, and land cover. The map is designed for village committees and uses plain colours and local place names so that it can be printed and discussed in community meetings without any GIS training.", mapTitle: "Landslide Susceptibility, Nepal", authors: "Ramesh Gurung", fileUrl: tile(4, "#C1121F"), fileMime: "image/svg+xml" },
+    { _id: "mock-5", description: "A drought monitoring map for the Sahel that tracks vegetation health and rainfall anomalies across the last twelve months. It is aimed at humanitarian teams who need to decide where to send food aid first. The legend explains the index in two sentences, and the data sources are listed along the bottom edge.", mapTitle: "Drought Monitoring in the Sahel", authors: "Amina Diallo", fileUrl: "/mapathon/map-challenge-2026-guidelines.pdf", fileMime: "application/pdf" },
+    { _id: "mock-6", description: "Storm surge evacuation routes for a coastal city, combining elevation, road capacity, and shelter locations. The map marks which streets flood first and gives the safest route from each neighbourhood to the nearest shelter. It was designed to be read at a glance on a phone during an emergency, with large labels and strong contrast.", mapTitle: "Storm Surge Evacuation Routes", authors: "Carlos Mendez", mapLink: "https://www.openstreetmap.org" },
   ],
 };
 
@@ -65,7 +66,7 @@ const QUERY = `{
   "config": *[_type == "mapathonVoting"][0]{ heading, intro, votingOpen, sheetUrl },
   "finalists": *[_type == "mapathonSubmission" && finalist == true]
     | order(finalistOrder asc, mapTitle asc){
-      _id, mapTitle, authors, mapLink,
+      _id, mapTitle, authors, description, mapLink,
       "thumbnailUrl": thumbnail.asset->url,
       "fileUrl": mapFile.asset->url,
       "fileMime": mapFile.asset->mimeType
