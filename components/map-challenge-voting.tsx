@@ -5,33 +5,43 @@ import type { Finalist } from "@/lib/mapathon-vote";
 
 const STORAGE_KEY = "mapathon_voted";
 
-function Cover({ f, index, kind }: { f: Finalist; index: number; kind: string }) {
-  const [failed, setFailed] = useState(false);
+// Same logic as the poster cards: try each image source in order,
+// move to the next one when it fails to load, and end on an icon tile.
+function driveFileId(url?: string): string | null {
+  return url?.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/)?.[1] ?? null;
+}
 
-  // 1) thumbnail uploaded in Sanity, 2) the image file itself,
-  // 3) automatic screenshot for interactive map links (best effort), 4) icon tile
-  let src: string | undefined;
+function Cover({ f, index, kind }: { f: Finalist; index: number; kind: string }) {
+  const driveId = driveFileId(f.mapLink);
+
+  const sources: string[] = [];
+  // 1) thumbnail stored in Sanity
   if (f.thumbnailUrl) {
-    src = f.thumbnailUrl.startsWith("https://cdn.sanity.io")
-      ? `${f.thumbnailUrl}?w=800&auto=format`
-      : f.thumbnailUrl;
-  } else if (f.fileMime?.startsWith("image/") && f.fileUrl) {
-    src = f.fileUrl;
-  } else if (f.mapLink && !f.fileUrl) {
-    src = `https://api.microlink.io/?url=${encodeURIComponent(f.mapLink)}&screenshot=true&meta=false&embed=screenshot.url`;
+    sources.push(f.thumbnailUrl.startsWith("https://cdn.sanity.io") ? `${f.thumbnailUrl}?w=800&auto=format` : f.thumbnailUrl);
+  }
+  // 2) the uploaded image itself
+  if (f.fileMime?.startsWith("image/") && f.fileUrl) sources.push(f.fileUrl);
+  // 3) Google Drive file link (PDF or image): Drive's own thumbnail
+  if (driveId) sources.push(`https://drive.google.com/thumbnail?id=${driveId}&sz=w800`);
+  // 4) any other link (interactive map): automatic screenshot, best effort
+  if (f.mapLink && !f.fileUrl && !driveId) {
+    sources.push(`https://api.microlink.io/?url=${encodeURIComponent(f.mapLink)}&screenshot=true&meta=false&embed=screenshot.url`);
   }
 
-  const icon = kind === "PDF" ? "📄" : kind === "Image" ? "🖼️" : "🌐";
+  const [stage, setStage] = useState(0);
+  const src = sources[stage];
+  const icon = kind === "Image" ? "🖼️" : kind === "Interactive map" ? "🌐" : "📄";
 
   return (
     <div className="relative aspect-[4/3] bg-emerald-700 flex items-center justify-center text-white">
-      {src && !failed ? (
+      {src ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={src}
           alt={f.mapTitle}
           loading="lazy"
-          onError={() => setFailed(true)}
+          referrerPolicy="no-referrer"
+          onError={() => setStage((s) => s + 1)}
           className="absolute inset-0 w-full h-full object-cover object-top"
         />
       ) : (
@@ -41,6 +51,27 @@ function Cover({ f, index, kind }: { f: Finalist; index: number; kind: string })
         </div>
       )}
       <span className="absolute top-2 right-2 text-xs bg-black/60 rounded-full px-3 py-1">{kind}</span>
+    </div>
+  );
+}
+
+
+// Shows the description clamped to a few lines, with a toggle for the full text.
+function Description({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+  const long = text.length > 220;
+  return (
+    <div className="text-sm text-gray-700">
+      <p className={`whitespace-pre-line ${open || !long ? "" : "line-clamp-4"}`}>{text}</p>
+      {long && (
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="mt-1 text-emerald-700 font-medium hover:underline"
+        >
+          {open ? "Show less" : "Read more"}
+        </button>
+      )}
     </div>
   );
 }
@@ -99,7 +130,13 @@ export default function VoteForm({ finalists, votingOpen }: { finalists: Finalis
         {finalists.map((f, i) => {
           const href = f.fileUrl || f.mapLink;
           const isImage = f.fileMime?.startsWith("image/");
-          const kind = isImage ? "Image" : f.fileMime === "application/pdf" ? "PDF" : "Interactive map";
+          const kind = isImage
+            ? "Image"
+            : f.fileMime === "application/pdf"
+            ? "PDF"
+            : driveFileId(f.mapLink)
+            ? "Map file"
+            : "Interactive map";
           const selected = choice === f._id;
           return (
             <div
@@ -114,6 +151,7 @@ export default function VoteForm({ finalists, votingOpen }: { finalists: Finalis
                   <h2 className="font-semibold text-emerald-800">{f.mapTitle}</h2>
                   <p className="text-sm text-gray-600">{f.authors}</p>
                 </div>
+                {f.description && <Description text={f.description} />}
                 {href && (
                   <a href={href} target="_blank" rel="noopener noreferrer"
                      className="text-center text-sm font-medium border border-emerald-700 text-emerald-700 rounded-full py-1.5 hover:bg-emerald-50">
@@ -138,7 +176,7 @@ export default function VoteForm({ finalists, votingOpen }: { finalists: Finalis
 
       <div className="fixed inset-x-0 bottom-0 bg-white border-t shadow-lg px-4 py-3 flex flex-wrap items-center justify-center gap-4">
         <span className="font-medium text-gray-800">
-          {voted ? "Thanks, your vote is in!" : closed ? "Voting is closed" : choice ? "Ready to submit" : "Choose one map"}
+          {voted ? "✅ Thanks, your vote is in!" : closed ? "Voting is closed" : choice ? "Ready to submit" : "Choose one map"}
         </span>
         {error && <span className="text-sm text-red-600">{error}</span>}
         {!disabled && (

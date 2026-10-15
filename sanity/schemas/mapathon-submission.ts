@@ -103,13 +103,6 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
-      name: "thumbnail",
-      title: "Thumbnail (cover image for the voting page)",
-      type: "image",
-      options: { hotspot: true },
-      description: "Optional. Recommended for PDF and interactive maps: upload a screenshot (4:3 works best).",
-    }),
-    defineField({
       name: "finalistOrder",
       title: "Order on voting page",
       type: "number",
