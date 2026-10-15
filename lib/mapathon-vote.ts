@@ -17,6 +17,7 @@ export type Finalist = {
   mapLink?: string;
   fileUrl?: string;
   fileMime?: string;
+  thumbnailUrl?: string;
 };
 
 export type VotingConfig = {
@@ -48,7 +49,7 @@ const MOCK_DATA: { config: VotingConfig; finalists: Finalist[] } = {
   },
   finalists: [
     { _id: "mock-1", mapTitle: "Flood Risk in the Rhine Valley", authors: "Anna Schmidt", fileUrl: tile(1, "#2B50AA"), fileMime: "image/svg+xml" },
-    { _id: "mock-2", mapTitle: "Wildfire Spread Scenarios, Portugal", authors: "Joao Silva, Marta Costa", fileUrl: "/mapathon/map-challenge-2026-guidelines.pdf", fileMime: "application/pdf" },
+    { _id: "mock-2", mapTitle: "Wildfire Spread Scenarios, Portugal", authors: "Joao Silva, Marta Costa", thumbnailUrl: tile(2, "#FF6B35"), fileUrl: "/mapathon/map-challenge-2026-guidelines.pdf", fileMime: "application/pdf" },
     { _id: "mock-3", mapTitle: "Earthquake Shelters in Istanbul", authors: "Elif Yilmaz", mapLink: "https://www.openstreetmap.org" },
     { _id: "mock-4", mapTitle: "Landslide Susceptibility, Nepal", authors: "Ramesh Gurung", fileUrl: tile(4, "#C1121F"), fileMime: "image/svg+xml" },
     { _id: "mock-5", mapTitle: "Drought Monitoring in the Sahel", authors: "Amina Diallo", fileUrl: "/mapathon/map-challenge-2026-guidelines.pdf", fileMime: "application/pdf" },
@@ -65,6 +66,7 @@ const QUERY = `{
   "finalists": *[_type == "mapathonSubmission" && finalist == true]
     | order(finalistOrder asc, mapTitle asc){
       _id, mapTitle, authors, mapLink,
+      "thumbnailUrl": thumbnail.asset->url,
       "fileUrl": mapFile.asset->url,
       "fileMime": mapFile.asset->mimeType
     }
